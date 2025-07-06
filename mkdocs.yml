@@ -9,9 +9,11 @@ theme:
 nav:
   - INTRO: index.md
   - Common:
-    - Leetcode Interview 150: leetcode_interview_150.md
+    - Leetcode Interview 150: Leetcode/leetcode_interview_150.md
   - Machine Learning:
     - Common: ML/index.md
+  - Hard Questions:
+    - Hard_Questions: Hard/hard_01.md
 
 markdown_extensions:
   - attr_list
