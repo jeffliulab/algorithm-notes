@@ -6,6 +6,19 @@ theme:
     - navigation.sections
     # - navigation.expand
 
+plugins:
+  - search
+  - i18n: # https://ultrabug.github.io/mkdocs-static-i18n/fr/getting-started/quick-start/
+      docs_structure: suffix
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: zh
+          name: 中文
+          build: true
+
 nav:
   - INTRO: index.md
   - Common:
