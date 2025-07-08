@@ -1,4 +1,6 @@
 site_name: Jeff's Algorithm and Leetcode Notes
+site_author: Jeff Liu
+site_url: https://jeffliulab.github.io/algorithm-notes/
 
 theme:
   name: material
