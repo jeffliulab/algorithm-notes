@@ -17,12 +17,15 @@ calculate each i's water as [min of (max_left, max_right) - height[i]]
 ```
 
 Time: O(n)
+
 Space: O(n)
 
 **Solution 2. Optimize Space to O(1), use two pointers.**
 
-I think this gonna be a simplification of math equation [min of (max_left, max_right) - height[i]].
+I think this gonna be a simplification of math equation `[min of (max_left, max_right) - height[i]]`.
+
 Because we always caculate this, this can be considered as:
+
 * max_left - height[i], if max_left <= max_right
 * max_right - height[i], if max_left > max_right
 
@@ -39,4 +42,5 @@ while i <= j: # The boundry here is very important
 ```
 
 Time: O(n)
+
 Space: O(1)
