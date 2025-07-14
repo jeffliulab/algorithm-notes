@@ -24,7 +24,7 @@ plugins:
 nav:
   - INTRO: index.md
   - Common:
-    - Leetcode Interview 150: Leetcode/leetcode_interview_150.md
+    - Leetcode 500: Leetcode/leetcode_500.md
   - Machine Learning:
     - Common: ML/index.md
   - Hard Questions:
