@@ -1,5 +1,7 @@
 # LeetCode 500 - 1000
 
+🚫表示过于简单，不易展示。
+
 ## 501 - 550
 
 ...
@@ -89,3 +91,125 @@ traverse 列表：
 ...
 
 ## 701 - 750
+
+...
+
+...
+
+...
+
+#### 739. Daily Temperatures
+
+单调栈教学题，非常经典与优雅的思维方式。
+
+...
+
+## 751 - 800
+
+...
+
+...
+
+#### 771.🚫Jewels and Stones
+
+🚫过于简单，不易展示。
+
+...
+
+...
+
+...
+
+...
+
+## 801 - 850
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
+
+# 851 - 900
+
+...
+
+...
+
+...
+
+#### 853. ※ Car Fleet
+
+这本质上就是一个单调递增stack的问题，把到达时间作为value算出来，然后维护一个后面的值必须比前面的值小的stack。因为如果前面的value大于后面的，那么前面的车就必须合并到后面的车队中。
+
+这里要注意，处理的时候要按照位置信息来处理。因为原始的position是无序的。所以要把位置信息和速度打包为(position, speed)，然后按照position从大到小排序，即从离终点最近的地方开始看。（单调递增栈）
+
+如果从初始出发点开始看的话，则需要维护一个单调递减栈，并调整top节点的数值，容易出错。所以这道题比较适合用单调递增栈，然后从终点开始往回看。
+
+不过这道题的最佳实践是greedy贪心。但是本质上贪心解法就是把这个单调递增栈的使用进行了优化。
+
+mono stack solution:
+
+```python
+cars = sorted(zip(position, speed), key=lambda x: -x[0])
+
+stack = []
+for pos, spd in cars: 
+    arrival_time = float(target - pos) / spd
+    if not stack or arrival_time > stack[-1]:
+        stack.append(arrival_time)
+
+return len(stack)
+```
+
+greedy其实就是在此基础上，把stack改为一个单独的变量，比如leader_time。为什么能这么改呢？因为这道题我们只用到了最顶上的值，而不关注top下面的值。**换句话说：因为不需要追溯历史状态，只依赖于最近的/最重要的一个历史状态，所以可以用一个变量来记录这个状态，从而把这道题转换为一个贪心问题。**
+
+```python
+cars = sorted(zip(position, speed), key=lambda x: -x[0])
+
+leader_time = 0
+count = 0
+for pos, spd in cars: 
+    arrival_time = float(target - pos) / spd
+    if arrival_time > leader_time:
+        count += 1
+        leader_time = arrival_time
+
+return count
+```
+
+...
+
+...
+
+## 901 - 950
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
+
+## 951 - 1000
+
+...
+
+...
+
+...
+
+...
+
+...

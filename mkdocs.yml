@@ -25,6 +25,7 @@ nav:
   - INTRO: index.md
   - Common:
     - Leetcode 500: Leetcode/leetcode_500.md
+    - 算法宝典: 算法宝典.md
   - Machine Learning:
     - Common: ML/index.md
   - Hard Questions:
