@@ -393,32 +393,32 @@ class Solution(object):
         # 创建一个虚拟头节点，简化代码
         head = ListNode()
         current = head
-    
+  
         while True:
             smallest_node_val = float('inf')
             smallest_node_index = -1
-        
+      
             # 1. 遍历所有链表的当前头节点，找到最小的那个
             #    这个 for 循环实现了你的 "每一轮要把ls中的所有的node拿出来作比较！" 的思路
             for i in range(len(lists)):
                 if lists[i] and lists[i].val < smallest_node_val:
                     smallest_node_val = lists[i].val
                     smallest_node_index = i
-        
+      
             # 2. 如果 smallest_node_index 仍然是 -1，说明所有链表都已经是 None 了
             #    这实现了你的 "直到lists中所有元素都为空" 的退出条件
             if smallest_node_index == -1:
                 break
-            
+          
             # 3. 将找到的最小节点接到结果链表的末尾
             #    这实现了你的 "把smallest_node这个节点放到cur_new的下一个上"
             current.next = lists[smallest_node_index]
             current = current.next
-        
+      
             # 4. 将那个链表的头指针向后移动一位
             #    这实现了你的 "把smallest_node这个节点进行移动"
             lists[smallest_node_index] = lists[smallest_node_index].next
-        
+      
         return head.next
 ```
 
@@ -1481,15 +1481,38 @@ return "/" + "/".join(result)
 
  **总而言之，这个算法的核心价值在于展示了一种降维思想** ：当一个多维数据结构因其内在的排序属性而可以被视为一个“隐式”的一维有序数组时，我们就可以应用最高效的一维搜索算法（二分搜索）来解决问题，从而避免了代价高昂的多维遍历。
 
-...
+#### 75. Sort Colors
 
-...
+这道题有两种解法：
 
-...
+1. Counting Sort
+2. 直接一次遍历
 
-...
+一次遍历最巧妙：
 
-...
+* 这个方法使用三个指针 `low`, `mid`, `high` 将数组分为三部分：
+  * `[0, low-1]`：全部是 0
+  * `[low, mid-1]`：全部是 1
+  * `[high+1, n-1]`：全部是 2
+* `mid` 指针负责遍历数组，根据 `nums[mid]` 的值与 `low` 或 `high` 指针指向的元素进行交换。
+
+一次遍历法的代码如下：
+
+```python
+low = 0
+mid = 0
+high = len(nums) - 1
+while mid <= high:
+    if nums[mid] == 0:
+        nums[low], nums[mid] = nums[mid], nums[low]
+        low += 1
+        mid += 1
+    elif nums[mid] == 1:
+        mid += 1
+    else:
+        nums[mid], nums[high] = nums[high], nums[mid]
+        high -= 1
+```
 
 ...
 
@@ -2595,7 +2618,7 @@ class Solution:
                     dp[i] = True
                     # 找到一种方法即可，跳出内层循环
                     break
-        
+      
         # 返回整个字符串的拆分结果
         return dp[n]
 ```
@@ -2802,7 +2825,7 @@ class LRUCache(object):
         """
         self.capacity = capacity
         self.hashmap = {} # 正常的空字典即可
-    
+  
         # 2. 正确初始化哨兵节点，并把它们连接起来
         # self.head 是最“新”端，self.tail 是最“旧”端
         self.head = Node(None, None) 
@@ -2844,7 +2867,7 @@ class LRUCache(object):
         """
         if key not in self.hashmap:
             return -1
-    
+  
         node = self.hashmap[key]
         # 3. get操作的核心：将被访问的节点移动到链表头部
         self._move_to_head(node)
@@ -2867,7 +2890,7 @@ class LRUCache(object):
             new_node = Node(key, value)
             self.hashmap[key] = new_node # 忘记的步骤：添加到哈希表
             self._add_to_head(new_node)
-        
+      
             # 检查容量
             if len(self.hashmap) > self.capacity:
                 # 容量超限：淘汰最末尾的节点
@@ -2989,7 +3012,7 @@ class Solution(object):
         # 导致无限循环。
         while left < right:
             mid = left + (right - left) // 2
-      
+    
             # =================================================================
             # 2. 为什么用 nums[mid] 和 nums[right] 比较？
             # =================================================================
@@ -3025,7 +3048,7 @@ class Solution(object):
                 # 因此，我们将搜索区间的右边界收缩到 mid 的位置，即 `right = mid`，
                 # 从而保留 nums[mid] 这个潜在的答案。
                 right = mid
-          
+        
         # 循环结束时，left 和 right 相遇在同一点，这个点就是整个数组的最小值。
         return nums[left]
 ```

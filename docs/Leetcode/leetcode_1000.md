@@ -327,7 +327,7 @@ Koko吃香蕉问题就是这类问题的完美范例：
 
 #### 912. Sort an Array
 
-就是手写排序算法。这道题用QuickSort是很难通过的，需要大量优化。这种情况下MergeSort比较推荐使用，稳定性比较高，不会被刻意设置的针对性testcase狙击。
+就是手写排序算法。这道题用QuickSort是很难通过的，需要大量优化。这种情况下MergeSort比较推荐使用，稳定性比较高，不会被刻意设置的针对性testcase狙击。这道题也不能用BucketSort，所以最适合用的是MergeSort。
 
 ...
 
