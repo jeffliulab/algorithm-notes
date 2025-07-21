@@ -16,6 +16,16 @@
 
 这道题非常经典，是leetcode第一题。用hashmap存放{本数的补数：本数的index}。
 
+#### 2. Add Two Numbers
+
+这道题也非常经典。要注意最后剩下cur1，cur2或者carry的情况，可以三个情况合并为一个循环：
+
+```
+while cur1 or cur2 or carry:
+    val1 = cur1.val if cur1 else 0
+    val2 = cur2.val if cur2 else 0
+```
+
 #### 3. ※ Longest Substring Without Repeating Characters
 
 经典滑动窗口题，这道题建议强行记忆。
@@ -288,6 +298,14 @@ Why cannot pass leetcode: if the input nums is [2,2,2,2,2,2,2,2,2,2,2,...], then
 
 ..
 
+#### 19. Remove Nth Node From End of List
+
+这道题初见立马就想到用两个指针，差开N+1的距离，然后找到Nth Node了，但是要注意处理一个特殊的边界情况：如果第一个节点就是要删除的节点呢？
+
+所以这道题一定要引入一个dummy虚拟头节点，然后让fast和slow同时从虚拟头节点开始。
+
+虚拟头节点在linked list中一定要多用、常用，这是一个非常实用并且robust好的实践方法。
+
 ...
 
 #### 20. ※ Valid Parentheses
@@ -352,6 +370,58 @@ class Solution(object):
 如果我们把上导体的一种可选括号，改为三种可选括号，其他题目不变，那么这道题将无法用简单的计数方式来解决，从而需要一个显式的stack来实现validation机制（即20. Valid Parentheses的验证方法）。
 
 【括号系列第三题】下一道题：32. Longest Valid Parentheses (Hard)
+
+#### 23. Merge k Sorted Lists (Mark)
+
+这道题是heap题。
+
+暴力解法O(N*K)如下：
+
+```python
+# Definition for singly-linked list.
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution(object):
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[Optional[ListNode]]
+        :rtype: Optional[ListNode]
+        """
+        # 创建一个虚拟头节点，简化代码
+        head = ListNode()
+        current = head
+      
+        while True:
+            smallest_node_val = float('inf')
+            smallest_node_index = -1
+          
+            # 1. 遍历所有链表的当前头节点，找到最小的那个
+            #    这个 for 循环实现了你的 "每一轮要把ls中的所有的node拿出来作比较！" 的思路
+            for i in range(len(lists)):
+                if lists[i] and lists[i].val < smallest_node_val:
+                    smallest_node_val = lists[i].val
+                    smallest_node_index = i
+          
+            # 2. 如果 smallest_node_index 仍然是 -1，说明所有链表都已经是 None 了
+            #    这实现了你的 "直到lists中所有元素都为空" 的退出条件
+            if smallest_node_index == -1:
+                break
+              
+            # 3. 将找到的最小节点接到结果链表的末尾
+            #    这实现了你的 "把smallest_node这个节点放到cur_new的下一个上"
+            current.next = lists[smallest_node_index]
+            current = current.next
+          
+            # 4. 将那个链表的头指针向后移动一位
+            #    这实现了你的 "把smallest_node这个节点进行移动"
+            lists[smallest_node_index] = lists[smallest_node_index].next
+          
+        return head.next
+```
+
 
 ...
 
@@ -505,6 +575,10 @@ Two Pointer方法非常巧妙，和22. Generate Parentheses中的使用左右cou
 ```
 
 【括号系列第四题】下一道题：301. Remove Invalid Parentheses
+
+#### 33. Search in Rotated Sorted Array
+
+相比于153，现在不仅要判断是否在哪里卡断，还要判断target的位置。判断逻辑升级为：先判断一个区间（比如左区间）是否是有序的，如果是，那么判断是否在左区间；如果不是，说明右区间是有序的，那么就在右区间里判断是否有target。
 
 ...
 
@@ -2424,6 +2498,16 @@ return next(iter(s))
 
 ...
 
+#### 138. Copy List with Random Pointer
+
+这道题有两个方法：
+
+1. 最常见的，预设一个初始值为{None:None}的hashmap，预设这个初始值是防止cur.next为None的情况，会导致找不到None这个节点的问题。
+2. 不创建新的hashmap，空间复杂度为O(1)，在每个node后面创建新node，建立好映射关系后再拆开。
+
+
+...
+
 #### 139. ※ Word Break (Mark)
 
 这道题乍一看没啥难的，结果提交了三次都Fail。最后发现测例子中有类似"cat", "cats"这种细微区别的子单词。因此这道题显然不能用常规的set解法，因为set一般搭配贪心策略，只能对当下的单词和字符进行处置，而无法处理cat, cats；and, sand这种相近单词做出有效区分。显然，对于这种出现cats的时候需要同时考虑cat或者cats的情况，**我们需要考虑到未来的分布，这种情况下要么是回溯，要么是动态规划。**
@@ -2455,7 +2539,7 @@ class Solution:
             for end_index in range(start_index, len(s)):
                 # 截取当前的单词
                 current_word = s[start_index : end_index + 1]
-      
+    
                 # 如果这个单词在字典里
                 if current_word in word_set:
                     # 就继续对剩余部分进行回溯
@@ -2513,7 +2597,7 @@ class Solution:
                     dp[i] = True
                     # 找到一种方法即可，跳出内层循环
                     break
-            
+          
         # 返回整个字符串的拆分结果
         return dp[n]
 ```
@@ -2584,7 +2668,114 @@ class Solution:
 
 ...
 
+#### 141. Linked List Cycle
+
+这道题引申出了一个非常经典的算法：弗洛伊德龟兔赛跑双指针法。双指针不仅可以找到是否有cycle，还能找到cycle的入口和cycle的长度。
+
+#### 142. Linked List Cycle II
+
+这道题用的还是141的弗洛伊德龟兔赛跑双指针。
+
+```python
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def detectCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        slow, fast = head, head
+
+        # 步骤 1: 判断是否有环，并找到相遇点
+        # fast 走两步, slow 走一步
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if slow == fast:
+                # 找到相遇点，跳出循环
+                break
+        else:
+            # 如果循环正常结束 (不是 durch break)，说明 fast 走到了链表末尾
+            # 这意味着链表无环
+            return None
+
+        # 步骤 2: 找到环的入口
+        # 将一个指针（比如 slow）重置回头节点
+        slow = head
+        # 两个指针都以相同速度（一步）前进，直到它们再次相遇
+        # 它们再次相遇的节点就是环的入口
+        while slow != fast:
+            slow = slow.next
+            fast = fast.next
+    
+        return slow
+```
+
+为什么当他们相遇后，我们把一个指针放回起点 (`head`)，然后两个指针都用慢速（每次 1 步）前进，再次相遇的地方就一定是环的入口呢？
+
+我们来做一点简单的数学分析。
+
+**设几个变量：**
+
+* `L`：从 **起点 (`head`)** 到 **环入口** 的距离。
+* `C`：**环的周长** (Cycle)。
+* `k`：从 **环入口** 到 **相遇点** 的距离。
+
+**分析相遇时两个指针走过的路程：**
+
+1. **慢指针 `slow` 走过的路程** ：
+   它先走了 `L` 距离到达环入口，然后在环里又走了 `k` 距离到达相遇点。
+   所以，`路程_slow = L + k`
+2. **快指针 `fast` 走过的路程** ：
+   它也走了 `L` 距离到达环入口，然后在环里追上 `slow`。因为它速度是 `slow` 的两倍，它可能已经在环里跑了 `n` 圈了。
+   所以，`路程_fast = L + k + n * C` (这里的 `n` 是 `fast` 比 `slow` 多跑的圈数，`n >= 1`)
+
+**建立两个路程之间的关系：**
+
+因为 `fast` 的速度是 `slow` 的两倍，所以 `fast` 走过的路程也是 `slow` 的两倍。
+`路程_fast = 2 * 路程_slow`
+
+**推导神奇的公式：**
+
+现在我们把上面的公式代入这个关系：
+`L + k + n * C = 2 * (L + k)`
+
+展开右边：
+`L + k + n * C = 2L + 2k`
+
+两边都减去 `L + k`：
+`n * C = L + k`
+
+**现在，把这个公式变形一下，这是最关键的一步！**
+`L = n * C - k`
+
+这个公式可能还不够直观，我们再变一下形：
+`L = (n - 1) * C + (C - k)`
+
+**解读公式 `L = (n - 1) * C + (C - k)`：**
+
+这个公式告诉我们一个惊人的事实：
+
+* **`L`** ：是从 **起点 (`head`)** 到 **环入口** 的距离。
+* **`(C - k)`** ：是从 **相遇点** 继续往前走，回到 **环入口** 的距离。（因为环周长是 `C`，从入口到相遇点是 `k`）。
+
+所以，这个公式的物理意义是：
+**从【起点】走到【环入口】的距离，等于 从【相遇点】走到【环入口】的距离，可能再加上 `n-1` 圈环的长度。**
+
 ...
+
+#### 143. Reorder List
+
+这道题本质上是三道简单题组合在了一起：
+
+1. 用快慢针找到linked list的中点
+2. reverse下半部分（Reverse a linked list）
+3. 合并上半部分和reverse后的先办部分（Merge linked lists）
 
 ...
 
@@ -2593,6 +2784,104 @@ class Solution:
 数据结构：双向链表 + HashMap(Node作为值)
 
 面试中推荐手写链表，这样比较清晰一点
+
+最佳实践：
+
+```python
+# 1. 修正 Node 类，让它同时存储 key 和 value
+class Node:
+    def __init__(self, key, val):
+        self.key = key
+        self.val = val
+        self.next = None
+        self.prev = None
+
+class LRUCache(object):
+
+    def __init__(self, capacity):
+        """
+        :type capacity: int
+        """
+        self.capacity = capacity
+        self.hashmap = {} # 正常的空字典即可
+      
+        # 2. 正确初始化哨兵节点，并把它们连接起来
+        # self.head 是最“新”端，self.tail 是最“旧”端
+        self.head = Node(None, None) 
+        self.tail = Node(None, None)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    # --- 内部辅助方法，让代码更清晰 ---
+    def _move_to_head(self, node):
+        """将一个已存在的节点移动到链表头部"""
+        # a. 先将node从当前位置断开
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        # b. 再将node插入到head之后
+        self._add_to_head(node)
+
+    def _add_to_head(self, node):
+        """将一个新节点添加到链表头部"""
+        # head <-> node <-> head.next
+        node.next = self.head.next
+        self.head.next.prev = node
+        self.head.next = node
+        node.prev = self.head
+  
+    def _remove_tail(self):
+        """移除链表的尾部节点（最久未使用的）"""
+        # tail_node 就是实际上的最后一个节点
+        tail_node = self.tail.prev
+        # 从链中断开它
+        tail_node.prev.next = self.tail
+        self.tail.prev = tail_node.prev
+        return tail_node
+
+    # --- 公共API方法 ---
+    def get(self, key):
+        """
+        :type key: int
+        :rtype: int
+        """
+        if key not in self.hashmap:
+            return -1
+      
+        node = self.hashmap[key]
+        # 3. get操作的核心：将被访问的节点移动到链表头部
+        self._move_to_head(node)
+        return node.val
+
+    def put(self, key, value):
+        """
+        :type key: int
+        :type value: int
+        :rtype: None
+        """
+        # 4. 修正 put 的逻辑
+        if key in self.hashmap:
+            # key已存在：更新值，并移动到头部
+            node = self.hashmap[key]
+            node.val = value
+            self._move_to_head(node)
+        else:
+            # key不存在：创建新节点
+            new_node = Node(key, value)
+            self.hashmap[key] = new_node # 忘记的步骤：添加到哈希表
+            self._add_to_head(new_node)
+          
+            # 检查容量
+            if len(self.hashmap) > self.capacity:
+                # 容量超限：淘汰最末尾的节点
+                removed_node = self._remove_tail()
+                # 忘记的步骤：从哈希表中也删除它
+                del self.hashmap[removed_node.key] 
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
+```
 
 ...
 
@@ -2689,7 +2978,7 @@ return nums[left]
 class Solution(object):
     def findMin(self, nums):
         left, right = 0, len(nums) - 1
-      
+    
         # =================================================================
         # 1. 为什么循环条件是 left < right，而不是 left <= right?
         # =================================================================
@@ -2702,7 +2991,7 @@ class Solution(object):
         # 导致无限循环。
         while left < right:
             mid = left + (right - left) // 2
-          
+        
             # =================================================================
             # 2. 为什么用 nums[mid] 和 nums[right] 比较？
             # =================================================================
@@ -2738,7 +3027,7 @@ class Solution(object):
                 # 因此，我们将搜索区间的右边界收缩到 mid 的位置，即 `right = mid`，
                 # 从而保留 nums[mid] 这个潜在的答案。
                 right = mid
-              
+            
         # 循环结束时，left 和 right 相遇在同一点，这个点就是整个数组的最小值。
         return nums[left]
 ```
@@ -3137,6 +3426,112 @@ class Solution(object):
 ```
 
 ...
+
+#### 206. Reverse Linked List
+
+这是一道教学题，用来学习/复习Linked List的知识点。那我们就来一起复习一下吧：
+
+**链表的核心知识点**
+
+链表是一种线性数据结构，与数组不同，它的元素在内存中不是连续存储的。每个元素（称为 **节点 Node** ）包含两部分：
+
+* **数据（Data）** : 存储节点的值。
+* **指针（Pointer/Next）** : 指向下一个节点的内存地址。
+
+**关键概念:**
+
+* **头节点（Head）** : 链表的第一个节点，是访问链表中所有节点的入口。
+* **尾节点（Tail）** : 链表的最后一个节点，其指针通常指向 `null` 或 `None`，表示链表的结束。
+* **单向链表（Singly Linked List）** : 每个节点只有一个指向下一个节点的指针。
+* **双向链表（Doubly Linked List）** : 每个节点有两个指针，一个指向下一个节点，一个指向上一个节点。
+* **循环链表（Circular Linked List）** : 尾节点的指针指向头节点，形成一个环。
+
+**与数组的对比:**
+
+| 特性                | 数组 (Array)                | 链表 (Linked List)          |
+| ------------------- | --------------------------- | --------------------------- |
+| **内存分配**  | 连续的内存空间              | 非连续的内存空间            |
+| **大小**      | 固定大小                    | 动态大小，可随时增删        |
+| **访问元素**  | 通过索引随机访问 (O(1))     | 只能从头节点顺序访问 (O(n)) |
+| **插入/删除** | 效率低，需要移动元素 (O(n)) | 效率高，只需修改指针 (O(1)) |
+
+**反转链表（Reverse Linked List）**
+
+反转链表是一个经典的链表问题，目标是将一个给定的单向链表的方向反转。例如，将 `1 -> 2 -> 3 -> 4 -> 5 -> null` 反转为 `5 -> 4 -> 3 -> 2 -> 1 -> null`。
+
+下面我们以**迭代法**为例，讲解其思路过程：
+
+**核心思路：**
+
+我们需要在遍历原始链表的过程中，逐个将节点的指针方向反转。为了实现这一点，我们需要三个指针来辅助操作：
+
+1. `prev` (previous): 指向当前节点的前一个节点。初始时，头节点的前一个节点是 `null`。
+2. `curr` (current): 指向当前正在处理的节点。初始时，指向头节点 `head`。
+3. `next` (next): 指向当前节点的下一个节点。用于在反转当前节点的指针后，还能找到原始链表的下一个节点。
+
+**步骤详解：**
+
+假设我们有链表：`1 -> 2 -> 3 -> null`
+
+1. **初始化:**
+
+   * `prev = null`
+   * `curr = 1`
+   * `next = null`
+
+   **状态:**
+
+   ```
+   prev  curr  next
+   null   1  ->  2  ->  3  -> null
+   ```
+2. **开始循环 (当 `curr` 不为 `null` 时):**
+
+   * **第一次迭代:**
+
+     * `next = curr.next` (保存 `curr` 的下一个节点，即 `2`)
+     * `curr.next = prev` (将 `curr` 的 `next` 指针指向 `prev`，即 `1 -> null`)
+     * `prev = curr` (将 `prev` 移动到 `curr` 的位置，即 `prev = 1`)
+     * `curr = next` (将 `curr` 移动到下一个节点，即 `curr = 2`)
+
+     **状态:**
+
+     ```
+           prev  curr  next
+     null <- 1     2  ->  3  -> null
+     ```
+   * **第二次迭代:**
+
+     * `next = curr.next` (保存 `curr` 的下一个节点，即 `3`)
+     * `curr.next = prev` (将 `curr` 的 `next` 指针指向 `prev`，即 `2 -> 1`)
+     * `prev = curr` (将 `prev` 移动到 `curr` 的位置，即 `prev = 2`)
+     * `curr = next` (将 `curr` 移动到下一个节点，即 `curr = 3`)
+
+     **状态:**
+
+     ```
+                 prev  curr  next
+     null <- 1 <- 2     3  -> null
+     ```
+   * **第三次迭代:**
+
+     * `next = curr.next` (保存 `curr` 的下一个节点，即 `null`)
+     * `curr.next = prev` (将 `curr` 的 `next` 指针指向 `prev`，即 `3 -> 2`)
+     * `prev = curr` (将 `prev` 移动到 `curr` 的位置，即 `prev = 3`)
+     * `curr = next` (将 `curr` 移动到下一个节点，即 `curr = null`)
+
+     **状态:**
+
+     ```
+                       prev  curr  next
+     null <- 1 <- 2 <- 3    null
+     ```
+3. **循环结束 (当 `curr` 为 `null` 时):**
+   此时，`prev` 指向的就是反转后链表的头节点 `3`。我们返回 `prev` 即可。
+
+**最终结果:** `3 -> 2 -> 1 -> null`
+
+反转完成！
 
 ...
 
@@ -3741,6 +4136,8 @@ But, to avoid any possibility that the string is contained in the original strin
 * 记录list[i]>=i+1的数量，即h-index
 
 ...
+
+#### 287. Find the Duplicate Number
 
 ...
 

@@ -25,6 +25,7 @@ nav:
   - INTRO: index.md
   - Common:
     - 算法宝典: 算法宝典.md
+    - Data Structures: data_structures.md
     - Leetcode 500: Leetcode/leetcode_500.md
     - Leetcode 1000: Leetcode/leetcode_1000.md
   - Machine Learning:
