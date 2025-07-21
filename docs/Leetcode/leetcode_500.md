@@ -393,35 +393,34 @@ class Solution(object):
         # 创建一个虚拟头节点，简化代码
         head = ListNode()
         current = head
-      
+    
         while True:
             smallest_node_val = float('inf')
             smallest_node_index = -1
-          
+        
             # 1. 遍历所有链表的当前头节点，找到最小的那个
             #    这个 for 循环实现了你的 "每一轮要把ls中的所有的node拿出来作比较！" 的思路
             for i in range(len(lists)):
                 if lists[i] and lists[i].val < smallest_node_val:
                     smallest_node_val = lists[i].val
                     smallest_node_index = i
-          
+        
             # 2. 如果 smallest_node_index 仍然是 -1，说明所有链表都已经是 None 了
             #    这实现了你的 "直到lists中所有元素都为空" 的退出条件
             if smallest_node_index == -1:
                 break
-              
+            
             # 3. 将找到的最小节点接到结果链表的末尾
             #    这实现了你的 "把smallest_node这个节点放到cur_new的下一个上"
             current.next = lists[smallest_node_index]
             current = current.next
-          
+        
             # 4. 将那个链表的头指针向后移动一位
             #    这实现了你的 "把smallest_node这个节点进行移动"
             lists[smallest_node_index] = lists[smallest_node_index].next
-          
+        
         return head.next
 ```
-
 
 ...
 
@@ -2505,7 +2504,6 @@ return next(iter(s))
 1. 最常见的，预设一个初始值为{None:None}的hashmap，预设这个初始值是防止cur.next为None的情况，会导致找不到None这个节点的问题。
 2. 不创建新的hashmap，空间复杂度为O(1)，在每个node后面创建新node，建立好映射关系后再拆开。
 
-
 ...
 
 #### 139. ※ Word Break (Mark)
@@ -2539,7 +2537,7 @@ class Solution:
             for end_index in range(start_index, len(s)):
                 # 截取当前的单词
                 current_word = s[start_index : end_index + 1]
-    
+  
                 # 如果这个单词在字典里
                 if current_word in word_set:
                     # 就继续对剩余部分进行回溯
@@ -2597,7 +2595,7 @@ class Solution:
                     dp[i] = True
                     # 找到一种方法即可，跳出内层循环
                     break
-          
+        
         # 返回整个字符串的拆分结果
         return dp[n]
 ```
@@ -2712,7 +2710,7 @@ class Solution(object):
         while slow != fast:
             slow = slow.next
             fast = fast.next
-    
+  
         return slow
 ```
 
@@ -2804,7 +2802,7 @@ class LRUCache(object):
         """
         self.capacity = capacity
         self.hashmap = {} # 正常的空字典即可
-      
+    
         # 2. 正确初始化哨兵节点，并把它们连接起来
         # self.head 是最“新”端，self.tail 是最“旧”端
         self.head = Node(None, None) 
@@ -2846,7 +2844,7 @@ class LRUCache(object):
         """
         if key not in self.hashmap:
             return -1
-      
+    
         node = self.hashmap[key]
         # 3. get操作的核心：将被访问的节点移动到链表头部
         self._move_to_head(node)
@@ -2869,7 +2867,7 @@ class LRUCache(object):
             new_node = Node(key, value)
             self.hashmap[key] = new_node # 忘记的步骤：添加到哈希表
             self._add_to_head(new_node)
-          
+        
             # 检查容量
             if len(self.hashmap) > self.capacity:
                 # 容量超限：淘汰最末尾的节点
@@ -2978,7 +2976,7 @@ return nums[left]
 class Solution(object):
     def findMin(self, nums):
         left, right = 0, len(nums) - 1
-    
+  
         # =================================================================
         # 1. 为什么循环条件是 left < right，而不是 left <= right?
         # =================================================================
@@ -2991,7 +2989,7 @@ class Solution(object):
         # 导致无限循环。
         while left < right:
             mid = left + (right - left) // 2
-        
+      
             # =================================================================
             # 2. 为什么用 nums[mid] 和 nums[right] 比较？
             # =================================================================
@@ -3027,7 +3025,7 @@ class Solution(object):
                 # 因此，我们将搜索区间的右边界收缩到 mid 的位置，即 `right = mid`，
                 # 从而保留 nums[mid] 这个潜在的答案。
                 right = mid
-            
+          
         # 循环结束时，left 和 right 相遇在同一点，这个点就是整个数组的最小值。
         return nums[left]
 ```
