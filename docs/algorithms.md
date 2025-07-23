@@ -2,6 +2,8 @@
 
 注意：不要修改标题名称，否则会导致很多地方的链接失效。
 
+本页面主要介绍的是leetcode和常规算法。中高阶算法见对应的词条。
+
 ## Sorting
 
 好的，没有问题。下面我将对每一个主要的排序算法进行独立的、详细的介绍，并在最后给出一个整体的梳理和总结，帮助你形成一个完整清晰的知识体系。
@@ -408,7 +410,7 @@ class Solution(object):
     def sortArray(self, nums):
         """
         排序数组的主入口方法。
-    
+  
         :type nums: List[int]
         :rtype: List[int]
         """
@@ -416,12 +418,12 @@ class Solution(object):
         # 处理空列表或 None 的边界情况。
         if not nums:
             return []
-    
+  
         # --- 主排序逻辑调用 ---
         # 调用内部的 _sort 方法，对整个数组进行排序。
         # 初始范围是从索引 0 到 len(nums) - 1。
         self._sort(nums, 0, len(nums) - 1)
-    
+  
         # --- 返回结果 ---
         # 排序是“原地”进行的，直接返回修改后的 nums 列表。
         return nums
@@ -450,7 +452,7 @@ class Solution(object):
             # 对“较短”的那个区间进行递归调用，然后通过修改 low 或 high 的值，
             # 让 while 循环在下一次迭代中处理“较长”的那个区间。
             # 这确保了递归深度最多为 O(log n)。
-        
+    
             # 左区间长度: (lt - 1) - low + 1 = lt - low
             # 右区间长度: high - gt + 1
             if (lt - low) < (high - gt):
@@ -468,7 +470,7 @@ class Solution(object):
         """
         三路分区实现 (基于 Dijkstra 的荷兰国旗问题解法)。
         它将数组分为三部分：小于、等于、大于 pivot。
-    
+  
         返回值:
             lt, gt: 分别是“等于 pivot”区间的开始和结束索引的后一个位置。
                     即 arr[lt...gt-1] == pivot
@@ -479,7 +481,7 @@ class Solution(object):
         rand_idx = random.randint(low, high)
         arr[low], arr[rand_idx] = arr[rand_idx], arr[low]
         pivot = arr[low]
-    
+  
         # --- 指针初始化 ---
         # Invariants (循环不变量):
         # arr[low...lt-1]      中的元素都 < pivot
@@ -508,12 +510,12 @@ class Solution(object):
             else: # arr[i] == pivot
                 # 当前元素等于 pivot，不做任何交换，直接移动 i 指针
                 i += 1
-    
+  
         # --- 将 Pivot 放到最终位置 ---
         # 循环结束后，lt 指向“小于”区间的最后一个元素。
         # 将位于 low 的 pivot 和 arr[lt] 交换，这样 pivot 就来到了“等于”区间的开头。
         arr[low], arr[lt] = arr[lt], arr[low]
-    
+  
         # --- 返回分区边界 ---
         # 此时，我们知道：
         # 小于 pivot 的区间是 [low, lt-1]
@@ -909,3 +911,229 @@ DFS 的清晰，不在于执行步骤，而在于 **它和问题本身的逻辑�
     2. 它们的左子树必须相同。
     3. 它们的右子树也必须相同。
   * 那怎么判断它们的左子树是否相同呢？ **直接信任并使用我们定好的“契约”** ！调用 `isSameTree(p.left, q.left)` 就行了。右子树同理。
+
+## Math Algorithms
+
+### Hash Function
+
+常见的hash function：
+
+#### Int Hash
+
+整数的hash function一般就是自定义一个长度的hashtable，比如1000，然后所有的整数int就整除1000，结果就是在这个list里头的index。
+
+在python中，负数也可以直接取模运算。
+
+hash function与完整实现的python代码示例：
+
+```python
+class SimpleHashTable:
+    def __init__(self, capacity=10):
+        """
+        初始化哈希表。
+        capacity: 底层数组（桶）的大小。建议使用素数以获得更好的分布，但这里简化为10。
+        """
+        self.capacity = capacity
+        # 初始化一个列表作为我们的“桶”。
+        # 每个桶可以是一个空列表，用于存储链表（处理冲突）。
+        self.buckets = [[] for _ in range(self.capacity)]
+        self.size = 0 # 跟踪哈希表中实际存储的键值对数量
+
+    def _hash_function(self, key):
+        """
+        内部哈希函数，将键转换为整数哈希值。
+        这里使用Python内置的hash()函数，因为它已经很高效和通用。
+        """
+        return hash(key)
+
+    def _get_index(self, hash_value):
+        """
+        将哈希值映射到底层数组的索引。
+        使用取模运算确保索引在 [0, capacity-1] 范围内。
+        """
+        return hash_value % self.capacity
+
+    def put(self, key, value):
+        """
+        向哈希表插入一个键值对。
+        如果键已存在，则更新其值。
+        """
+        hash_value = self._hash_function(key)
+        index = self._get_index(hash_value)
+    
+        bucket = self.buckets[index] # 获取对应的桶（链表）
+
+        # 遍历桶中的键值对，检查键是否已存在
+        for i, (existing_key, existing_value) in enumerate(bucket):
+            if existing_key == key:
+                # 键已存在，更新其值
+                bucket[i] = (key, value)
+                print(f"键 '{key}' 已存在，值已更新为: {value}")
+                return
+
+        # 键不存在，添加到桶的链表末尾
+        bucket.append((key, value))
+        self.size += 1
+        print(f"插入: ('{key}', {value}) 到索引 {index}")
+
+    def get(self, key):
+        """
+        从哈希表获取一个键对应的值。
+        如果键不存在，返回 None。
+        """
+        hash_value = self._hash_function(key)
+        index = self._get_index(hash_value)
+    
+        bucket = self.buckets[index]
+
+        # 遍历桶中的键值对，查找匹配的键
+        for existing_key, existing_value in bucket:
+            if existing_key == key:
+                print(f"找到: '{key}' 对应的值是: {existing_value} (在索引 {index})")
+                return existing_value
+    
+        print(f"未找到键: '{key}'")
+        return None # 键不存在
+
+    def delete(self, key):
+        """
+        从哈希表删除一个键值对。
+        """
+        hash_value = self._hash_function(key)
+        index = self._get_index(hash_value)
+    
+        bucket = self.buckets[index]
+
+        # 遍历桶中的键值对，查找并删除
+        for i, (existing_key, existing_value) in enumerate(bucket):
+            if existing_key == key:
+                del bucket[i]
+                self.size -= 1
+                print(f"删除: ('{key}', {existing_value}) 从索引 {index}")
+                return True # 删除成功
+    
+        print(f"删除失败: 未找到键 '{key}'")
+        return False # 删除失败
+
+    def __len__(self):
+        """返回哈希表中键值对的数量"""
+        return self.size
+
+    def __str__(self):
+        """打印哈希表的当前状态"""
+        items = []
+        for i, bucket in enumerate(self.buckets):
+            if bucket:
+                items.append(f"Bucket {i}: {bucket}")
+        return "\n".join(items) if items else "哈希表为空。"
+```
+
+...
+
+使用示例：
+
+```python
+# 创建一个容量为5的哈希表进行测试
+my_hash_table = SimpleHashTable(capacity=5) 
+
+# 插入一些键值对
+my_hash_table.put("apple", 10)
+my_hash_table.put("banana", 20)
+my_hash_table.put("cherry", 30)
+my_hash_table.put("date", 40)
+my_hash_table.put("elderberry", 50) # 可能会与之前的键发生哈希冲突，但会被链表处理
+my_hash_table.put("fig", 60) # 再次插入，看如何处理冲突
+
+print("\n--- 哈希表当前状态 ---")
+print(my_hash_table)
+print(f"哈希表大小: {len(my_hash_table)}")
+
+print("\n--- 获取值 ---")
+my_hash_table.get("banana")
+my_hash_table.get("apple")
+my_hash_table.get("grape") # 不存在的键
+my_hash_table.get("elderberry")
+
+print("\n--- 更新值 ---")
+my_hash_table.put("apple", 100) # 更新'apple'的值
+my_hash_table.get("apple")
+
+print("\n--- 删除值 ---")
+my_hash_table.delete("banana")
+my_hash_table.delete("grape") # 不存在的键
+my_hash_table.get("banana") # 确认是否已删除
+
+print("\n--- 最终哈希表状态 ---")
+print(my_hash_table)
+print(f"最终哈希表大小: {len(my_hash_table)}")
+```
+
+...
+
+...
+
+#### String Hash
+
+字符串一般用乘法哈希法：
+
+1. **初始值：** 从一个起始哈希值（通常为 `0`）开始。
+2. **迭代：** 遍历字符串中的每一个字符。
+3. **累积：** 对于每个字符，将其 ASCII 值与一个选定的素数（最常用的是  **31** ）相乘，然后将结果加到当前的哈希值上。这个素数有助于将哈希值更均匀地分布，减少冲突。
+4. **最终值：** 所有字符处理完毕后，得到的累积值就是最终的哈希值。
+
+...
+
+其hash function如下：
+
+```python
+def custom_string_hash(s):
+    """
+    一个简单的自定义字符串哈希函数，基于乘法哈希法。
+  
+    参数:
+        s (str): 需要计算哈希值的字符串。
+    
+    返回:
+        int: 计算出的整数哈希值。
+    """
+  
+    hash_value = 0
+    prime = 31 # 一个常用的素数，有助于减少冲突并均匀分布哈希值
+
+    for char in s:
+        # 将当前哈希值乘以素数，然后加上字符的ASCII值。
+        # 这种累积方式确保了字符的顺序和内容都会影响最终的哈希值。
+        hash_value = (hash_value * prime) + ord(char)
+    
+        # 注意：在实际更复杂的哈希函数中，为了防止整数溢出（在某些语言中）
+        # 或者为了将哈希值控制在特定范围内，可能会引入位操作或取模。
+        # Python 的整数可以任意大，所以这里不需要特殊处理溢出，
+        # 但如果要在哈希表中使用，最终仍然会进行取模运算以映射到数组索引。
+    
+    return hash_value
+```
+
+...
+
+...
+
+为什么选择 31？
+
+* **素数特性：** 素数有助于减少哈希冲突。当与各种字符的 ASCII 值相乘时，它能更好地“搅动”哈希值，使其更均匀地分布。
+* **性能优化：** 在一些底层语言中，乘以 31 可以被编译器优化为 `(x << 5) - x`，这比一般的乘法运算更快。虽然 Python 解释器不一定会进行这种微优化，但这个数字已经成为一种行业惯例。
+
+这个 `custom_string_hash` 函数虽然简单，但它很好地演示了字符串哈希函数的核心思想：通过迭代和累积每个字符的信息，生成一个能够代表整个字符串的、唯一性较好的整数值。在实际的哈希表使用中，这个结果还会再经过**取模运算**来映射到底层数组的索引。
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
