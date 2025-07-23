@@ -6,6 +6,110 @@
 
 ...
 
+...
+
+#### 543. Diameter of Binary Tree
+
+对于树中的 **任何一个节点** ，我们可以思考：
+
+如果最长路径**经过**我这个节点，那么它的长度就是 `我的左子树深度 + 我的右子树深度`。
+
+但是，最长路径也可能**不经过**我，而是完全在我的左子树里，或者完全在我的右子树里。
+
+所以，全局的直径就是这三者中的最大值：
+
+* `max(左子树的直径, 右子树的直径, 穿过当前根的路径(左深度+右深度))`
+
+这个思路虽然正确，但实现起来有点复杂。一个更优雅、更高效的实现是使用一个辅助函数，通常是计算**深度**的函数，然后在计算深度的“途中”，顺便把直径给算出来。
+
+#### **“计算深度，顺便求直径” 的算法**
+
+1. 我们需要一个全局变量（或者在类中用 `self.variable`）来记录我们目前找到的“最大直径”，我们叫它 `max_diameter`，初始化为0。
+2. 我们写一个辅助函数 `depth(node)`，这个函数的**主要任务**是返回以 `node` 为根的子树的 **最大深度** 。
+3. 在这个 `depth` 函数内部，我们执行以下操作：
+   * **递归出口** ：如果 `node` 是空，深度为0，直接 `return 0`。
+   * **递归计算** ：分别递归调用 `depth(node.left)` 得到 `左深度`，`depth(node.right)` 得到 `右深度`。
+   * **“顺便”更新直径** ：在当前这个 `node`，穿过它的最长路径长度是 `左深度 + 右深度`。我们用这个值和全局的 `max_diameter` “打个擂台”，把更大的那个存入 `max_diameter`。即 `self.max_diameter = max(self.max_diameter, 左深度 + 右深度)`。
+   * **返回本职工作的结果** ：`depth` 函数的本职工作是返回深度，所以它返回 `1 + max(左深度, 右深度)`。
+4. 主函数 `diameterOfBinaryTree` 里，我们先初始化 `self.max_diameter = 0`，然后调用 `depth(root)` 启动整个过程，最后返回 `self.max_diameter` 即可。
+
+这个过程本质上是一个 **后序遍历** ：我们总是先处理完左、右子树（计算出它们的深度），然后才在当前节点进行操作（更新直径，并计算自己的深度）。
+
+### 正确的 Python 代码实现
+
+**Python**
+
+```
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution(object):
+    def diameterOfBinaryTree(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: int
+        """
+        # 使用一个实例变量来充当全局变量，记录遍历过程中发现的最大直径
+        self.max_diameter = 0
+    
+        # 调用辅助函数来启动深度计算和直径更新的过程
+        self.depth(root)
+    
+        # 整个树遍历完后，self.max_diameter 就保存了最终答案
+        return self.max_diameter
+
+    def depth(self, node):
+        """
+        这个辅助函数有两个使命：
+        1. [返回值]：计算并返回以 `node` 为根的子树的最大深度。
+        2. [副作用]：在计算深度的过程中，顺便更新 `self.max_diameter`。
+        """
+        # 递归的出口：空节点的深度为-1（因为我们计算的是边的数量）。
+        # 如果计算节点数，则返回0。这里我们用边的数量，所以左深度+右深度正好是路径长度。
+        if not node:
+            return -1
+    
+        # 递归地计算左、右子树的深度
+        left_depth = self.depth(node.left)
+        right_depth = self.depth(node.right)
+    
+        # “顺便”更新最大直径：
+        # 穿过当前 node 的最长路径 = (1+左深度) + (1+右深度) = 2 + left_depth + right_depth
+        # 这里的深度是边的数量。
+        # 如果深度是节点数，则为 left_depth + right_depth
+        # LeetCode定义为边的数量，所以是 left_depth + right_depth + 2
+        # (从左最深叶子到左孩子是left_depth+1条边，右边同理)
+        diameter_at_this_node = (left_depth + 1) + (right_depth + 1)
+        self.max_diameter = max(self.max_diameter, diameter_at_this_node)
+    
+        # [返回值] 完成本职工作：返回当前节点的深度
+        return 1 + max(left_depth, right_depth)
+
+```
+
+ **代码修正与说明** ：LeetCode对直径的定义是“路径上边的数量”。
+
+* 一个节点的 **深度** （或高度）通常也用**边的数量**来定义。一个叶子节点的深度是0，空节点是-1。
+* 穿过一个节点的最长路径 = `左子树的高度` + `右子树的高度` + 2 (连接根与左右子树的两条边)。
+* 我的 `depth` 函数返回的是高度（从该节点到最远叶子的边数）。所以 `left_depth` 和 `right_depth` 就是左右子树的高度。
+* 因此，`diameter_at_this_node` 的计算 `(left_depth + 1) + (right_depth + 1)` 是完全正确的。
+
+...
+
+#### 543S. Find the path of Largest Diameter (Mark)
+
+不仅找到543中要求的最大diameter，还要把这个path输出出来。
+
+...
+
+...
+
+...
+
 ## 551 - 600
 
 ...
@@ -68,6 +172,10 @@ traverse 列表：
 
 ...
 
+#### 572. Subtree of Another Tree
+
+基础Tree题
+
 ...
 
 ...
@@ -82,6 +190,20 @@ traverse 列表：
 
 ...
 
+...
+
+...
+
+#### 662. Maximum Width of Binary Tree
+
+这道题并非简单的找到最大宽度是多少，还要找出最大宽度的那一行从最左边到最右边的所有元素（包含中间的None）。详细教程见数据结构Tree中的相关章节。
+
+#### 662S. Path of Max Width (Mark)
+
+在662的基础上，把最大宽度的那一行的元素（包含None）以list形式return。
+
+...
+
 #### 692.※ Top K Frequent Words
 
 这道题关键点在于构建min-heap以及理解python中的排序机制。
@@ -90,7 +212,15 @@ traverse 列表：
 
 ...
 
+#### 700. 基础题
+
+略
+
 ## 701 - 750
+
+#### 701. Insert into BST
+
+基础题，略。
 
 ...
 

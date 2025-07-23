@@ -2,6 +2,1239 @@
 
 注意：不要修改标题名称，否则会导致很多地方的链接失效。
 
+## Array
+
+...
+
+## Dynamic List
+
+...
+
+## Linked List
+
+...
+
+## Stack
+
+...
+
 ## Queue and Deque
+
+...
+
+## Priority Queue
+
+...
+
+## Set & Map
+
+...
+
+..
+
+## Tree
+
+...
+
+### Concept of Tree
+
+Tree是一种非线性的数据结构，由一系列节点Node和连接这些节点的边（Edge）组成。它被用来表示具有层级关系的数据。
+
+![1753119494657](image/data_structures/1753119494657.png)
+
+在一个tree中，核心术语包括：
+
+* Node：Tree的基本组成部分，每一个Node都包含一个数据值和指向其子节点的引用
+* Root：根节点，是整个Tree中唯一没有父节点的节点。
+* Edge: 连接parent node和child node的线
+* Parent: 父节点
+* Child: 子节点
+* Siblings: 拥有相同父节点的多个节点
+* Leaf Node: 没有任何子节点的节点
+* Internal Node: 至少有一个子节点的节点
+* Path: 从一个节点到另一个节点所经过的边的序列
+* Depth of a Node: 从root到该节点的路径长度。根节点的深度为0.
+* Height of a Tree: 所有节点中深度的最大值，即root到最远leaf node的路径长度。空tree的height一般记为-1.
+
+在python中，一般的tree通过以下方式实现：
+
+```python
+class TreeNode:
+    """
+    通用树的节点类
+    """
+    def __init__(self, value):
+        self.value = value  # 节点存储的值
+        self.children = []  # 一个列表，用来存储所有子节点对象
+
+    def add_child(self, child_node):
+        """
+        为当前节点添加一个子节点
+        """
+        # 确保传入的是TreeNode的实例
+        if isinstance(child_node, TreeNode):
+            self.children.append(child_node)
+        else:
+            # 如果传入的是值，则为其创建一个节点
+            self.children.append(TreeNode(child_node))
+
+    def __repr__(self, level=0):
+        """
+        一个辅助函数，用于美观地打印树的结构（递归实现）
+        """
+        # level参数用来控制缩进，表示当前节点的深度
+        ret = "  " * level + repr(self.value) + "\n"
+        for child in self.children:
+            ret += child.__repr__(level + 1)
+        return ret
+
+# --- 创建树 ---
+# 1. 创建根节点
+root = TreeNode("CEO")
+
+# 2. 创建第一层子节点 (VP)
+vp_eng = TreeNode("VP of Engineering")
+vp_mkt = TreeNode("VP of Marketing")
+
+# 3. 将VP节点加为CEO的子节点
+root.add_child(vp_eng)
+root.add_child(vp_mkt)
+
+# 4. 为VP of Engineering添加子节点 (Directors)
+dir_infra = TreeNode("Director of Infrastructure")
+dir_app = TreeNode("Director of Application")
+vp_eng.add_child(dir_infra)
+vp_eng.add_child(dir_app)
+
+# 5. 为Director of Infrastructure添加子节点 (Managers)
+#   这里我们直接传入值，让add_child方法自动创建节点
+dir_infra.add_child("Cloud Manager")
+dir_infra.add_child("Data Center Manager")
+
+# 6. 为VP of Marketing添加子节点
+vp_mkt.add_child("Director of Sales")
+
+
+# --- 打印树的结构 ---
+print(root)
+```
+
+最后print(root)的结果如下：
+
+```
+'CEO'
+  'VP of Engineering'
+    'Director of Infrastructure'
+      'Cloud Manager'
+      'Data Center Manager'
+    'Director of Application'
+  'VP of Marketing'
+    'Director of Sales'
+```
+
+...
+
+### Tree's Traversal
+
+对于通用树，最常见的遍历方式是**深度优先搜索 (DFS)** 和  **广度优先搜索 (BFS)** 。
+
+#### 1. BFS / Level-Order Traversal)
+
+BFS 按层级顺序访问节点，先访问第一层（根），再访问第二层的所有节点，以此类推。这通常需要借助一个**队列 (Queue)** 来实现。
+
+**Python**
+
+```
+from collections import deque
+
+def traverse_bfs(root_node):
+    """
+    使用BFS遍历树
+    """
+    if not root_node:
+        return
+
+    nodes_to_visit = deque([root_node]) # 使用双端队列，效率更高
+
+    while len(nodes_to_visit) > 0:
+        current_node = nodes_to_visit.popleft() # 从队列左边取出节点
+        print(current_node.value, end=" -> ")
+
+        # 将当前节点的所有子节点加入队列的右边
+        for child in current_node.children:
+            nodes_to_visit.append(child)
+
+# 使用上面创建的树进行BFS遍历
+print("BFS Traversal:")
+traverse_bfs(root)
+print("End")
+```
+
+**BFS 输出:**
+
+```
+BFS Traversal:
+CEO -> VP of Engineering -> VP of Marketing -> Director of Infrastructure -> Director of Application -> Director of Sales -> Cloud Manager -> Data Center Manager -> End
+```
+
+#### 2. DFS
+
+DFS 会尽可能深地探索树的分支。当节点的所有子树都访问完毕后，才回溯到父节点。DFS 通常使用**递归 (Recursion)** 或**栈 (Stack)** 来实现。
+
+递归实现非常自然和简洁。
+
+**Python**
+
+```
+def traverse_dfs(node):
+    """
+    使用DFS（前序遍历）递归遍历树
+    """
+    if not node:
+        return
+  
+    # 前序遍历：先访问当前节点
+    print(node.value, end=" -> ")
+
+    # 然后递归地访问每个子节点
+    for child in node.children:
+        traverse_dfs(child)
+  
+    # 如果是后序遍历，就把print语句放到for循环之后
+
+# 使用上面创建的树进行DFS遍历
+print("\nDFS (Pre-order) Traversal:")
+traverse_dfs(root)
+print("End")
+```
+
+**DFS 输出:**
+
+```
+DFS (Pre-order) Traversal:
+CEO -> VP of Engineering -> Director of Infrastructure -> Cloud Manager -> Data Center Manager -> Director of Application -> VP of Marketing -> Director of Sales -> End
+```
+
+...
+
+## Binary Tree
+
+Binary Tree虽然是一种General Tree，但是其应用范围非常之广，所以一般都单独作为一个大类目来讲。
+
+...
+
+### Types of Binary Trees
+
+...
+
+#### Full Binary Tree
+
+...
+
+#### Complete Binary Tree
+
+...
+
+#### Perfect Binary Tree
+
+...
+
+#### Balanced Binary Tree
+
+...
+
+#### Skewed Binary Tree
+
+...
+
+### Traversal
+
+...
+
+#### DFS
+
+DFS 的核心思想是“一条路走到黑，不撞南墙不回头”。它会尽可能深地探索树的分支。当一个节点的子树被完全访问完毕后，才会回溯到其父节点，探索其他分支。
+
+对于二叉树，根据访问**根节点**的时机不同，DFS 分为三种主要形式：
+
+1. **前序遍历 (Pre-order): 根 -> 左 -> 右**
+   * **访问顺序** ：先访问当前节点，然后递归地访问左子树，最后递归地访问右子树。
+   * **应用** ：常用于创建树的副本、序列化树。
+2. **中序遍历 (In-order): 左 -> 根 -> 右**
+   * **访问顺序** ：先递归地访问左子树，然后访问当前节点，最后递归地访问右子树。
+   * **应用** ：在二叉搜索树（BST）中，中序遍历会得到一个**有序**的序列。
+3. **后序遍历 (Post-order): 左 -> 右 -> 根**
+   * **访问顺序** ：先递归地访问左子树，然后递归地访问右子树，最后访问当前节点。
+   * **应用** ：常用于删除树（先删除子节点再删除父节点）、计算表达式树。
+
+**DFS 实现 (Python, 递归)**
+
+```python
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def dfs_traversal(root):
+    if not root:
+        return
+  
+    # 前序遍历 Pre-order
+    print(root.val) 
+    self.dfs_traversal(root.left)
+    self.dfs_traversal(root.right)
+  
+    # 中序遍历 In-order
+    self.dfs_traversal(root.left)
+    print(root.val)
+    self.dfs_traversal(root.right)
+
+    # 后序遍历 Post-order
+    dfs_traversal(root.left)
+    dfs_traversal(root.right)
+    print(root.val)
+```
+
+#### BFS
+
+BFS 的核心思想是“一层一层地访问”。它从根节点开始，先访问完第一层的所有节点，然后再访问第二层的所有节点，以此类推，像水波纹一样从中心向外扩散。
+
+* **实现方式** ：BFS 通常需要借助一个**队列 (Queue)** 来实现。
+* **访问顺序** ：也称为 **层序遍历 (Level-order Traversal)** 。
+
+**BFS 实现 (Python, 迭代)**
+
+```python
+from collections import deque
+
+def bfs_traversal(root):
+    if not root:
+        return
+  
+    queue = deque([root]) # 1. 初始化队列，放入根节点
+  
+    while queue: # 2. 当队列不为空时循环
+        node = queue.popleft() # 3. 从队列头部取出一个节点
+  
+        print(node.val, end=" -> ") # 4. 访问该节点
+  
+        # 5. 如果它有左孩子，将其加入队列尾部
+        if node.left:
+            queue.append(node.left)
+  
+        # 6. 如果它有右孩子，将其加入队列尾部
+        if node.right:
+            queue.append(node.right)
+    print("End")
+```
+
+...
+
+#### Max Depth
+
+最大深度是指从根节点到最远的叶子节点所经过的 **节点数量** （或边的数量+1）。这是一个典型的可以用 **DFS** 解决的问题。
+
+**思路** ：
+一棵树的最大深度，等于 `1` (当前节点本身) 加上其左、右子树中**较大的那个**深度。这是一个完美的递归定义。
+
+**实现 (Python, 递归)**
+
+```python
+def max_depth(root: TreeNode) -> int:
+    # Base Case: 如果节点为空，其深度为0
+    if not root:
+        return 0
+  
+    # 递归地计算左子树的深度
+    left_depth = max_depth(root.left)
+  
+    # 递归地计算右子树的深度
+    right_depth = max_depth(root.right)
+  
+    # 当前树的深度 = 1 + 左右子树深度的最大值
+    return 1 + max(left_depth, right_depth)
+```
+
+#### Max Width
+
+最大宽度是指在树的所有层级中，节点数量最多的那一层的节点数。这是一个典型的可以用 **BFS** 解决的问题，因为BFS天生就是按层处理的。
+
+**思路** ：
+使用BFS进行层序遍历。在遍历每一层时，记录下该层的节点数量，并与一个全局的最大宽度变量进行比较和更新。
+
+**实现 (Python, 迭代)**
+
+```python
+from collections import deque
+
+def max_width(root: TreeNode) -> int:
+    if not root:
+        return 0
+  
+    max_w = 0
+    queue = deque([root])
+  
+    while queue:
+        # 当前层的节点数量，也就是当前层的宽度
+        level_width = len(queue)
+  
+        # 更新最大宽度
+        max_w = max(max_w, level_width)
+  
+        # 遍历当前层的所有节点，并将它们的子节点加入队列
+        for _ in range(level_width):
+            node = queue.popleft()
+    
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        
+    return max_w
+```
+
+如果要找到最大宽度并记录内容，并且包含中间的None（leetcode662），需要对整个tree进行“编号”。用BFS遍历的时候，每一层的队列的第一个元素，一定是这一层最左边的元素；而队列的最后一个元素，一定是这一层最右边的元素。
+
+在binary tree中，所有的编号都是可以直接算出来的：
+
+* 根节点root的位置是0
+* 父节点的位置是 `i`
+  * 左孩子是 `2*i + 1`
+  * 右孩子是 `2*i + 2`
+
+...
+
+#### Max Diameter
+
+如果我们想找到整个Binary Tree中的最长路径，这个路径不一定是经过root的（可以想象这棵树非常不平衡，那么最长的路径可能在root的左边或者右边）
+
+如果直到如何求最大depth，那么max diameter这里首先要明白，diameter相当于是edge的数量。比如对于：[1, 2, 3]，假设2是parent而1和3是child，那么长度就是1-2-3共两条边，长度就是2.
+
+那么最长path就应该等于下列三者中最长的一个：
+
+* 经过当前node的最大path，即左孩子的深度+1+右孩子的深度+1。这里加的1就是node到左孩子或者右孩子的那条边。
+* 左子树中最大的path
+* 右子树中最大的path
+
+我们可以维护一个全局变量max_diameter，这样我们只需要traverse整个tree，并找到每一个node处的：
+
+* 经过当前node的最大path
+
+就可以找到整个tree中最大的diameter了。
+
+#### Check Same Tree
+
+DFS检查：
+
+```python
+class Solution(object):
+    def isSameTree(self, p, q):
+        # 1. 如果两个节点都是 None, 它们是相同的
+        if not p and not q:
+            return True
+        # 2. 如果只有一个是 None, 或者它们的值不同, 则不相同
+        if not p or not q or p.val != q.val:
+            return False
+  
+        # 3. 递归地检查左右子树
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+```
+
+BFS检查：
+
+```python
+from collections import deque
+class Solution(object):
+    def isSameTree(self, p, q):
+        queue = deque([(p, q)]) # 队列中存储节点对
+  
+        while queue:
+            node1, node2 = queue.popleft()
+      
+            # 首先处理 None 的情况
+            if not node1 and not node2:
+                continue # 两个都是 None, 是相同的, 继续检查下一对
+            if not node1 or not node2 or node1.val != node2.val:
+                return False # 一个为 None 或值不同, 直接判为不等
+      
+            # 将子节点对加入队列
+            queue.append((node1.left, node2.left))
+            queue.append((node1.right, node2.right))
+      
+        return True # 如果队列处理完都没发现不同, 则两树相同
+```
+
+...
+
+#### Check Sub Tree
+
+检查一个tree是否是另一个tree的subtree。
+
+## BST - Binary Search Tree
+
+在BST中，所有节点左边的都更小，右边的都更大。
+
+**BST一般被设计为一个“集合”，即所有的元素的值都是唯一的，不允许重复。**因为如果重复的话就没办法实现其快速搜索的特性了。
+
+BST是全局有序的，也就是对于Tree中的任何Node，上述规则都是适用的。
+
+![1753121001848](image/data_structures/1753121001848.png)
+
+![1753121034603](image/data_structures/1753121034603.png)
+
+### General BST
+
+#### Search in BST
+
+对于一个array，Binary Search的时间复杂度是O(logN)。那么在BST中，如果我们要找一个target，从root开始，如果node小于target，我们就往右节点走；否则往左节点。这样很快就能找到target。
+
+Search的算法实现（查找是否存在子节点）：
+
+```python
+def search(root, target):
+    if not root:
+        return False
+  
+    if target > root.val:
+        return search(root.right, target)
+    elif target < root.val:
+        return search(root.left, target)
+    else:
+        return True # 如果要return节点，就return root
+```
+
+如果要return target节点，把return True改为return root就可以了。
+
+...
+
+#### Insertion & Delete
+
+我们先来看一个最基本的BST，他满足最基本的BST要求，即左边总是比node小，右边总是比node大。我们要实现的功能也很简单，一个是插入，一个是删除。
+
+**首先来看insert操作。**其思路就是，从root开始找，如果新值比当前节点 **小** ，就往**左**找；如果新值比当前节点 **大** ，就往**右**找，直到找到一个 `None`（空位），然后插入新节点。
+
+在实现上，可以用Recursion来实现：
+
+```python
+# Insert a new node and return the root of the BST.
+def insert(root, val):
+    if not root:
+        return TreeNode(val)
+  
+    if val > root.val:
+        root.right = insert(root.right, val)
+    elif val < root.val:
+        root.left = insert(root.left, val)
+    return root
+```
+
+**然后看remove操作**，删除操作比插入要复杂得多，因为它需要考虑在移除一个节点后，如何“修复”树的结构，以保证它仍然满足“左小右大”的黄金定律。
+
+删除的第一步总是相同的：**首先，像查找一样，在树中找到要删除的那个节点。**
+
+找到之后，根据这个节点有几个子节点，我们分为三种情况来处理：
+
+**情况一：要删除的节点是叶子节点 (没有子节点)**
+
+这是最简单的情况。
+
+* **逻辑** ：直接把它从树上“摘掉”即可。
+* **操作** ：将其父节点的对应指针（`left` 或 `right`）设置为 `None`。
+
+**图示：删除 `20`**
+
+**Code snippet**
+
+```
+graph TD
+    subgraph Before
+        30 --> 15
+        15 --> 20
+    end
+
+    subgraph After
+        30 --> 15'
+        style 15' stroke:#000,stroke-width:2px
+    end
+```
+
+**情况二：要删除的节点只有一个子节点**
+
+* **逻辑** ：让它的子节点“越级”接替它的位置。
+* **操作** ：将其父节点的对应指针，直接指向它的那个唯一的子节点。
+
+**图示：删除 `15`**
+
+**Code snippet**
+
+```
+graph TD
+    subgraph Before
+        30 --> 15
+        15 --> 20
+    end
+
+    subgraph After
+        30 --> 20
+    end
+```
+
+**情况三：要删除的节点有两个子节点**
+
+这是最复杂，也是最核心的情况。我们不能简单地删除它，因为这样会留下两个“孤儿”子树。
+
+* **逻辑** ：我们不能凭空创造一个节点，所以必须在它的后代中找一个“替身”来顶替它的位置。这个“替身”必须能完美地维持“左小右大”的规则。
+* **谁能当替身？** 有两个最佳人选：
+  1. **中序后继 (In-order Successor)** ：它的**右子树**中的**最小**节点。
+  2. **中序前驱 (In-order Predecessor)** ：它的**左子树**中的**最大**节点。
+
+**通常我们选择第一种（中序后继）来实现。**
+
+* **操作步骤 (以“中序后继”为例)** ：
+
+1. **找到替身** ：从要删除节点的**右孩子**出发，然后一路向**左**走到尽头，那个节点就是“中序后继”。
+2. **偷梁换柱** ：将“中序后继”的 **值** ，复制到我们要删除的节点上。
+3. **转换问题** ：现在，原节点的值已经被替换，但树里出现了一个重复的节点（那个“中序后继”）。我们的问题就从“删除一个有两个孩子的节点”转换成了“ **删除那个中序后继节点** ”。
+4. **删除替身** ：因为“中序后继”是其所在子树中最小的，所以它最多只有一个右孩子（不可能有左孩子）。因此，删除它就变成了我们上面已经解决的**情况一**或 **情况二** 。
+
+如何通俗理解呢？
+
+我们用一个“办公室调动”的例子来解释为什么必须这么做。
+
+ **场景** ：假设我们要开除部门主管 `50`。主管 `50` 手下有两大业务团队：左团队（所有员工编号都 `< 50`）和右团队（所有员工编号都 `> 50`）。
+
+ **我们的困境** ：我们不能直接让 `50` 走人，因为他走了之后，这两大团队就没人管了，整个部门的组织架构就乱了。我们必须找一个**合适的替身**来接替 `50` 的位置。
+
+**谁是最佳替身？**
+这个替身必须满足：
+
+1. 他必须比 **左团队所有人都强** （值更大）。
+2. 他必须比 **右团队所有人都弱** （值更小），这样才能服众。
+
+符合这个条件的完美人选就是 **右团队里最弱的那个人** （即“中序后继”）。在我们的例子里，他就是右子树中值最小的节点。
+
+```
+# 1. 找到右子树的最小节点（即中序后继）
+least = root.right
+while least.left:
+    least = least.left
+
+# 2. 先把当前的root，也就是当前的节点的值替换为删掉的最小节点的值
+root.val = least.val
+
+# 3. 删除找到的这个右子树的最小节点
+root.right = self.deleteNode(root.right, least.val)
+```
+
+这个操作其实是一个非常聪明的“障眼法”或者说“问题转换法”。
+
+1. **`successor = ...`** ：我们找到了右团队里最弱的那个员工（中序后继），我们叫他 `55` 号员工。
+2. **`root.val = successor.val`** : 这是最关键的一步，叫做**“偷梁换柱”**。我们并没有移动任何节点，只是把 `55` 号员工的**身份牌**（值）拿过来，贴在了主管 `50` 的办公室门上。现在，从外面看，主管办公室里的人已经是 `55` 了。原来的 `50` 实际上已经消失了。
+3. **`root.right = self.deleteNode(...)`** : 现在出现了一个新问题：公司里有了两个 `55` 号员工！一个在主管办公室，一个还在右团队原来的位置上。我们必须把右团队里那个多余的 `55` 号员工开除掉。
+
+**为什么这个新问题更简单？**
+因为我们去找的那个替身（中序后继 `55`），他是他所在团队里最弱的（值最小），所以他 **绝对不可能有左孩子** ！因此，开除他，就变成了我们之前已经解决的**“情况一（没有孩子）” **或** “情况二（只有一个右孩子）”**的简单问题。
+
+我们没有直接解决“如何删除一个有两个孩子的复杂节点”这个问题，而是把它巧妙地**转换**成了“如何删除一个最多只有一个孩子的简单节点”的问题。这是一个经典的算法思想： **将复杂问题转化为已知解的简单问题** 。
+
+至此，删除操作完成，整棵树的“左小右大”规则依然被完美地保持着。
+
+完整的实现如下：
+
+```python
+# TreeNode是所有实现的基础
+class TreeNode:
+    """二叉搜索树的节点类"""
+    def __init__(self, key):
+        self.key = key  # 键（或值）
+        self.left = None
+        self.right = None
+        self.height = 1 # 为AVL树预留，此处暂时不用
+
+    def __repr__(self):
+        return f"Node({self.key})"
+
+class BinarySearchTree:
+    """一个标准的、非自平衡的二叉搜索树"""
+    def __init__(self):
+        self.root = None
+
+    # -------------------- 插入操作 --------------------
+    def insert(self, key):
+        self.root = self._insert_recursive(self.root, key)
+
+    def _insert_recursive(self, node, key):
+        # 1. 如果当前位置为空，则创建新节点并返回
+        if not node:
+            return TreeNode(key)
+  
+        # 2. 否则，根据BST规则向下递归
+        if key < node.key:
+            node.left = self._insert_recursive(node.left, key)
+        elif key > node.key:
+            node.right = self._insert_recursive(node.right, key)
+  
+        # （注意：如果key已存在，此处不做任何事，直接返回原node）
+        return node
+
+    # -------------------- 删除操作 --------------------
+    def delete(self, key):
+        self.root = self._delete_recursive(self.root, key)
+
+    def _delete_recursive(self, node, key):
+        if not node:
+            return node  # 如果没找到，直接返回
+
+        # 1. 找到要删除的节点
+        if key < node.key:
+            node.left = self._delete_recursive(node.left, key)
+        elif key > node.key:
+            node.right = self._delete_recursive(node.right, key)
+        else:
+            # 2. 找到节点后，分情况处理
+            # 情况 1: 节点只有一个孩子或没有孩子（叶节点）
+            if not node.left:
+                return node.right
+            elif not node.right:
+                return node.left
+  
+            # 情况 2: 节点有两个孩子
+            # 找到其中序后继（右子树的最小节点）
+            successor = self._get_min_value_node(node.right)
+            # 将后继的值赋给当前节点
+            node.key = successor.key
+            # 从右子树中删除那个后继节点
+            node.right = self._delete_recursive(node.right, successor.key)
+
+        return node
+
+    def _get_min_value_node(self, node):
+        """找到并返回一棵树中最小值的节点"""
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+  
+    # 辅助函数，用于打印树（中序遍历）
+    def inorder_traversal(self):
+        self._inorder_recursive(self.root)
+        print()
+
+    def _inorder_recursive(self, node):
+        if node:
+            self._inorder_recursive(node.left)
+            print(node.key, end=' ')
+            self._inorder_recursive(node.right)
+
+# --- 标准BST使用示例 ---
+print("--- Standard BST (Non-balancing) ---")
+bst = BinarySearchTree()
+# 插入有序数据，会导致树退化
+keys_to_insert = [10, 20, 30, 40, 50]
+for key in keys_to_insert:
+    bst.insert(key)
+
+print("Inorder traversal (should be sorted):")
+bst.inorder_traversal() # 输出: 10 20 30 40 50 
+
+# 此时的树结构是一个链表: 10 -> 20 -> 30 -> 40 -> 50
+print("Deleting 30...")
+bst.delete(30)
+bst.inorder_traversal() # 输出: 10 20 40 50 
+```
+
+ **小结** ：这个基础版本能正确工作，但正如示例所示，插入有序数据会导致它性能下降。这就是我们需要自平衡的原因。
+
+#### Tree Rotation
+
+BST本身不是平衡结构，所以可能会退化，比如你有一个空的BST，然后依次插入 `10 -> 20 -> 30 -> 40 -> 50`。
+
+1. 插入 `10`：`10` 成为根。
+2. 插入 `20`：`20 > 10`，成为 `10` 的右孩子。
+3. 插入 `30`：`30 > 10`，去右边；`30 > 20`，成为 `20` 的右孩子。
+4. 插入 `40`：...成为 `30` 的右孩子。
+5. 插入 `50`：...成为 `40` 的右孩子。
+
+最终得到的树会是这样：
+
+```
+10
+ \
+  20
+   \
+    30
+     \
+      40
+       \
+        50
+```
+
+这棵树已经完全退化成了一个 **链表** 。在这种情况下，对它进行任何操作（查找、插入、删除），时间复杂度都从理想的 **O**(**l**o**g**N**)** 急剧恶化为 **O**(**N**)，失去了BST的全部优势。
+
+为了解决这个问题，计算机科学家发明了 **自平衡二叉搜索树 (Self-Balancing Binary Search Tree)** 。
+
+自平衡BST通过在每次插入和删除后进行一系列精巧的调整操作，来确保树的高度差维持在一定范围内，从而保证 **O**(**l**o**g**N**)** 的性能。
+
+这个神奇的调整操作，其核心就是—— **树旋转 (Tree Rotation)** 。
+
+树旋转是一种 **局部的、改变树结构的操作** ，它可以在不破坏BST“左<根<右”性质的前提下，降低树的高度，使之恢复平衡。旋转操作本身非常快，是 **O**(**1**) 的常数时间操作。
+
+主要有两种旋转：
+
+1. **左旋 (Left Rotation)** ：当某个节点的**右子树过高**时，对该节点进行左旋。
+2. **右旋 (Right Rotation)** ：当某个节点的**左子树过高**时，对该节点进行右旋。
+
+**右旋示例（对节点 Y 进行右旋）：**
+
+```
+    Y           (不平衡)              X       (平衡后)
+   / \          ------>             / \
+  X   T3        <------            T1  Y
+ / \        (左旋恢复)                / \
+T1  T2                              T2  T3
+```
+
+* **过程** ：`X` 提升为新的根，`Y` 降为 `X` 的右孩子。`X` 原本的右孩子 `T2` 现在“无家可归”，正好可以挂在 `Y` 空出来的左孩子位置上。
+* **效果** ：树的高度降低了，但中序遍历的顺序 (`T1 -> X -> T2 -> Y -> T3`) 依然保持不变，BST的性质没有被破坏。
+
+不同的自平衡树采用不同的策略来决定**何时**以及**如何**进行旋转。最著名的两种是：
+
+**1. AVL 树 (Adelson-Velsky and Landis' Tree)**
+
+* **平衡策略** ： **最严格的平衡** 。它要求树中**任何节点**的左、右子树高度差的绝对值 **不能超过 1** 。这个高度差被称为“平衡因子”。
+* **维持方式** ：
+
+1. 每次插入或删除后，从操作点向上回溯到根节点。
+2. 检查路径上每个节点的平衡因子。
+3. 一旦发现某个节点的平衡因子变成了 `+2` 或 `-2`，就立即通过一次或两次旋转来修正这个局部的不平衡。
+
+* **特点** ：由于其严格的平衡，AVL树的查找速度非常快。但为了维持这种严格的平衡，插入和删除时可能需要进行更多的旋转，因此写操作稍慢。
+
+**2. 红黑树 (Red-Black Tree)**
+
+* **平衡策略** ： **相对宽松的平衡** 。它不直接关心高度差，而是通过给每个节点赋予“红色”或“黑色”并遵循以下5条规则来间接维持平衡：
+
+1. 节点是红色或黑色。
+2. 根是黑色。
+3. 所有叶子（NIL节点）都是黑色。
+4. 红色节点的子节点必须是黑色（ **不能有两个连续的红色节点** ）。
+5. 从任一节点到其所有后代叶子节点的路径上，均包含相同数目的黑色节点。
+
+* **维持方式** ：插入或删除后，如果破坏了上述规则（比如出现了两个连续的红色节点），就通过一系列的**颜色翻转**和**树旋转**来修正，重新满足规则。
+* **特点** ：它的平衡没有AVL树那么严格（最长路径不会超过最短路径的两倍），所以查找速度理论上稍慢。但它的插入和删除操作通常需要更少的旋转，因此写操作更快。在实际应用中，这种综合性能使其更受欢迎，例如 **C++ 的 `std::map`、`std::set` 和 Java 的 `TreeMap`、`TreeSet`** 内部都是用红黑树实现的。
+
+这是自平衡算法的原子操作。我们将在一个类中实现它们，以便后续的AVL树使用。旋转的目的是在**不破坏BST“左<根<右”性质**的前提下，调整树的结构以降低高度。
+
+```python
+class AVLTree: # 先创建一个框架，放入旋转逻辑
+    # ... (其他方法将在第3部分实现)
+
+    # -------------------- 旋转操作 --------------------
+  
+    def _right_rotate(self, y):
+        """
+        对节点y进行右旋
+              y                              x
+             / \                           /   \
+            x   T3  -- 右旋 (y) -->        T1    y
+           / \                                 / \
+          T1  T2                              T2  T3
+        """
+        print(f"Right rotating on {y.key}")
+        x = y.left
+        T2 = x.right
+
+        # 执行旋转
+        x.right = y
+        y.left = T2
+
+        # 更新高度 (必须先更新y，再更新x)
+        y.height = 1 + max(self._get_height(y.left), self._get_height(y.right))
+        x.height = 1 + max(self._get_height(x.left), self._get_height(x.right))
+
+        # 返回新的根节点
+        return x
+
+    def _left_rotate(self, x):
+        """
+        对节点x进行左旋
+            x                               y
+           / \                            /   \
+          T1  y   -- 左旋 (x) -->         x     T3
+             / \                        / \
+            T2  T3                     T1  T2
+        """
+        print(f"Left rotating on {x.key}")
+        y = x.right
+        T2 = y.left
+
+        # 执行旋转
+        y.left = x
+        x.right = T2
+  
+        # 更新高度
+        x.height = 1 + max(self._get_height(x.left), self._get_height(x.right))
+        y.height = 1 + max(self._get_height(y.left), self._get_height(y.right))
+
+        # 返回新的根节点
+        return y
+
+    def _get_height(self, node):
+        return node.height if node else 0
+
+    def _get_balance(self, node):
+        """获取节点的平衡因子"""
+        if not node:
+            return 0
+        return self._get_height(node.left) - self._get_height(node.right)
+```
+
+ **小结** ：这两个旋转方法是后续所有自平衡操作的基础。注意每次旋转后**更新高度**是至关重要的。
+
+#### 自平衡AVL
+
+现在，我们将旋转操作整合到 `insert` 和 `delete` 方法中，创建一个完整的 `AVLTree`。
+
+```python
+class AVLTree:
+    def __init__(self):
+        self.root = None
+
+    def _get_height(self, node):
+        return node.height if node else 0
+
+    def _get_balance(self, node):
+        if not node:
+            return 0
+        return self._get_height(node.left) - self._get_height(node.right)
+
+    # (在此处粘贴上面已实现的 _right_rotate 和 _left_rotate 方法)
+    def _right_rotate(self, y):
+        print(f"Right rotating on {y.key}")
+        x = y.left
+        T2 = x.right
+        x.right = y
+        y.left = T2
+        y.height = 1 + max(self._get_height(y.left), self._get_height(y.right))
+        x.height = 1 + max(self._get_height(x.left), self._get_height(x.right))
+        return x
+
+    def _left_rotate(self, x):
+        print(f"Left rotating on {x.key}")
+        y = x.right
+        T2 = y.left
+        y.left = x
+        x.right = T2
+        x.height = 1 + max(self._get_height(x.left), self._get_height(x.right))
+        y.height = 1 + max(self._get_height(y.left), self._get_height(y.right))
+        return y
+
+
+    # -------------------- 带平衡的插入操作 --------------------
+    def insert(self, key):
+        self.root = self._insert_recursive(self.root, key)
+
+    def _insert_recursive(self, node, key):
+        # 1. 执行标准的BST插入
+        if not node:
+            return TreeNode(key)
+        if key < node.key:
+            node.left = self._insert_recursive(node.left, key)
+        else:
+            node.right = self._insert_recursive(node.right, key)
+
+        # 2. 更新当前节点的高度
+        node.height = 1 + max(self._get_height(node.left), self._get_height(node.right))
+
+        # 3. 获取平衡因子，检查是否需要旋转
+        balance = self._get_balance(node)
+
+        # 4. 根据四种情况进行旋转
+        # Case 1: 左-左 (Left-Left)
+        if balance > 1 and key < node.left.key:
+            return self._right_rotate(node)
+
+        # Case 2: 右-右 (Right-Right)
+        if balance < -1 and key > node.right.key:
+            return self._left_rotate(node)
+
+        # Case 3: 左-右 (Left-Right)
+        if balance > 1 and key > node.left.key:
+            node.left = self._left_rotate(node.left)
+            return self._right_rotate(node)
+
+        # Case 4: 右-左 (Right-Left)
+        if balance < -1 and key < node.right.key:
+            node.right = self._right_rotate(node.right)
+            return self._left_rotate(node)
+
+        return node
+
+    # -------------------- 带平衡的删除操作 --------------------
+    def delete(self, key):
+        self.root = self._delete_recursive(self.root, key)
+
+    def _delete_recursive(self, node, key):
+        # 1. 执行标准的BST删除
+        if not node:
+            return node
+        if key < node.key:
+            node.left = self._delete_recursive(node.left, key)
+        elif key > node.key:
+            node.right = self._delete_recursive(node.right, key)
+        else:
+            if not node.left:
+                return node.right
+            elif not node.right:
+                return node.left
+  
+            successor = self._get_min_value_node(node.right)
+            node.key = successor.key
+            node.right = self._delete_recursive(node.right, successor.key)
+  
+        # 如果树在删除后变空了
+        if not node:
+            return node
+
+        # 2. 更新高度
+        node.height = 1 + max(self._get_height(node.left), self._get_height(node.right))
+
+        # 3. 获取平衡因子并执行旋转 (逻辑同插入)
+        balance = self._get_balance(node)
+  
+        # 左-左
+        if balance > 1 and self._get_balance(node.left) >= 0:
+            return self._right_rotate(node)
+        # 左-右
+        if balance > 1 and self._get_balance(node.left) < 0:
+            node.left = self._left_rotate(node.left)
+            return self._right_rotate(node)
+        # 右-右
+        if balance < -1 and self._get_balance(node.right) <= 0:
+            return self._left_rotate(node)
+        # 右-左
+        if balance < -1 and self._get_balance(node.right) > 0:
+            node.right = self._right_rotate(node.right)
+            return self._left_rotate(node)
+
+        return node
+  
+    # 辅助函数
+    def _get_min_value_node(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+  
+    def inorder_traversal(self):
+        self._inorder_recursive(self.root)
+        print()
+
+    def _inorder_recursive(self, node):
+        if node:
+            self._inorder_recursive(node.left)
+            print(node.key, end=' ')
+            self._inorder_recursive(node.right)
+
+
+# --- AVL树使用示例 ---
+print("\n--- Self-Balancing AVL Tree ---")
+avl_tree = AVLTree()
+keys_to_insert = [10, 20, 30, 40, 50] # 同样插入有序数据
+for key in keys_to_insert:
+    print(f"\nInserting {key}...")
+    avl_tree.insert(key)
+    print("Current tree (inorder):", end=" ")
+    avl_tree.inorder_traversal()
+
+# 最终的树是平衡的，而不是链表！
+# 插入30后, 对10进行左旋, 树变为: 20 -> (10, 30)
+# 插入50后, 对30进行左旋, 树变为: 40 -> (30, 50)
+# 之后再对20进行左旋, 树变为: 40 -> (20, 50) -> (10, 30)
+
+print("\nDeleting 10...")
+avl_tree.delete(10)
+print("Current tree (inorder):", end=" ")
+avl_tree.inorder_traversal()
+
+print("\nDeleting 40...")
+avl_tree.delete(40)
+print("Current tree (inorder):", end=" ")
+avl_tree.inorder_traversal()
+```
+
+...
+
+**总结**
+
+1. **标准BST** ：逻辑简单，但有性能隐患。插入和删除的核心是递归地找到位置，然后修改指针。删除有两个孩子的节点时，需要找到其后继来替换。
+2. **树旋转** ：是自平衡的关键。通过 `_left_rotate`和 `_right_rotate`可以局部调整树的结构，降低高度，且不破坏BST的性质。
+3. **AVL树** ：在标准BST的每个 `insert`和 `delete`操作的递归返回路径上，增加了**更新高度**和**检查平衡因子**的步骤。一旦发现不平衡（平衡因子大于1或小于-1），就立即调用相应的旋转函数（四种情况）来恢复平衡，从而始终保证树的性能在 **O**(**l**o**g**N**)**。
+
+#### BST vs Array
+
+**BST在维护数据有序性的成本上，远远低于有序数组。**
+
+让我们通过一个详细的对比表格来看一下：
+
+| 操作 (Operation)           | 平衡二叉搜索树 (Balanced BST)             | 有序数组 (Sorted Array)                                 | 对比分析                                |
+| -------------------------- | ----------------------------------------- | ------------------------------------------------------- | --------------------------------------- |
+| **查找 (Search)**    | **O**(**l**o**g**N**)** | **O**(**l**o**g**N**)**(使用二分查找) | **打平** 。两者在查找上同样高效。 |
+| **插入 (Insertion)** | **O**(**l**o**g**N**)** | **O**(**N**)****                            | **BST 完胜** 。这是最关键的区别。 |
+| **删除 (Deletion)**  | **O**(**l**o**g**N**)** | **O**(**N**)****                            | **BST 完胜** 。这也是关键区别。   |
+
+**为什么插入和删除差异如此巨大？**
+
+**有序数组的问题：牵一发而动全身**
+
+想象一下一个有序数组 `[10, 20, 30, 40, 50]`。
+
+* **插入 `25`** :
+
+1. **查找位置** : 用二分查找可以很快（**O**(**l**o**g**N**)**）确定 `25` 应该在 `20` 和 `30` 之间。
+2. **移动元素** : 为了给 `25` 腾出空间，你必须将 `30`, `40`, `50` **所有**后续元素都向右移动一个位置。如果数组有一百万个元素，这可能意味着几十万次的数据移动。这个移动操作的时间复杂度是 **O**(**N**)。
+3. **总成本** : **O**(**l**o**g**N**)**+**O**(**N**)**=**O**(**N**)**。
+
+* **删除 `20`** :
+
+1. **查找位置** : 同样，用二分查找很快（**O**(**l**o**g**N**)**）找到 `20`。
+2. **移动元素** : 为了填补 `20` 留下的空缺，你必须将 `30`, `40`, `50` **所有**后续元素都向左移动一个位置。这个操作的时间复杂度也是 **O**(**N**)。
+3. **总成本** : **O**(**l**o**g**N**)**+**O**(**N**)**=**O**(**N**)**。
+
+**BST 的优势：局部修改，无需移动**
+
+**想象一下一个平衡的BST。**
+
+* **插入 `25`** :
+
+1. **查找位置** : 从根节点开始，通过比较大小，一路向下走到一个空位（**O**(**l**o**g**N**)**）。例如，最终会发现 `30` 的左子节点是空的。
+2. **插入节点** : 直接将 `25` 作为一个新节点挂在 `30` 的左子节点上。这是一个指针的修改，是 **O**(**1**) 操作。
+3. **平衡调整 (Rebalancing)** : 对于自平衡树（如AVL树、红黑树），可能需要做几次旋转操作来恢复平衡，这个过程也是 **O**(**l**o**g**N**)**。
+4. **总成本** : **O**(**l**o**g**N**)**。
+
+* **删除 `20`** :
+
+1. **查找位置** : 找到 `20` 这个节点 (**O**(**l**o**g**N**)**)。
+2. **删除节点** : 通过修改指针来移除该节点，比如让其父节点指向它的子节点 (**O**(**1**))。
+3. **平衡调整** : 同样，可能需要 **O**(**l**o**g**N**)** 的旋转操作来恢复平衡。
+4. **总成本** : **O**(**l**o**g**N**)**。
+
+**其他维度对比**
+
+| 维度                         | 平衡BST                                                                                       | 有序数组                                                                               |
+| ---------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **内存开销**           | **较高** 。每个节点除了数据外，还需要存储左、右指针，甚至父指针和颜色等额外信息。       | **较低** 。只存储数据本身，非常紧凑。                                            |
+| **空间局部性 (Cache)** | **差** 。节点在内存中是分散的，访问时可能导致缓存未命中（Cache Miss），降低实际性能。   | **极好** 。数据在内存中是连续的，CPU可以高效地预读取和缓存，遍历速度飞快。       |
+| **实现复杂度**         | **高** 。需要实现复杂的节点、指针操作和平衡算法（如旋转）。                             | **简单** 。大多数语言都内置了数组/列表。                                         |
+| **平衡问题**           | 普通BST有退化风险（变成**O**(**N**)）。必须使用自平衡树来保证性能，增加了复杂性。 | **无** 。其**O**(**l**o**g**N**)**的搜索性能是稳定且有保证的。 |
+
+**BST 的核心意义在于为“动态数据集”提供了一套“三项全能”的高效解决方案。**
+
+当你的应用场景需要**频繁地进行查找、插入和删除**操作时，BST（特别是自平衡BST）是近乎完美的结构，因为它将这三个核心操作的时间复杂度都维持在了优秀的 **O**(**l**o**g**N**)** 水平。
+
+**何时使用它们？**
+
+* **使用有序数组** ：
+  * 如果你的数据集是**静态的**或者 **很少变动** （Write-Once, Read-Many）。
+  * 你只需要极快的**查找**速度，而几乎没有插入/删除操作。
+  * 对内存占用和缓存性能要求极高。
+  * **例如** ：一个不常更新的配置表，一个城市的邮政编码列表。
+* **使用平衡BST** ：
+  * 如果你的数据集是 **动态的** ，插入和删除操作非常频繁。
+  * 你需要同时保证查找、插入、删除都有很高的性能。
+  * **例如** ：数据库索引、需要实时更新的在线用户列表、操作系统的进程调度。
+
+#### Ordered Set & Map
+
+在C++中，std::map和std::set使用红黑树（一种特殊的自平衡BST）来实现有序的set和map。
+
+在Java中，TreeMap和TreeSet使用红黑树实现。
+
+Python中没有内置有序set和有序map，需要借助第三方库sortedcontainers来实现。这个由社区自维护的第三方库非常强大，经过了大量的优化。
+
+为什么python不使用有序字典呢？因为python的设计哲学是简单，python设计者认为大多数编程场景中使用hashmap的需求主要是快速存入、取出和删除，即追求平均时间复杂度为O(1)的常数时间的常规操作。红黑树则需要O(logN)。
+
+### BST Traversal
+
+BST必须要掌握的几个技能
+
+#### Ascending Visit
+
+由于 BST 的特性（左子节点的值 < 根节点的值 < 右子节点的值），对 BST 进行中序遍历总是会按节点值的**升序**访问节点。
+
+...
+
+#### Descending Visit
+
+....
+
+#### Find Kth Smallest
+
+如果你执行中序遍历，第一个访问到的节点是最小的，第二个是第二小的，依此类推。你在这次遍历中访问到的第 K 个节点，就是第 K 小的元素。
+
+....
+
+#### Find Kth Largest
+
+....
+
+### AVL Tree
+
+...
+
+### Red-Black Tree
+
+...
+
+### Expression Tree
+
+...
+
+### Huffman Tree
+
+...
+
+## Heap
+
+...
+
+## Trie
+
+...
+
+## B Tree
+
+...
+
+## Graph
+
+...
+
+...
+
+...
+
+## Disjoint Set
+
+...
+
+## Multiset
+
+...
+
+## Bloom Filter
+
+...
+
+## LRU Cache
+
+...
+
+...
+
+...
+
+...
 
 ...

@@ -397,28 +397,28 @@ class Solution(object):
         while True:
             smallest_node_val = float('inf')
             smallest_node_index = -1
-      
+  
             # 1. 遍历所有链表的当前头节点，找到最小的那个
             #    这个 for 循环实现了你的 "每一轮要把ls中的所有的node拿出来作比较！" 的思路
             for i in range(len(lists)):
                 if lists[i] and lists[i].val < smallest_node_val:
                     smallest_node_val = lists[i].val
                     smallest_node_index = i
-      
+  
             # 2. 如果 smallest_node_index 仍然是 -1，说明所有链表都已经是 None 了
             #    这实现了你的 "直到lists中所有元素都为空" 的退出条件
             if smallest_node_index == -1:
                 break
-          
+  
             # 3. 将找到的最小节点接到结果链表的末尾
             #    这实现了你的 "把smallest_node这个节点放到cur_new的下一个上"
             current.next = lists[smallest_node_index]
             current = current.next
-      
+  
             # 4. 将那个链表的头指针向后移动一位
             #    这实现了你的 "把smallest_node这个节点进行移动"
             lists[smallest_node_index] = lists[smallest_node_index].next
-      
+  
         return head.next
 ```
 
@@ -2169,11 +2169,273 @@ def backtrack(start_index):
 
 ...
 
+#### 98. Validate BST
+
+注意：一定要记住，BST中每一个节点左侧的所有节点，都比这个节点小！
+
+因此在DFS的时候，同时传递两个参数：
+
+* lower bound: 代表当前node可选范围的下界限
+* upper bound: 代表当前node可选范围的上界限
+
+那么如何维护这个上下界限呢？
+
+我们可以如此相像，当我们从root走向root左边的子树的时候，子树中的所有元素都共同有一个已经确定的上界限：root的value。换句话说，进入左子树后，所有左子树的value都必须小于root的value。同理，进入右子树的时候，所有节点共同维护一个下界限，这个下界限就是root的value。
+
+然后我们来看root的left node。当我们访问root的left node后，这个node右边的所有子节点，必须维护一个大于这个node的value的下界限。以此类推。
+
+最佳实践：
+
+```python
+def isValidBST(self, root: Optional[TreeNode]) -> bool:
+    def validate(node, low, high):
+        if not node:
+            return True
+  
+        if not low < node.val < high:
+            return False
+  
+        return validate(node.left, low, node.val) and validate(node.right, node.val, high)
+
+    return validate(root, -float('inf'), float('inf'))
+```
+
+最佳实践的注释说明：
+
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+import math # 导入 math 模块以使用 float('-inf') 和 float('inf')
+
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        """
+        检查一个二叉树是否是有效的二叉搜索树 (BST)。
+  
+        一个 BST 的定义：
+        1. 节点的左子树只包含小于当前节点的数。
+        2. 节点的右子树只包含大于当前节点的数。
+        3. 左右子树本身也必须是二叉搜索树。
+        4. 所有左子树节点的值 < 根节点的值 < 所有右子树节点的值。
+           这意味着每个节点的值都必须在其祖先节点设定的特定范围内。
+        """
+
+        # 辅助递归函数，用于验证节点及其子树是否在给定范围内
+        # node: 当前正在检查的节点
+        # lower_bound: 当前节点及其子树中所有节点值必须大于的最小值
+        # upper_bound: 当前节点及其子树中所有节点值必须小于的最大值
+        def validate(node, lower_bound, upper_bound):
+            # 递归终止条件 1: 如果节点为空，则视为有效的 BST (空树始终是 BST)
+            if not node:
+                return True
+  
+            # 检查当前节点的值是否违反了它的边界限制
+	    # ※ 注意，这里必须一行写，因为检查是严格的
+            # 如果 node.val <= lower_bound，说明它不大于下限，违反了 BST 性质
+            # 如果 node.val >= upper_bound，说明它不小于上限，违反了 BST 性质
+            if not (lower_bound < node.val < upper_bound):
+                return False
+  
+            # 递归检查左子树：
+            # 左子树的所有节点值都必须小于当前节点的值 (node.val)。
+            # 所以，当前节点的值 node.val 成为左子树的新的 `upper_bound`。
+            # `lower_bound` 保持不变，因为左子树的节点仍需满足它父节点的下限要求。
+            left_is_valid = validate(node.left, lower_bound, node.val)
+  
+            # 递归检查右子树：
+            # 右子树的所有节点值都必须大于当前节点的值 (node.val)。
+            # 所以，当前节点的值 node.val 成为右子树的新的 `lower_bound`。
+            # `upper_bound` 保持不变，因为右子树的节点仍需满足它父节点的上限要求。
+            right_is_valid = validate(node.right, node.val, upper_bound)
+  
+            # 只有当左右子树都有效时，当前节点及其子树才构成一个有效的 BST
+            return left_is_valid and right_is_valid
+
+        # 初始调用辅助函数
+        # 对于根节点，它最初没有数值上的上限或下限限制（除了整数范围）。
+        # 因此，我们将初始的 lower_bound 设为负无穷，upper_bound 设为正无穷，
+        # 这样根节点的值总是会落在 (-inf, +inf) 范围内，可以被正确检查。
+        return validate(root, float('-inf'), float('inf'))
+```
+
+...
+
+#### 100. Same Tree
+
+略。
+
+...
+
+...
+
+...
+
 ...
 
 ## No.101 - No.150
 
 ...
+
+#### 102. Binary Tree Level Order Traversal
+
+就是普通的BFS。
+
+...
+
+#### 104. Max Depth
+
+Tree基础教学题，详情参见数据结构知识。
+
+...
+
+#### 105. ※ Construct Binary Tree from Preorder and Inorder Traversal
+
+根据已经有的结果来重建tree。
+
+![1753216721484](image/leetcode_500/1753216721484.png)
+
+关键的点在于partition，如上图所示。（[Neetcode教程链接](https://www.youtube.com/watch?v=ihj4IQGZ2zc)）
+
+我们可以直接在函数中进行递归：
+
+1. 导入参数为：preorder list和inorder list
+2. 首先判断两个list是否空了，如果空了，说明已经constructing完毕了。这里注意我们在recursion中return的是node，所以basecase的情况中return None，可以和node作为区分。
+3. 构建root node，这个总是preorder的第一个元素。
+4. 接着构建mid，这个一定是root node.val在Inorder中出现的地方。即上图中的蓝色箭头指向的内容。
+5. 有了mid后，我们就知道root的左子树和右子树了。这里我们对preorder进行分割，然后左子树的preorder和inorder这样就都有了。
+6. 分割后，我们就可以用递归，把左半部分的preorder/inorder导入左子树建设，把右半部分的preorder/inorder导入右子树建设。
+7. 最后直接return root就可以了。
+
+代码如下：
+
+```python
+def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+    if not preorder and not inorder:
+        return None
+  
+    root = TreeNode(preorder[0])
+    mid = inorder.index(preorder[0])
+
+    root.left = self.buildTree(preorder[1:1+mid],inorder[0:mid])
+    root.right = self.buildTree(preorder[1+mid:],inorder[mid+1:])
+
+    return root
+```
+
+这里的切片不太好记住，可以这么记：
+
+1. 首先root永远是preorder的第一个
+2. inorder中它的索引就是mid，这个mid就是尺子
+3. 记住：mid就是左子树的尺寸
+4. inorder切的时候：
+   1. 左子树就是mid长度，也就是[0:mid]
+   2. 右子树就是根mid右边的部分：[mid+1:]
+5. preorder切的时候：
+   1. 左子树就是去掉头的mid长度：[1:1+mid]
+   2. 右子树就是左子树后面的部分：[1+mid:]
+
+或者在写代码的时候把这个结构图写在注释部分：
+
+```
+preorder: root, left, right
+           1  
+inorder: left, root, right
+               mid
+```
+
+然后用切片切。写切片的时候不要着急，这个不难，但是光动脑子想的话很容易写错。
+
+以上是常规思路解法，但是其中有两个问题：
+
+* inorder.index()这个操作需要从头到尾遍历inorder，时间复杂度是O(N)
+* preorder[1:1+Mid]这种切片每次都会创建一个新的列表副本
+
+针对上述两点，优化措施如下：
+
+* 建立一个hashmap，创建value -> index的映射，这样可以用空间来换时间。`inorder_map = {val: i for i, val in enumerate(inorder)}`
+* 递归函数增加参数索引index的传递
+
+优化后的代码如下：(Leetcode beat 100%)
+
+```python
+def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+    inorder_map = {val: i for i, val in enumerate(inorder)}
+  
+    # preorder 的索引，用来唯一确定当前的根节点
+    self.preorder_index = 0
+
+    def array_to_tree(left: int, right: int) -> Optional[TreeNode]:
+        # left: 当前子树在中序遍历中的左边界
+        # right: 当前子树在中序遍历中的右边界
+      
+        # 基本情况：如果左边界大于右边界，说明当前是一个空子树
+        if left > right:
+            return None
+
+        # 2. 前序遍历的第一个元素就是当前的根节点
+        root_val = preorder[self.preorder_index]
+        root = TreeNode(root_val)
+      
+        # 将 preorder 的索引后移一位，为构建子树做准备
+        self.preorder_index += 1
+
+        # 3. 从哈希表中 O(1) 获取根节点在中序遍历中的位置
+        inorder_root_index = inorder_map[root_val]
+
+        # 4. 递归构建左右子树
+        # 注意：必须先构建左子树，再构建右子树，这符合前序遍历的顺序
+        root.left = array_to_tree(left, inorder_root_index - 1)
+        root.right = array_to_tree(inorder_root_index + 1, right)
+
+        return root
+
+    # 初始调用，范围是整个中序遍历数组
+    return array_to_tree(0, len(inorder) - 1)
+```
+
+无论优化前后，算法都遵循着完全相同的、最根本的构建逻辑：
+
+1. **从 `preorder` 确定根** ：`preorder` 数组的第一个元素永远是当前要构建的树（或子树）的根节点。
+2. **用 `inorder` 划分左右** ：在 `inorder` 数组中找到这个根节点，它左边的所有元素都属于左子树，右边的所有元素都属于右子树。
+3. **递归构建** ：根据划分好的左右范围，递归地去构建左右子树。
+
+这个 “ **分治 (Divide and Conquer)** ” 的核心策略是这道题的灵魂，它在两个版本中是完全一致的。
+
+变化在于我们如何高效地执行上面第二步和第三步。下面是一个直接的对比：
+
+| 目标 (Goal)                                   | 之前的做法 (Slicing Version)                                                                                      | **优化后的做法 (Index + Map Version)**                                                         |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **1. 查找根节点在 `inorder`中的位置** | `inorder.index()<br>` **慢** ，每次查找都需要O(N)的线性扫描。                                             | `inorder_map[...]<br>` **快** ，利用哈希表做到O(1)的即时查找。                               |
+| **2. 将子树问题交给下层递归**           | **列表切片** `preorder[...]`,`inorder[...]<br>` **笨重** ，每次都创建新列表，消耗大量时间和内存。 | **传递索引** `(left, right)<br>` **轻量** ，只传递两个数字，不产生任何额外的数据副本。 |
+
+...
+
+
+
+
+#### 110. Balanced Binary Tree
+
+Balanced的意思就是高度差1.
+
+这里注意，python中False==0的结果判定是True，所以本道题中可以用-1来代表False。
+
+...
+
+#### 112. Path Sum
+
+这道题标简单但是对tree结构不太熟悉的话还真不好做。
+
+这道题两种解法思路：
+
+1. 递归的时候不断把本层的val减去，这样到leaf的时候只要leaf和剩下的targetSum一致，就说明该path符合要求
+2. 单独建一个method，不断传递和，到leaf的时候对比sum是否和targetSum相等
+
+....
 
 ...
 
@@ -2295,6 +2557,102 @@ def maxProfitExactlyTwoTransactions(prices: list[int]) -> int:
 ```
 
 ...
+
+#### 124. Binary Tree Maximum Path Sum (Hard)
+
+这道题的目标是找到和最大的那条路径。
+
+这道题的难点在于，路径上可能会有负数，所以不能想当然的用一个左子树+右子树的和作为最大和路径的判断依据。
+
+![1753222602869](image/leetcode_500/1753222602869.png)
+
+对于任何一个leaf node，其value就是该node往下看的path和。
+
+然后我们把途中的3、4、5作为一个整体来看，因为只要弄明白3、4、5这个子部分的path和，就能知道从root出发的左子树和右子树的最大路径和。
+
+从3往下看的话，我们必须知道从3往下看包括3的这一个子部分的最大路径和。为什么从3往下看呢？因为3作为一个分叉，要么从3到4，要么从3到5，只能二选一。
+
+我们可以看到，这里出现了两个内容：
+
+* 以3为root的子树的路径和，是4+3+5=12
+* 从3往上连接的话，3作为被连接的一方，最大和是8
+
+然后我们可以看到，3作为被连接的一方，和连接3的一方所组成的最大路径和是2+1+8=11，小于12。所以这个情况下他的最大路径和就是12。
+
+可以看到，在递归的时候，我们必须处理两个事情：
+
+* 以当前node为root的子树中最大的路径和
+* 以当前node为连接，其可提供的最大路径和的加数
+
+在计算可提供的最大路径和的加数的时候，我们还要注意负数，如果有负数的话：
+
+![1753223046519](image/leetcode_500/1753223046519.png)
+
+遇到这种情况我们只需要在计算最大数的时候加上0：
+
+* 以3为node的最大提供加数 = 3 + max(-4, -5, 0)
+
+本题伪代码如下：
+
+```
+INPUT: root
+result 存储最大和，初始化为root的value
+
+DFS递归(node)：
+    base case：node为空，return 0，因为空node提供不了加数
+
+    leftMax = dfs(node.left)
+    rightMax = dfs(node.right)
+
+    以node为根的左子树目前的最大和 leftMax = max(leftMax, 0)
+    同理，处理右子树可能为负的情况 rightMax = max(rightMax, 0)
+
+    计算path经过node的最大路径和 = node.val + leftMax + rightMax
+    对比该最大和与result，更新为更大的数字
+
+    最后将以node为加数的部分返回，供更上级调用
+    return node.val + max(leftMax, rightMax)
+
+DFS(root)
+return result
+```
+
+python代码如下：
+
+```python
+class Solution(object):
+    def maxPathSum(self, root):
+        self.result = root.val # 作为实例变量存储
+
+        def dfs(node):
+            if not node:
+                return 0
+
+            leftMax = dfs(node.left)
+            rightMax = dfs(node.right)
+
+            leftMax = max(leftMax, 0)
+            rightMax = max(rightMax, 0)
+
+            self.result = max(self.result, leftMax + rightMax + node.val) # 访问实例变量
+
+            return node.val + max(leftMax, rightMax)
+
+        dfs(root)
+        return self.result
+```
+
+self.result或者result然后nonlocal声明都可以，本例和leetcode中推荐self.result。在同一个class内，self.result可以在所有的函数和任何函数内部的嵌套函数中访问，只要保证不重复设置self变量，那么就不会出现任何问题。
+
+...
+
+
+
+
+
+
+
+
 
 #### 125. Valid Palindrome
 
@@ -2618,7 +2976,7 @@ class Solution:
                     dp[i] = True
                     # 找到一种方法即可，跳出内层循环
                     break
-      
+  
         # 返回整个字符串的拆分结果
         return dp[n]
 ```
@@ -2890,7 +3248,7 @@ class LRUCache(object):
             new_node = Node(key, value)
             self.hashmap[key] = new_node # 忘记的步骤：添加到哈希表
             self._add_to_head(new_node)
-      
+  
             # 检查容量
             if len(self.hashmap) > self.capacity:
                 # 容量超限：淘汰最末尾的节点
@@ -3012,7 +3370,7 @@ class Solution(object):
         # 导致无限循环。
         while left < right:
             mid = left + (right - left) // 2
-    
+  
             # =================================================================
             # 2. 为什么用 nums[mid] 和 nums[right] 比较？
             # =================================================================
@@ -3048,7 +3406,7 @@ class Solution(object):
                 # 因此，我们将搜索区间的右边界收缩到 mid 的位置，即 `right = mid`，
                 # 从而保留 nums[mid] 这个潜在的答案。
                 right = mid
-        
+  
         # 循环结束时，left 和 right 相遇在同一点，这个点就是整个数组的最小值。
         return nums[left]
 ```
@@ -3209,6 +3567,42 @@ class Solution(object):
 ...
 
 ...
+
+...
+
+#### 199. Binary Tree Right Side View
+
+这道题其实就是把每一层的最后一个元素提出来，用BFS最直观。
+
+如果必须要用DFS，也要知道如何用DFS。用DFS的话，可以用“root-right-left”的顺序，并在traverse的时候记录当前node的深度depth。我们再设置一个result列表，result的长度就是当前已经记录到的最大深度，如果当前depth等于result的长度，说明我们第一次到达这一个深度。因为traverse的顺序，所以第一个到达该深度的node必然是该层最右边的node。
+
+```python
+class Solution(object):
+    def rightSideView(self, root):
+        result = []
+        self.dfs(root, 0, result)
+        return result
+
+    def dfs(self, node, depth, result):
+        if not node:
+            return
+
+        # 如果当前深度等于 result 的长度，说明这是第一次到达该深度
+        # 因此，这个节点是该层最右边的节点
+        if depth == len(result):
+            result.append(node.val)
+
+        # 优先遍历右子树，确保最先访问到右边的节点
+        self.dfs(node.right, depth + 1, result)
+        self.dfs(node.left, depth + 1, result)
+```
+
+时间复杂度都是O(N)
+
+空间复杂度：
+
+* BFS：O(W), W is width
+* DFS: O(H), H is height
 
 ...
 
@@ -3991,6 +4385,10 @@ class Solution(object):
 
 ...
 
+#### 226. Invert Binary Tree
+
+Tree数据结构基础，略。
+
 #### 227. Basic Calculator II (Mark)
 
 该题是Basic Calculator系列的第二道，难度标记为Medium。I和II在普通面试中可能出现，III在顶级公司中可能会出现。可以先把I和II掌握。
@@ -4081,6 +4479,89 @@ for i in range(1,len(nums)):
         interval_start = i
 
 return output
+```
+
+...
+
+#### 230. Kth Smallest Element in a BST
+
+找到BST中第K小的元素。
+
+这道题不难，但是如何处理找到结果后的快速结束，需要一些小技巧。
+
+一般有两种方法：
+
+1. 设置一个found标志，如果找到则把found赋值为True，否则为False。
+2. 值传递，无值的时候return None，有值传递的时候就代表找到了。
+
+推荐的方法是找到目标值后直接传递该值；如果没有值，传递的return value是None。
+
+最佳实践代码：(leetcode击败了100%)
+
+```python
+def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+    # 没找到的话return 0
+    cur_k = 0
+    def dfs(node):
+        nonlocal cur_k
+
+        if not node:
+            return None
+      
+        found_left = dfs(node.left)
+        if found_left:
+            return found_left
+
+        # cur_node (in order traverse)
+        cur_k += 1
+        if cur_k == k:
+            return node.val
+
+        found_right = dfs(node.right)
+        if found_right:
+            return found_right
+      
+        # 当前分支没找到
+        return None
+  
+    result = dfs(root)
+    return result if result is not None else 0
+```
+
+
+#### 235 Lowest Common Ancestor of a BST
+
+根据BST的特性，往下搜索的时候，第一次出现两个node的值分布在左右两侧的时候，就是lowest common ancestor。
+
+有两种写法：自递归或iterative。
+
+对于BST，迭代法不占用额外空间，通常更快，因此更推荐。recursion有可能会栈溢出，且要占用额外空间。
+
+第一种写法：（直接在主函数上递归）
+
+```
+def lowestCommonAncestor(self, root, p, q):
+    if p.val > root.val and q.val > root.val:
+        return self.lowestCommonAncestor(root.right, p, q)
+
+    elif p.val < root.val and q.val < root.val:
+        return self.lowestCommonAncestor(root.left, p, q)
+
+    else:
+        return root
+```
+
+第二种写法：（迭代）
+
+```
+while root:
+    if p.val < root.val and q.val < root.val:
+        root = root.left
+    elif p.val > root.val and q.val > root.val:
+        root = root.right
+    else:
+        return root
+return False
 ```
 
 ...
@@ -4191,6 +4672,119 @@ But, to avoid any possibility that the string is contained in the original strin
 ...
 
 ...
+
+#### 297. Serialize and Deserialize Binary Tree (Hard)
+
+这道题注意，针对的不是BST，所以不能用BST的preorder/inorder重建法。我们可以直接用一个list（用逗号分割为string）记录tree，只要保证记录的是一个包含空缺的节点的list就可以了。对于空缺，我们可以用None来代替。
+
+**核心思想：**
+
+* **序列化 `serialize`** ：
+
+1. 进行前序遍历。
+2. 遇到一个节点，就将其值加入结果字符串。
+3. 如果遇到一个空指针 (`None`)，就加入一个特殊的标记（比如 `'#'` 或 `'null'`）。
+
+* **反序列化 `deserialize`** ：
+
+1. 将序列化后的字符串按分隔符分割成一个列表。
+2. 用一个全局的迭代器或队列来按顺序消费这个列表中的值。
+3. 写一个递归函数 `build()`：
+   * 从列表中取出一个值。
+   * 如果这个值是空指针标记，返回 `None`。
+   * 否则，用这个值创建一个新节点 `node`。
+   * 递归调用 `build()` 来构建 `node` 的左子树。
+   * 递归调用 `build()` 来构建 `node` 的右子树。
+   * 返回创建好的 `node`。
+
+这种方法的时间复杂度对于序列化和反序列化都是 **O**(**N**)，并且可以完美处理包含重复值的树。
+
+这道题也可以用后序遍历，但是前序遍历是最直观的。中序遍历不可以，无法确定根节点位置。
+
+序列化的部分非常好写，反序列化的部分需要用一个技巧：迭代器。这是我在刷题中第一次遇到需要用迭代器的题。当然，不用迭代器也可以，用一个self索引就可以，只是迭代器比较pythonic。
+
+最佳实践如下：
+
+```python
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+      
+        :type root: TreeNode
+        :rtype: str
+        """
+        res = []
+      
+        def preorder(node):
+            if not node:
+                # 为空指针添加标记
+                res.append("null")
+                return
+          
+            # 前序遍历：根 -> 左 -> 右
+            res.append(str(node.val))
+            preorder(node.left)
+            preorder(node.right)
+          
+        preorder(root)
+        return ",".join(res) # 使用逗号分隔
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+      
+        :type data: str
+        :rtype: TreeNode
+        """
+        if not data:
+            return None
+          
+        vals = data.split(',')
+        # 使用迭代器，方便在递归中传递状态
+        self.it = iter(vals)
+
+        def build():
+            # 从迭代器中获取下一个值
+            val = next(self.it)
+          
+            # 如果是空指针标记，说明这里是叶子节点的子节点，返回 None
+            if val == "null":
+                return None
+          
+            # 创建节点
+            node = TreeNode(int(val))
+          
+            # 递归构建左子树和右子树
+            node.left = build()
+            node.right = build()
+          
+            return node
+          
+        return build()
+
+# Your Codec object will be instantiated and called as such:
+# ser = Codec()
+# deser = Codec()
+# ans = deser.deserialize(ser.serialize(root))
+```
+
+
+
+
+
+
+
+
+
+
+
 
 ...
 
@@ -4452,6 +5046,10 @@ class Solution(object):
 ...
 
 ...
+
+#### 450. Delete Node in a BST
+
+BST基础教学题，略。详情参见数据结构教程。
 
 ## No.451 - No.500
 

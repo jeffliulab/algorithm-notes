@@ -408,7 +408,7 @@ class Solution(object):
     def sortArray(self, nums):
         """
         排序数组的主入口方法。
-      
+    
         :type nums: List[int]
         :rtype: List[int]
         """
@@ -416,12 +416,12 @@ class Solution(object):
         # 处理空列表或 None 的边界情况。
         if not nums:
             return []
-      
+    
         # --- 主排序逻辑调用 ---
         # 调用内部的 _sort 方法，对整个数组进行排序。
         # 初始范围是从索引 0 到 len(nums) - 1。
         self._sort(nums, 0, len(nums) - 1)
-      
+    
         # --- 返回结果 ---
         # 排序是“原地”进行的，直接返回修改后的 nums 列表。
         return nums
@@ -450,7 +450,7 @@ class Solution(object):
             # 对“较短”的那个区间进行递归调用，然后通过修改 low 或 high 的值，
             # 让 while 循环在下一次迭代中处理“较长”的那个区间。
             # 这确保了递归深度最多为 O(log n)。
-          
+        
             # 左区间长度: (lt - 1) - low + 1 = lt - low
             # 右区间长度: high - gt + 1
             if (lt - low) < (high - gt):
@@ -468,7 +468,7 @@ class Solution(object):
         """
         三路分区实现 (基于 Dijkstra 的荷兰国旗问题解法)。
         它将数组分为三部分：小于、等于、大于 pivot。
-      
+    
         返回值:
             lt, gt: 分别是“等于 pivot”区间的开始和结束索引的后一个位置。
                     即 arr[lt...gt-1] == pivot
@@ -479,7 +479,7 @@ class Solution(object):
         rand_idx = random.randint(low, high)
         arr[low], arr[rand_idx] = arr[rand_idx], arr[low]
         pivot = arr[low]
-      
+    
         # --- 指针初始化 ---
         # Invariants (循环不变量):
         # arr[low...lt-1]      中的元素都 < pivot
@@ -508,12 +508,12 @@ class Solution(object):
             else: # arr[i] == pivot
                 # 当前元素等于 pivot，不做任何交换，直接移动 i 指针
                 i += 1
-      
+    
         # --- 将 Pivot 放到最终位置 ---
         # 循环结束后，lt 指向“小于”区间的最后一个元素。
         # 将位于 low 的 pivot 和 arr[lt] 交换，这样 pivot 就来到了“等于”区间的开头。
         arr[low], arr[lt] = arr[lt], arr[low]
-      
+    
         # --- 返回分区边界 ---
         # 此时，我们知道：
         # 小于 pivot 的区间是 [low, lt-1]
@@ -583,8 +583,6 @@ Bucket Sort可以把最坏情况的时间复杂度降低到O(N)级别，但是�
 * 或者数据均匀分布在某一个固定区间内（实数）
 
 Bucket Sort的空间复杂度是O(N+K)，其中K是Bucket的数量。
-
-
 
 * **核心思想** ：一种 **非比较排序** ，属于 **分布式排序** 。它将待排序的数据根据一定的映射规则，均匀地分配到有限数量的桶中，然后对每个桶内的数据分别进行排序，最后将所有桶的元素按顺序连接起来。
 * **步骤分解** ：
@@ -890,3 +888,24 @@ Blastoff!
 * **优先选择循环** ：当性能至关重要或数据规模可能导致栈溢出时。
 
 精通递归的思想，并懂得在何时将其转化为更高效的循环，是每一位优秀Python程序员的必备技能。
+
+### Recursive Leap of Faith
+
+DFS 的清晰，不在于执行步骤，而在于 **它和问题本身的逻辑定义高度一致** 。
+
+要理解 DFS 的清晰，需要掌握一个核心思想，叫做**“递归的信任之跃”（Recursive Leap of Faith）**。你不需要在脑子里追踪程序到底递归到了哪一层，你只需要做两件事：
+
+1. **定义好函数的“契约”** ：
+   对于 `isSameTree(p, q)` 这个函数，它的契约就是：“你给我两个节点 p 和 q，我会返回 `True` 或 `False`，告诉你以它们为根的两棵树是否完全相同。”
+2. **只考虑当前这一层，并信任“契约”** ：
+   现在，你要写函数内部的逻辑。你完全不需要去想“下一层会怎么样”、“递归了五层之后是什么情况”，你只需要问自己：
+
+* **最简单的情况是什么（Base Case）？**
+  * 如果 p 和 q 都是 `None`，那它们肯定相同，返回 `True`。
+  * 如果只有一个是 `None`，或者它们的值不一样，那肯定不同，返回 `False`。
+* **一般情况是什么（Recursive Step）？**
+  * 如果上面最简单的情况都不是，那么要判断当前这两棵树是否相同，就需要满足三个条件：
+    1. 它们的值 `p.val` 和 `q.val` 相等（我们已经检查过了）。
+    2. 它们的左子树必须相同。
+    3. 它们的右子树也必须相同。
+  * 那怎么判断它们的左子树是否相同呢？ **直接信任并使用我们定好的“契约”** ！调用 `isSameTree(p.left, q.left)` 就行了。右子树同理。
