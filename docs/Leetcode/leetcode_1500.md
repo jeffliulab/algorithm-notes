@@ -18,6 +18,10 @@
 
 ...
 
+#### 1046. Last Stone Weight
+
+最大堆，水题一个。
+
 ...
 
 ...
@@ -31,6 +35,10 @@
 ...
 
 ...
+
+#### 1091. Shortest Path in Binary Matrix
+
+常规的BFS题
 
 ...
 
@@ -93,12 +101,6 @@
 这道题的意思是：对于任何一个非root的节点X，如果在从根节点到该节点X（包括该节点本身）的路径上，没有任何一个节点的值大于当前节点的值，那么这个节点就被认为是一个好的节点（good node）。找到good nodes的数量并return。
 
 普通dfs加一个cur_max参数就可以。做这道题的时候才发现自己在leetcode一直用的是python2，所以nonlocal用不了。
-
-
-
-
-
-
 
 ...
 

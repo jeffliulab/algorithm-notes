@@ -55,10 +55,10 @@ class Solution(object):
         """
         # 使用一个实例变量来充当全局变量，记录遍历过程中发现的最大直径
         self.max_diameter = 0
-    
+  
         # 调用辅助函数来启动深度计算和直径更新的过程
         self.depth(root)
-    
+  
         # 整个树遍历完后，self.max_diameter 就保存了最终答案
         return self.max_diameter
 
@@ -72,11 +72,11 @@ class Solution(object):
         # 如果计算节点数，则返回0。这里我们用边的数量，所以左深度+右深度正好是路径长度。
         if not node:
             return -1
-    
+  
         # 递归地计算左、右子树的深度
         left_depth = self.depth(node.left)
         right_depth = self.depth(node.right)
-    
+  
         # “顺便”更新最大直径：
         # 穿过当前 node 的最长路径 = (1+左深度) + (1+右深度) = 2 + left_depth + right_depth
         # 这里的深度是边的数量。
@@ -85,7 +85,7 @@ class Solution(object):
         # (从左最深叶子到左孩子是left_depth+1条边，右边同理)
         diameter_at_this_node = (left_depth + 1) + (right_depth + 1)
         self.max_diameter = max(self.max_diameter, diameter_at_this_node)
-    
+  
         # [返回值] 完成本职工作：返回当前节点的深度
         return 1 + max(left_depth, right_depth)
 
@@ -186,6 +186,140 @@ traverse 列表：
 
 ...
 
+#### 621. Task Scheduler
+
+这道题两种解法：heap+冷却队列；贪心数学解。
+
+我们讲heap法，贪心数学解不是通用解，感兴趣的同学可以自己去搜搜或者让gemini讲一下。
+
+首先，我们可以用频率当作排序的依据，维护一个heap。
+
+然后，我们要考虑冷却（也可以理解为间隔）。
+
+**完美的解决方案：最大堆 + 冷却队列**：
+
+1. **最大堆** ：存放所有**当前可用**的任务。堆顶永远是频率最高的那个。
+2. **冷却队列** ：存放所有**正在冷却**的任务。队列里存的是 `(任务剩余频率, 可用时间点)`。
+3. 引入一个全局 **时间计数器 `time`** ，从0开始，一步步模拟CPU的运作。
+
+初见学习版本：
+
+```python
+from collections import deque
+import heapq
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        time = 0
+        hashmap = {}
+        for task in tasks:
+            hashmap[task] = hashmap.get(task, 0) + 1
+      
+        maxheap = []
+        for task in hashmap:
+            freq = hashmap[task]
+            heapq.heappush(maxheap, (-freq, task))
+      
+        coolq = deque()
+
+        # INITIAL STATUS:
+        # time = 0
+        # maxheap = [(-3, 'A'), (-3, 'B')]
+        # coolq = []
+
+        while maxheap or coolq:
+            # 当任务和冷却队列不为空的时候
+            # 继续循环
+            # 循环开始时，时间步+1
+            time += 1
+
+            # 检查冷却队列
+            while coolq and coolq[0][2] <= time:
+                freq, task, T = coolq.popleft()
+                heapq.heappush(maxheap, (freq, task))
+              
+                    # 如果T是time或者time已经超过了T，说明可以执行
+                    # 这里要用while循环一直弹出直到不能执行吗？
+                    # 如果能执行了，就放回最大堆
+                    # 这里我有个问题：如果time到了才放回去，会不会不是最优？比如假如time==3的时候能执行了，这个时候才放回去？不会差一截吗？
+
+
+
+            # 处理maxheap
+            if maxheap:
+                top = heapq.heappop(maxheap)
+                # 这个任务就是要执行的任务
+                # 现在执行了这个任务
+                # 然后执行任务后频率降低
+                freq, task = top
+                freq += 1
+              
+                # 把使用后的任务放入冷却队列
+                # 在放进冷却队列之前计算可用时间：
+                # 什么时候能用呢？
+                # 可用时间 = 当前时间T + 间隔时间N + 1       
+                if freq != 0:
+                    T = time + n + 1
+                    coolq.append((freq, task, T))
+
+                # 好了，现在maxheap处理完了
+
+
+        return time
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+...
+
+...
+
+...
+
+
+
 ## 651 - 700
 
 ...
@@ -212,6 +346,90 @@ traverse 列表：
 
 ...
 
+...
+
+...
+
+#### 695. Max Area of Island
+
+和200岛屿题差不太多。这道题是一个非常标准的图的模板题，建议一定要记住。
+
+```python
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        if not grid:
+            return 0
+
+        rows = len(grid)
+        cols = len(grid[0])
+
+        directions = [
+            [-1, 0],
+            [1, 0],
+            [0, -1],
+            [0, 1]
+        ]
+
+        visited = set() # 用set存储(r,c)
+        
+        def dfs(r, c):
+            # 首先base case判断该位置是否valid：
+            # 1、 是否越界
+            # 2、 是否不是陆地
+            # 3、 是否已经访问过
+            if (r < 0 or r >= rows or
+                c < 0 or c >= cols or
+                grid[r][c] == 0 or
+                (r,c) in visited ):
+                return 0
+
+            # 核心逻辑
+            # 如果没有在base case中被排除，那么这个点可访问
+            visited.add((r,c))
+
+            # 然后递归求面积
+            S = 1
+            for dr, dc in directions:
+                S += dfs(r+dr, c+dc)
+
+            # return area
+            return S
+
+        max_area = 0
+        # traverse whole grid
+        for r in range(rows):
+            for c in range(cols):
+                ## 如果发现了一个新的岛屿起点
+                ## 即没有visited并且是1
+                if (r,c) not in visited and grid[r][c] == 1:
+                    area = dfs(r, c)
+                    max_area = max(area, max_area)
+
+        return max_area
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+...
+
+...
+
+...
+
 #### 700. 基础题
 
 略
@@ -223,6 +441,10 @@ traverse 列表：
 基础题，略。
 
 ...
+
+#### 703. Kth Largest Element in a Stream
+
+略。题目是越来越长了，内容是没啥可写的。
 
 ...
 
@@ -479,8 +701,14 @@ Koko吃香蕉问题就是这类问题的完美范例：
 
 ...
 
+#### 973. K Closest Points to Origin
+
+最大堆，略。
+
 ...
 
 ...
+
+#### 994. Rotting Oranges
 
 ...

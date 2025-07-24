@@ -66,6 +66,25 @@ Heap的重要性质包括：
   * 左子节点的索引：`2 * i`
   * 右子节点的索引：`2 * i + 1`
 
+实现一个heap，主要功能实现方法如下：
+
+* sift up: 不断和parent比较，如果比parent小就交换位置
+* sift down：不断和childs比较，如果比child大，就和更小的那个child交换
+* heapify：从第一个非叶子节点开始，向前遍历，逐一sift down
+* add: 把新元素放到数组的最末尾，然后执行sift up操作
+* pop: 把list[0]和list[-1]调换位置，然后对新的list[0] sift down
+
+重要速算，对于一个长度为n的最小堆list：
+
+* 第一个非叶子节点：(n // 2) - 1
+* 第k小的元素：无法直接计算
+* 节点i的父节点：(i - 1) // 2
+* 节点i的左子节点：2 * i + 1
+* 节点i的右子节点：2 * i + 2
+* 非叶子节点的数量：n // 2
+* 叶子节点的数量：n - n // 2
+* heap的高度：math.floor(math.log2(n))
+
 #### Insertion, Deletion
 
 我们以**数组从索引 0 开始**为例来解释。
@@ -153,12 +172,12 @@ class MinHeap:
         """
         while self._has_left_child(index): # 只要有左子节点，就可能有子节点
             smaller_child_idx = self._left_child_index(index)
-      
+  
             # 如果有右子节点，并且右子节点比左子节点更小，则选择右子节点
             if self._has_right_child(index) and \
                self.heap[self._right_child_index(index)] < self.heap[smaller_child_idx]:
                 smaller_child_idx = self._right_child_index(index)
-      
+  
             # 如果当前节点比最小的子节点还小，则满足堆属性，停止下沉
             if self.heap[index] <= self.heap[smaller_child_idx]:
                 break
@@ -397,7 +416,7 @@ Heapify：
 * 最小的子节点是 `30`。
 * `100 > 30`，所以交换 `100` 和 `30`。
 
-   **交换后：**
+  **交换后：**
 
 ```
       10  (当前节点，违反了堆属性，因为它比子节点大)
@@ -432,6 +451,27 @@ Heapify：
 总结来说sift down就是：
 
 * 不断比较i和2i+1和2i+2，找到更小的那个交换
+
+...
+
+### 第K大
+
+维护一个大小为K的最小堆，堆顶就是第K大的元素。
+
+这里其实蕴含了两个步骤，以班上成绩[88, 90, 95]为例，加入要继续加入一个92：
+
+* 那么首先让92入队
+* 如果我们要找第3大的成绩，那么我们就维护一个大小为3的最小堆
+* 现在堆里已经有4个元素了：[88,90,92,95]，把最小的88挤出去
+* 这个时候堆变成了[90,92,95]，堆顶还是第三大的数字！
+
+第K小的话就是反过来，维护一个大小为K的最大堆，堆顶就是第K小的元素。
+
+...
+
+...
+
+...
 
 ...
 
@@ -799,7 +839,7 @@ def max_width(root: TreeNode) -> int:
                 queue.append(node.left)
             if node.right:
                 queue.append(node.right)
-    
+  
     return max_w
 ```
 
@@ -1616,9 +1656,184 @@ BST必须要掌握的几个技能
 
 ## Graph
 
-...
+Linked List和Tree都是特殊的Graph。
+
+![1753295311729](image/data_structures/1753295311729.png)
+
+在一个Graph（图）中，包含两类：
+
+* Vertex
+* Edge
+
+![1753295462975](image/data_structures/1753295462975.png)
+
+在一个图中：
+
+* Edge可能是有向的
+* Edge可以指向自己形成环
+
+### Graph Properties
+
+图的性质。
+
+#### degree(u)
+
+* **对于无向图 (Undirected Graph)：**
+  顶点 `u` 的度数是指 **与顶点 `u` 相连的边的数量** 。
+  例如，在一个无向图中，如果顶点 A 连接到 B, C, D，那么顶点 A 的度数就是 3。
+* **对于有向图 (Directed Graph)：**
+  有向图的度数通常分为两种：
+  * **出度 (Out-degree)：** 从顶点 `u` **出发**的边的数量。
+  * **入度 (In-degree)：** **指向**顶点 `u` 的边的数量。
+    当提到 `degree(u)` 而没有特别指明时，通常指的是 **出度** （尤其是在邻接列表的上下文中，因为它通常存储的是出边信息），或者是无向图的度数。
+
+握手引理（Handshaking Lemma）：在任何无向图中，所有顶点的度数之和等于边数的两倍：
+
+$$
+\left( \sum_{v \in V} \deg(v) = 2 \cdot E \right)
+$$
 
 ...
+
+#### Density
+
+图的密度是衡量一个图“有多满”的指标，即它有多少边是实际存在的，相对于它可能拥有的最大边数。
+
+- **对于简单无向图：**
+
+  - 最多可以有 $V(V - 1)/2$ 条边。这是一个组合数 $\binom{V}{2}$。
+  - 密度通常定义为：
+
+    $$
+    \text{Density} = \frac{E}{V(V - 1)/2}
+    $$
+  - 密度值介于 $0$ 到 $1$ 之间。密度接近 $1$ 表示是稠密图 (Dense Graph)，接近 $0$ 表示是稀疏图 (Sparse Graph)。
+- **对于简单有向图：**
+
+  - 最多可以有 $V(V - 1)$ 条边。
+  - 密度通常定义为：
+
+    $$
+    \text{Density} = \frac{E}{V(V - 1)}
+    $$
+
+### Graph Representation
+
+在leetcode中，图相关的题一般涉及以下三种形式：
+
+* Matrix
+* Adjacency Matrix
+* Adjacency List
+
+#### Matrix
+
+用Matrix表示的图一般用一个2d grid来表示，用0表示通，1表示blocked：
+
+![1753295715806](image/data_structures/1753295715806.png)
+
+这种情况下一般可以用来表示一个无向图：
+
+![1753295793691](image/data_structures/1753295793691.png)
+
+...
+
+#### Adjacency Matrix
+
+adjacency matrix是记录图的一个非常好的工具，他之所以能记录图，是因为在图中，如果我们对每个node进行编号，那么这个node和另外一个node（或者和自己）一定有一个唯一且确定的关系：从a到b是否连通。
+
+如果我们把所有的点的关系记录下来，就可以形成一个matrix：
+
+![1753297226203](image/data_structures/1753297226203.png)
+
+我们用：
+
+* `A[i][j] = 1`来表示从顶点i到顶点j有边
+* `A[i][j] = 0`来表示从顶点i到顶点j没有边
+
+用下面这个例子来说明：
+
+![1753297060136](image/data_structures/1753297060136.png)
+
+以上图为例，如果我们想把这个图用adjacency matrix记录，那么我们就要先把所有的顶点列出来并进行编号：0、1、2、3、4、5，一共有6个顶点。
+
+![1753297441178](image/data_structures/1753297441178.png)
+
+我们一个一个node来看：
+
+* 1和2、5连通，所以1到2和5是1，即A[1][2]和A[1][5]是1，其他是0
+* 以此类推，可以得到：
+
+![1753297574587](image/data_structures/1753297574587.png)
+
+由于图例是无向图，所以途中的矩阵是对称的。如果是有向图，假设从1到2但是不从2到1，那么显然就不对称了。
+
+对于一个adjacency matrix，显然其空间复杂度较大，为O(V^2)。因为无论图有多少条边，都要为可能的VxV对分配空间。对于稀疏图（E远小于V^2），这种方式会浪费大量空间。
+
+时间复杂度：
+
+* 检查边是否存在，直接访问A[u][v]，O(1)，优势巨大
+* 查找所有邻居：traverse顶点所在行，O(V)
+* 添加/删除边：O(1)，直接修改
+* 遍历：O(N^2)
+
+#### Adjacency List
+
+Adjacency List在leetcode和interview中较为常见，用一个简单的数据结构就能记录value和adjacency：
+
+![1753297847326](image/data_structures/1753297847326.png)
+
+这里的neighbors只记录当前节点node可以通向的对象。
+
+如果我们用adjacency list记录刚才的这个例子：
+
+![1753297060136](https://file+.vscode-resource.vscode-cdn.net/c%3A/Users/jeffl/OneDrive/github_notes/algorithm-notes/docs/image/data_structures/1753297060136.png)
+
+还是一样，我们先把所有的node列出来：
+
+```
+0: []
+1: []
+2: []
+3: []
+4: []
+5: []
+```
+
+然后我们对每个node，把他相连的node添加上去：
+
+```
+0: [4]
+1: [2, 5]
+2: [1, 3, 5]
+3: [2, 4]
+4: [0, 3, 5]
+5: [1, 2, 4, 5]
+```
+
+其中5连通自己，所以5也被记录在了5中。
+
+Adjacency List的空间复杂度是O(V+E)，是稀疏图的最佳选择，因为他只存储实际存在的边。
+
+时间复杂度：
+
+* 检查边是否存在：遍历顶点的邻居，O(degree(u)), 最坏O(V)
+* 查找所有邻居：遍历顶点u的邻居列表，O(degree(u))
+* 添加边：O(1)
+* 删除边：需要先找到，再删除：O(degree(u))
+
+...
+
+#### Incidence Matrix
+
+关联矩阵
+
+...
+
+### DAG
+
+有向无环图
+
+DAG的Topological Sort拓扑排序是leetcode和interview的重点
 
 ...
 

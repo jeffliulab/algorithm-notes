@@ -583,6 +583,40 @@ Two Pointer方法非常巧妙，和22. Generate Parentheses中的使用左右cou
 
 ...
 
+#### 34. Find First and Last Position of Element in Sorted Array
+
+这道题用过两次二分查找，第一次找左边界，第二次找右边界。
+
+从**时间复杂度**的角度来看，这种“两次二分查找”的解法  **就是最优解** 。
+
+我们来分析一下为什么。
+
+**理论下限** ：对于一个排好序的数组，任何基于比较的搜索算法，其时间复杂度的理论最优值就是 O(log n)。你不可能比这个更快，因为每次比较最多只能排除一半的元素。
+
+第一次查找的时间是 O(log n)。第二次查找的时间也是 O(log n)。
+
+总时间 = O(log n) + O(log n) = 2 * O(log n)。**大O表示法** ：在计算时间复杂度时，我们会忽略常数系数。所以 2 * O(log n) 就等于  **O(log n)** 。
+
+因此，你的算法达到了理论上的最优时间复杂度。
+
+我们能不能 **只用一个 `while` 循环** 来同时找到左右边界呢？
+
+答案是：**很难，而且通常不这么做。**
+
+原因在于，二分查找的核心是  **“抛弃一半”** 。当你站在一个 `mid` 点时：
+
+* **为了找左边界** ，当你找到一个 `target` 时，你需要 **向左** 收缩区间 (`right = mid - 1`)，去探索左边是否还有更早的 `target`。
+* **为了找右边界** ，当你找到一个 `target` 时，你需要 **向右** 收缩区间 (`left = mid + 1`)，去探索右边是否还有更晚的 `target`。
+
+这两个目标是 **相互矛盾** 的。在一个 `while` 循环里，`left` 和 `right` 指针的移动方向是唯一的。你不可能让它们既向左收缩又向右收缩。
+
+**最接近“一次遍历”的 O(log n) 想法是：**
+
+1. 用一次二分查找，找到 **任意一个** `target`。
+2. 然后从这个 `target` 的位置开始，向左和向右 **线性地** 扩展，直到找到边界。
+
+但这个方法存在一个致命缺陷：在最坏的情况下，比如整个数组所有元素都是 `target`，那么第2步的线性扩展就会退化成 O(n) 的复杂度，导致整个算法不再是 O(log n)。
+
 ...
 
 #### 36. Valid Sudoku
@@ -2372,7 +2406,7 @@ def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNod
     def array_to_tree(left: int, right: int) -> Optional[TreeNode]:
         # left: 当前子树在中序遍历中的左边界
         # right: 当前子树在中序遍历中的右边界
-      
+  
         # 基本情况：如果左边界大于右边界，说明当前是一个空子树
         if left > right:
             return None
@@ -2380,7 +2414,7 @@ def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNod
         # 2. 前序遍历的第一个元素就是当前的根节点
         root_val = preorder[self.preorder_index]
         root = TreeNode(root_val)
-      
+  
         # 将 preorder 的索引后移一位，为构建子树做准备
         self.preorder_index += 1
 
@@ -2414,9 +2448,6 @@ def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNod
 | **2. 将子树问题交给下层递归**           | **列表切片** `preorder[...]`,`inorder[...]<br>` **笨重** ，每次都创建新列表，消耗大量时间和内存。 | **传递索引** `(left, right)<br>` **轻量** ，只传递两个数字，不产生任何额外的数据副本。 |
 
 ...
-
-
-
 
 #### 110. Balanced Binary Tree
 
@@ -2645,14 +2676,6 @@ class Solution(object):
 self.result或者result然后nonlocal声明都可以，本例和leetcode中推荐self.result。在同一个class内，self.result可以在所有的函数和任何函数内部的嵌套函数中访问，只要保证不重复设置self变量，那么就不会出现任何问题。
 
 ...
-
-
-
-
-
-
-
-
 
 #### 125. Valid Palindrome
 
@@ -4507,7 +4530,7 @@ def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
 
         if not node:
             return None
-      
+  
         found_left = dfs(node.left)
         if found_left:
             return found_left
@@ -4520,14 +4543,13 @@ def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         found_right = dfs(node.right)
         if found_right:
             return found_right
-      
+  
         # 当前分支没找到
         return None
   
     result = dfs(root)
     return result if result is not None else 0
 ```
-
 
 #### 235 Lowest Common Ancestor of a BST
 
@@ -4717,35 +4739,35 @@ class Codec:
 
     def serialize(self, root):
         """Encodes a tree to a single string.
-      
+  
         :type root: TreeNode
         :rtype: str
         """
         res = []
-      
+  
         def preorder(node):
             if not node:
                 # 为空指针添加标记
                 res.append("null")
                 return
-          
+      
             # 前序遍历：根 -> 左 -> 右
             res.append(str(node.val))
             preorder(node.left)
             preorder(node.right)
-          
+      
         preorder(root)
         return ",".join(res) # 使用逗号分隔
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
-      
+  
         :type data: str
         :rtype: TreeNode
         """
         if not data:
             return None
-          
+      
         vals = data.split(',')
         # 使用迭代器，方便在递归中传递状态
         self.it = iter(vals)
@@ -4753,20 +4775,20 @@ class Codec:
         def build():
             # 从迭代器中获取下一个值
             val = next(self.it)
-          
+      
             # 如果是空指针标记，说明这里是叶子节点的子节点，返回 None
             if val == "null":
                 return None
-          
+      
             # 创建节点
             node = TreeNode(int(val))
-          
+      
             # 递归构建左子树和右子树
             node.left = build()
             node.right = build()
-          
+      
             return node
-          
+      
         return build()
 
 # Your Codec object will be instantiated and called as such:
@@ -4774,17 +4796,6 @@ class Codec:
 # deser = Codec()
 # ans = deser.deserialize(ser.serialize(root))
 ```
-
-
-
-
-
-
-
-
-
-
-
 
 ...
 
