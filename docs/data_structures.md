@@ -1676,6 +1676,12 @@ Linked List和Tree都是特殊的Graph。
 
 图的性质。
 
+#### E <= V^2
+
+如果图中两个节点之间最多只能有一条路，而一个节点最多只能有一个自环，那么V和E之间遵循E <= V^2的关系。
+
+只有当节点只有一个的时候，一个节点加一个自环，E == V^2。
+
 #### degree(u)
 
 * **对于无向图 (Undirected Graph)：**
@@ -1776,7 +1782,28 @@ adjacency matrix是记录图的一个非常好的工具，他之所以能记录�
 * 添加/删除边：O(1)，直接修改
 * 遍历：O(N^2)
 
-#### Adjacency List
+### Adjacency List
+
+Adjacency List和Adjacency Matrix都是用来存储graph的。
+
+一般而言，一个图的Node的数据结构可以写为：
+
+```
+class Node {
+    public int val;
+    public List<Node> neighbors;
+}
+```
+
+这个Node就是构成图的基本单元，每个node都有一个他自己的值，并且知道他的所有邻居是谁。
+
+如果值是唯一的，值本身就可以作为index；如果值不唯一，则需要把值和index分开存储，一般把index作为key存储。
+
+在处理这种问题的时候，如果我们直接对Node进行处理操作，那么操作起来会有点困难，所以这里引入以hashmap + list为组建核心的adjacency list作为工具来帮我们快速构建图。
+
+...
+
+#### Adjacency List Intro
 
 Adjacency List在leetcode和interview中较为常见，用一个简单的数据结构就能记录value和adjacency：
 
@@ -1823,17 +1850,422 @@ Adjacency List的空间复杂度是O(V+E)，是稀疏图的最佳选择，因为
 
 ...
 
-#### Incidence Matrix
+#### 无重复值Implementation
 
-关联矩阵
+Adjacency List实现起来并不难，首先我们需要构建一个原始数据，记录当下的边的情况：
+
+```
+# edges 是 "说明书"
+edges = [["A", "B"], ["B", "C"], ["B", "E"], ["C", "E"], ["E", "D"]]
+```
+
+然后我们根据说明书搭建Adjacency List。Adjacency List（邻接表）的优点是可以快速找到一个node的所有neighbors。
+
+我们用一个hashmap来构造邻接表：
+
+```
+adjList = {}
+```
+
+更具体地说，邻接表是由以下内容构建的：
+
+* node目录：用hashmap记录所有node
+* 邻居内容：每一个node key对应所有的邻居，用list记录
+
+即
+
+```
+adjList = {key: nodes; values: node's neighbors}
+```
+
+然后我们可以根据edges中的信息，构建出这张表：
+
+![1753367723069](image/data_structures/1753367723069.png)
+
+代码实现如下：
+
+```python
+# edges 是 "说明书"
+edges = [["A", "B"], ["B", "C"], ["B", "E"], ["C", "E"], ["E", "D"]]
+
+# adjList 是我们准备要搭建的 "模型"，目前是空的
+adjList = {}
+
+# 开始阅读 "说明书"，一条一条地执行指令
+for src, dst in edges:
+    # 指令: ["A", "B"]
+    # src = "A", dst = "B"
+  
+    # 检查一下模型里有没有 "A" 和 "B" 这两个节点，如果没有就创建出来
+    if src not in adjList:
+        adjList[src] = []  # 在模型里为 "A" 创建一个空间，用来存放它的邻居
+    if dst not in adjList:
+        adjList[dst] = []  # 在模型里为 "B" 创建一个空间
+
+    # 核心步骤：执行指令，建立连接
+    # 在模型中，找到 "A" 的邻居列表，然后把 "B" 加进去
+    adjList[src].append(dst)
+```
+
+构建完成后，adjList就变成了：
+
+```
+{
+  "A": ["B"],
+  "B": ["C", "E"],
+  "C": ["E"],
+  "E": ["D"],
+  "D": [] 
+}
+```
 
 ...
 
-### DAG
+#### 有重复值Implementation
 
-有向无环图
+如果图中有重复值，又想用邻接表存储的话，需要对node升级一下：
+
+* 标识符（ID）：必须是独一无二的唯一ID，作为key
+* 值（Value）：可以重复的值，单独分开存储
+
+这个方法是算法竞赛和工程实践中常用的方法，举例来说，假设图的输入是这样的：
+
+* **节点的值** : `[5, 8, 5, 2]`  (注意，索引0的节点和索引2的节点值都是5)
+* **边** : `(0, 1)`, `(0, 2)`, `(2, 3)` (表示从ID为0的节点到ID为1的节点有边，以此类推)
+
+我们的数据结构会变成这样：
+
+1. **邻接表 `adjList`** : 键是节点的 **唯一ID (整数)** 。
+2. **值存储 `nodeValues`** : 一个独立的数组或HashMap，用来通过ID查询节点的值。
+
+```python
+# 节点的值 (索引就是它们的唯一ID)
+nodeValues = [5, 8, 5, 2] 
+
+# 邻接表 (只关心结构，只存储ID)
+adjList = {
+    0: [1, 2],  # ID为0的节点连接到ID为1和ID为2的节点
+    1: [],
+    2: [3],
+    3: []
+}
+
+# 现在，我们既能表示图的结构，又能处理重复的值
+print(f"节点ID 0 的值是: {nodeValues[0]}") # 输出 5
+print(f"节点ID 2 的值是: {nodeValues[2]}") # 输出 5
+print(f"节点ID 0 的邻居是ID为 {adjList[0]} 的节点") # 输出 [1, 2]
+```
+
+...
+
+#### DFS in Adjacency List
+
+假如我们现在有一个adjacency list，然后想看看target这个目标值是否在adj. list里，我们可以进行遍历。
+
+对于图的遍历，标准的做法是DFS和BFS。那么为什么不直接把hashmap进行普通的hashmap traverse呢？他们不都是访问所有的元素，用了O(V+E)的时间吗？
+
+这是因为，如果你直接迭代循环hashmap，你确实可以找到所有的点，但是这种访问是缺乏顺序的。如果问题不仅仅是有没有target，而是：
+
+* Reachability: 我从节点A能否到达节点Z？
+* Shortest Path: 从A到Z最少需要几步？（无权图）
+* Cycle Detection: 图中是否有环路？
+* Connected Components: 连通分量，即这张图是否完全连通？如果不是，他们分成了几个相互独立的小岛？
+
+因此，我们直接学习标准图遍历，而不是学习一个只能解决有没有target的问题的解法。
+
+Neetcode中的教程：（图片来自neetcode.io）
+
+![1753379337085](image/data_structures/1753379337085.png)
+
+标准DFS实现：
+
+```python
+def dfs_recursive(graph: dict, start_node: str) -> list:
+    """
+    对图进行深度优先搜索 (DFS)，使用递归实现。
+
+    Args:
+        graph: 图的邻接表表示 (字典)。
+        start_node: 遍历的起始节点。
+
+    Returns:
+        一个包含DFS遍历顺序的节点列表。
+        如果起始节点不存在，则返回空列表。
+    """
+    if start_node not in graph:
+        return []
+  
+    visited = set()
+    path = []
+
+    # 定义一个辅助递归函数
+    def _dfs_helper(node):
+        # 访问当前节点
+        visited.add(node)
+        path.append(node)
+
+        for neighbor in graph.get(node, []):
+            if neighbor not in visited:
+                _dfs_helper(neighbor)
+
+    _dfs_helper(start_node)
+    return path
+
+# --- 使用示例 ---
+dfs_rec_path = dfs_recursive(graph_example, "A")
+print(f"DFS (递归) 遍历路径: {dfs_rec_path}")
+# 输出: DFS (递归) 遍历路径: ['A', 'B', 'D', 'C', 'E']
+```
+
+...
+
+当图非常大的时候，推荐用迭代版DFS：
+
+```python
+def dfs_iterative(graph: dict, start_node: str) -> list:
+    """
+    对图进行深度优先搜索 (DFS)，使用迭代和栈实现。
+
+    Args:
+        graph: 图的邻接表表示 (字典)。
+        start_node: 遍历的起始节点。
+
+    Returns:
+        一个包含DFS遍历顺序的节点列表。
+        如果起始节点不存在，则返回空列表。
+    """
+    if start_node not in graph:
+        return []
+
+    stack = [start_node]      # 使用list作为栈
+    visited = set()           # visited集合防止重复访问和死循环
+    path = []
+
+    while stack:
+        current_node = stack.pop()
+
+        # 注意：一个节点可能在栈里出现多次，但我们只在它第一次被弹出时访问它
+        if current_node not in visited:
+            visited.add(current_node)
+            path.append(current_node)
+
+            # 将邻居逆序压入栈，以保证遍历顺序与递归版一致
+            # (因为栈是后进先出)
+            for neighbor in reversed(graph.get(current_node, [])):
+                if neighbor not in visited:
+                    stack.append(neighbor)
+  
+    return path
+
+# --- 使用示例 ---
+dfs_it_path = dfs_iterative(graph_example, "A")
+print(f"DFS (迭代) 遍历路径: {dfs_it_path}")
+# 输出: DFS (迭代) 遍历路径: ['A', 'B', 'D', 'C', 'E']
+```
+
+...
+
+#### BFS in Adjacency List
+
+...
+
+图片来自neetcode.io：
+
+![1753379381070](image/data_structures/1753379381070.png)
+
+代码如下：
+
+```python
+from collections import deque
+
+def bfs(graph: dict, start_node: str) -> list:
+    """
+    对图进行广度优先搜索 (BFS)。
+
+    Args:
+        graph: 图的邻接表表示 (字典)。
+        start_node: 遍历的起始节点。
+
+    Returns:
+        一个包含BFS遍历顺序的节点列表。
+        如果起始节点不存在，则返回空列表。
+    """
+    # 1. 健壮性检查：确认起始节点在图中
+    if start_node not in graph:
+        return []
+
+    # 2. 初始化：使用高效的数据结构
+    queue = deque([start_node])  # 使用deque作为队列
+    visited = {start_node}       # 使用set进行O(1)复杂度的快速查找
+    path = []                    # 用于存储最终的遍历路径
+
+    # 3. 循环直到队列为空
+    while queue:
+        # 从队列左侧取出节点 (先进先出)
+        current_node = queue.popleft()
+        path.append(current_node)
+
+        # 遍历当前节点的所有邻居
+        # 使用 graph.get(current_node, []) 避免因节点没有邻居列表而报错
+        for neighbor in graph.get(current_node, []):
+            if neighbor not in visited:
+                # 将新发现的节点加入visited集合和队列
+                visited.add(neighbor)
+                queue.append(neighbor)
+  
+    return path
+
+# --- 使用示例 ---
+bfs_path = bfs(graph_example, "A")
+print(f"BFS 遍历路径: {bfs_path}")
+# 输出: BFS 遍历路径: ['A', 'B', 'C', 'D', 'E']
+```
+
+...
+
+### DAG & Topo Sort
+
+Directed Acyclic Graph, 简称DAG，即有向无环图。
+
+Topo  Sort即Topological Sort，拓扑排序。
 
 DAG的Topological Sort拓扑排序是leetcode和interview的重点
+
+...
+
+#### Topological Sort
+
+对于DAG图，如果想理清楚依赖关系，拓扑排序是必不可少的。
+
+拓扑排序（Topological Sort）是对有向无环图（Directed Acyclic Graph，简称 DAG）的顶点进行的一种线性排序。
+
+它的核心思想是：**如果图中有从顶点 U 到顶点 V 的有向边（即 U -> V），那么在拓扑排序的结果中，顶点 U 总是出现在顶点 V 的前面。**
+
+简单来说，拓扑排序解决的是“先做A才能做B”这类依赖性问题。如果一系列任务或事件之间存在依赖关系，拓扑排序就能给出一个可行的执行顺序。
+
+Topological sort的重点在于根据图的结构来进行排序，并且：
+
+1. **必须是有向图：** 关系是单向的，例如“A 必须在 B 之前”，而不是“A 必须在 B 之前，B 也必须在 A 之前”。
+2. **不能有环：** 图中不能有循环依赖。如果存在循环（例如，A 必须在 B 之前，B 必须在 C 之前，C 又必须在 A 之前），那么就不可能找到一个有效的线性顺序来完成所有任务，这种情况下，拓扑排序是无法进行的。
+
+拓扑排序的典型应用：
+
+* 课程先修关系（经典的course schedule）
+* 编译器依赖、软件包管理、任务调度等
+
+#### DFS解法
+
+这个方法并非最适合解决拓扑排序的方法，可以了解一下，记住DFS是“反向”。
+
+对于一个有向图，DFS法是反着来的：
+
+![1753410936442](image/data_structures/1753410936442.png)
+
+我们从结果出发，然后往回找，当找到没有前序内容或者前序内容都已经添加的时候，就把这个node添加进去。
+
+当然，我们也可以顺着来，当找到最后的node的时候作为base case添加到result中，得到一个和正确排序正好相反的结果：
+
+![1753411357293](image/data_structures/1753411357293.png)
+
+然后我们把result反过来（reverse）就可以了。
+
+#### BFS解法
+
+在course schedule问题中，我们一开始并不知道哪门课是图的起点。虽然DFS也可以解决，但是BFS法会更简单直观。BFS的拓扑排序也叫做Kahn's Algorithm，是DAG拓扑排序的经典解法。
+
+Kahn's Algorithm所需的数据结构：
+
+* 一个Queue：存储所有当前入度为0的nodes，记录当前可以处理的nodes
+* 一个记录入度（In-degree）的list/hashtable：用于存放每个node有多少条指向它的边，例如 `in_degree[A] = 2`，意味着node A有两个前置依赖。
+* 一个adjacency list：用于表示图的结构，即每个节点指向哪些其他节点。
+
+针对一个DAG，Kahn's算法步骤如下：
+
+```
+遍历图中所有边，计算出每个节点的初始入度（in-degree）
+初始化queue，将所有in-degree为0的节点全部放入
+一个result，用来存储最终拓扑排序的结果
+
+循环，当队列不为空时：
+    从queue中取出一个节点u，将u放入result
+    遍历u的所有邻居v：
+	对于每个邻居v，v的入度 -= 1（象征前置依赖已经满足）
+	如果邻居v的入度减1后变为0，则将v放入queue
+	（象征所有前置依赖都已经满足）
+
+循环结束后，检查result中的节点数量：
+    如果result中的节点数量等于图中的节点数量：
+	说明该图是一个有效的拓扑排序
+    如果result中的节点数量小于图中的节点数量：
+	说明该图中存在环路（Cycle）
+	（环路中的节点入度永远无法变为0）
+```
+
+可以记忆一下标准模板：
+
+```python
+indegree = {}
+neighbors = {}
+
+for i in range(numCourses):
+    indegree[i] = 0
+    neighbors[i] = []
+
+for course, pre_course in prerequisites:
+    indegree[course] += 1
+    neighbors[pre_course].append(course)
+
+queue = deque()
+for node in indegree:
+    if indegree[node] == 0:
+	queue.append(node)
+
+result = []
+while queue:
+    node = queue.popleft()
+    result.append(node)
+  
+    node_neighbors = neighbors[node]
+    for neighbor in node_neighbors:
+	indegree[neighbor] -= 1
+	if indegree[neighbor] == 0:
+	    queue.append(neighbor)
+
+if len(result) == numCourses:
+    return result # or return True, the DAG is valid
+else:
+    return False # the DAG has circle
+```
+
+在分析时间复杂度的时候，N代表nodes数量，E代表边的数量：
+
+* for循环numCourses: O(N)
+* for循环prerequisites: O(E)
+* for循环indegree: O(N)
+* while循环queue: O(N)
+* while循环中的for循环:O(E)
+
+这里要注意，最终整体时间复杂度是O(N+E)，为什么嵌套在while循环里的O(E)是被加上去而不是乘上去的呢？
+
+想象一下，你要规划一次全国旅行：
+
+* **N** : 代表你要访问的  **城市总数** 。
+* **E** : 代表连接这些城市的  **公路总数** 。
+
+你的旅行计划（也就是我们的算法）分为两部分工作：
+
+1. **抵达每个城市（外层 `while` 循环）** : 每抵达一个城市，你都要去酒店办一次入住手续。因为你每个城市只去一次，所以你总共要办 **N** 次入住手续。
+2. **开车走公路（内层 `for` 循环）** : 每当你身处一个城市时，你会开车走完 **从这个城市出发的所有公路** ，前往下一个城市。
+
+现在我们来计算总工作量：
+
+* **`O(N*E)` 的错误逻辑** : 这种逻辑相当于说：“我每抵达一个城市（总共N个），就要把全国所有的高速公路（总共E条）都开一遍。” 这显然是荒谬的，没有人会这样旅行。
+* **`O(N+E)` 的正确逻辑** : 我的总工作量是“ **所有城市的入住手续总和** ” **加上** “ **所有公路的驾驶里程总和** ”：
+  * 办入住的总次数 = **N**
+  * 因为你的旅行计划会确保全国的每一条公路你都只走一次，所以开车走公路的总次数 = **E**
+  * 因此，总工作量 = **O(N + E)**
+
+所以在course schedule问题以及类似的问题中，时间复杂度是O(N+E)，这是一个重要的知识点。
 
 ...
 

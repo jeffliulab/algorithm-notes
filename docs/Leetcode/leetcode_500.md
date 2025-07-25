@@ -1221,6 +1221,10 @@ class Solution(object):
 
 ...
 
+#### 53. Maximum Subarray
+
+Kadane's algorithm.
+
 #### 54. Spiral Matrix
 
 这道题主要用来练习对Matrix的操作和coding时对边界的处理。
@@ -2869,6 +2873,53 @@ class Solution(object):
 
 ...
 
+#### 133. ※ Clone Graph
+
+这是一道经典的adjacency list的教学题。但是注意，这道题使用的邻接表不是常见的hashmap + list，而是用Node来实现的。
+
+```python
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+from typing import Optional
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        if not node:
+            return None
+  
+        hashmap = {} # old node: new node
+        def dfs(node):
+            if node in hashmap:
+                # mark
+                return hashmap[node]
+
+            newnode = Node(node.val)
+            if node not in hashmap:
+                hashmap[node] = newnode
+  
+            # 上面已经处理完了映射关系
+            for neighbor in node.neighbors:
+                # neighbor是旧的
+                # 把neighbor加进去，这里如果过neighbor还不在hashmap中怎么办呢？
+                # ※ 答案就是这里继续dfs
+                new_neighbor = dfs(neighbor)
+                hashmap[node].neighbors.append(new_neighbor)
+
+            # return的是拷贝的值
+            return hashmap[node]
+
+        return dfs(node)
+```
+
+...
+
+...
+
 #### 134. ※ Gas Station
 
 这道题是一道经典的贪心greedy题，非常适合用来理解greedy思想。
@@ -3973,11 +4024,59 @@ class Solution(object):
 
 ...
 
+#### 207. Course Schedule
+
+这是做的第一道有向图，所以作为有向图教学帖。
+
+以[a, b]为例，如果你想上a，就必须先上b。这可以被理解为从b到a的一条有向边。
+
+为什么是从b到a？因为你想到a，必须经过b。
+
+假设我们的课程是[[0,1],[0,2],[1,3],[1,4],[3,4]]，那么理论上我们的图是：
+
+![1753390634564](image/leetcode_500/1753390634564.png)
+
+上图表示的是最直观的先修课顺序，也就是修了4，才能修3和1，然后修2后才能修0.
+
+这种建图的方式是BFS拓扑排序的标准做法。我们先找到没有先修课的课4，然后解锁他们的后续课程。
+
+---
+
+另一种方法是DFS的依赖关系法，即我们反过来看，如果你想上0，那么依赖于你上过1和2；如果你想上1，那么依赖于你上过3和4；如果你想上3，那么依赖于你上过4：
+
+![1753382162564](image/leetcode_500/1753382162564.png)
+
+依赖关系建图的时候，我们依赖对象放在list里头，从而构成我们的邻接表如下：
+
+```
+preMap = {i: [] for i in range(numCourses)}
+for crs, pre in prerequisites:
+    preMap[crs].append(pre)
+```
+
+这里的 `crs` 是课程，`pre` 是它的先修课。
+
+代码 `preMap[crs].append(pre)` 明确地建立了从 `crs -> pre` 的依赖关系图，也就是我们上面所说的方式。DFS沿着依赖关系进行递归搜索。
+
+---
+
+以上两种方式都能解开本题，但是这里其实更推荐用拓扑排序，也就是Kahn's Algorithm来做。因为这个方法就是专门针对这道题或者说这类型题的经典解法。
+
+比如说，在面试中如果遇到Course Schedule这道题，如果你用BFS拓扑排序解的话，不仅能解本题，还能在写完后，加一句：如果想得到可行的学习顺序，只需要在现有代码上加一行即可。
+
+具体的解法参见210. Course Schedule II。
+
+...
+
 #### 209. Minimum Size Subarray Sum
 
 最佳实践：滑动窗口只用一个left指针，然后右指针通过遍历完成。
 
 ...
+
+#### 210.※ Course Schedule II
+
+我们通过这道题来讲解拓扑排序。在Course Schedule I的基础上，II不仅要求判断能否排出来，还要把排出来的结果返回。
 
 ...
 
@@ -4625,6 +4724,15 @@ class Solution(object):
 
 ...
 
+#### 239. Sliding Window Maximum
+
+这道题乍一看不难，很容易就想到用一个queue，不断enqueue、dequeue。但是提交后会超时，因为max(queue)的时间复杂度是O(K)，循环O(N-K)次，因而总时间复杂度会达到O(K*(N-K)), 约等于O(N*K)。当n和k都很大时，这个算法会超时。
+
+
+
+
+
+
 #### 242. Valid Anagram
 
 Anagram就是用到了一样的词汇，用hashmap加减统计是最方便的，用一个26个字母的list并不能节省多少空间，因为hashmap在本题的情况下最长长度也就是26。S查找的话，list和hashmap都是O(1)。
@@ -4639,6 +4747,53 @@ Anagram就是用到了一样的词汇，用hashmap加减统计是最方便的，
 ## No.251 - No.300
 
 ...
+
+#### 269. Alien Dictionary (Hard)
+
+这道题的难点不是构图或拓扑排序，难点在单词字符串处理上。
+
+单词字符串处理部分的代码：
+
+```python
+words_set = set()
+for word in words:
+    for w_i in word:
+        words_set.add(w_i)
+  
+# INIT indegrees
+indegrees = {}
+graph = {} # DAG Graph {node: [neighbors]}
+
+for char in words_set:
+    indegrees[char] = 0
+    graph[char] = []
+  
+
+
+for i in range(len(words)-1):
+    word1 = words[i]
+    word2 = words[i+1]
+  
+    min_len = min(len(word1), len(word2))
+
+    found_diff = False
+
+    for j in range(min_len):
+        char1 = word1[j]
+        char2 = word2[j]
+
+        if char1 != char2:
+            if char2 not in graph[char1]:
+                graph[char1].append(char2)
+                indegrees[char2] += 1
+            found_diff = True
+            break
+  
+    # 这道题看题没看出来的一个地方：
+    # 无效字符处理，比如["abc","ab"]
+    if not found_diff and len(word1) > len(word2):
+        return ""
+```
 
 #### 271. ※ Encode and Decode Strings
 
@@ -4750,12 +4905,12 @@ class Codec:
                 # 为空指针添加标记
                 res.append("null")
                 return
-      
+  
             # 前序遍历：根 -> 左 -> 右
             res.append(str(node.val))
             preorder(node.left)
             preorder(node.right)
-      
+  
         preorder(root)
         return ",".join(res) # 使用逗号分隔
 
@@ -4767,7 +4922,7 @@ class Codec:
         """
         if not data:
             return None
-      
+  
         vals = data.split(',')
         # 使用迭代器，方便在递归中传递状态
         self.it = iter(vals)
@@ -4775,20 +4930,20 @@ class Codec:
         def build():
             # 从迭代器中获取下一个值
             val = next(self.it)
-      
+  
             # 如果是空指针标记，说明这里是叶子节点的子节点，返回 None
             if val == "null":
                 return None
-      
+  
             # 创建节点
             node = TreeNode(int(val))
-      
+  
             # 递归构建左子树和右子树
             node.left = build()
             node.right = build()
-      
+  
             return node
-      
+  
         return build()
 
 # Your Codec object will be instantiated and called as such:
@@ -5175,6 +5330,10 @@ traverse num3, num4 to count if (num3 + num4) is in hashmap
 ...
 
 ...
+
+#### 496. Next Greater Element I
+
+这道题用mono stack解。
 
 ...
 

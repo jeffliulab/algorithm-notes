@@ -452,7 +452,7 @@ class Solution(object):
             # 对“较短”的那个区间进行递归调用，然后通过修改 low 或 high 的值，
             # 让 while 循环在下一次迭代中处理“较长”的那个区间。
             # 这确保了递归深度最多为 O(log n)。
-    
+  
             # 左区间长度: (lt - 1) - low + 1 = lt - low
             # 右区间长度: high - gt + 1
             if (lt - low) < (high - gt):
@@ -960,7 +960,7 @@ class SimpleHashTable:
         """
         hash_value = self._hash_function(key)
         index = self._get_index(hash_value)
-    
+  
         bucket = self.buckets[index] # 获取对应的桶（链表）
 
         # 遍历桶中的键值对，检查键是否已存在
@@ -983,7 +983,7 @@ class SimpleHashTable:
         """
         hash_value = self._hash_function(key)
         index = self._get_index(hash_value)
-    
+  
         bucket = self.buckets[index]
 
         # 遍历桶中的键值对，查找匹配的键
@@ -991,7 +991,7 @@ class SimpleHashTable:
             if existing_key == key:
                 print(f"找到: '{key}' 对应的值是: {existing_value} (在索引 {index})")
                 return existing_value
-    
+  
         print(f"未找到键: '{key}'")
         return None # 键不存在
 
@@ -1001,7 +1001,7 @@ class SimpleHashTable:
         """
         hash_value = self._hash_function(key)
         index = self._get_index(hash_value)
-    
+  
         bucket = self.buckets[index]
 
         # 遍历桶中的键值对，查找并删除
@@ -1011,7 +1011,7 @@ class SimpleHashTable:
                 self.size -= 1
                 print(f"删除: ('{key}', {existing_value}) 从索引 {index}")
                 return True # 删除成功
-    
+  
         print(f"删除失败: 未找到键 '{key}'")
         return False # 删除失败
 
@@ -1092,7 +1092,7 @@ def custom_string_hash(s):
   
     参数:
         s (str): 需要计算哈希值的字符串。
-    
+  
     返回:
         int: 计算出的整数哈希值。
     """
@@ -1104,12 +1104,12 @@ def custom_string_hash(s):
         # 将当前哈希值乘以素数，然后加上字符的ASCII值。
         # 这种累积方式确保了字符的顺序和内容都会影响最终的哈希值。
         hash_value = (hash_value * prime) + ord(char)
-    
+  
         # 注意：在实际更复杂的哈希函数中，为了防止整数溢出（在某些语言中）
         # 或者为了将哈希值控制在特定范围内，可能会引入位操作或取模。
         # Python 的整数可以任意大，所以这里不需要特殊处理溢出，
         # 但如果要在哈希表中使用，最终仍然会进行取模运算以映射到数组索引。
-    
+  
     return hash_value
 ```
 
@@ -1129,6 +1129,23 @@ def custom_string_hash(s):
 ...
 
 ...
+
+## Kadane's Algorithm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ...
 

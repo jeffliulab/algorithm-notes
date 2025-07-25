@@ -6,6 +6,28 @@
 
 ...
 
+#### 503. Next Greater Element II
+
+我初见的解法是直接把list翻倍，然后常规mono stack。这里要注意，要记录index而不是值，因为nums中有重复元素。
+
+通过取模运算可以省去list翻倍，并且本题需要的result就是下一个最大列表，所以不需要hashmap直接存在result上就可以：
+
+```python
+stack = []
+result = [-1] * len(nums)
+for i in range(len(nums)*2):
+    index = i % len(nums)
+
+    while stack and nums[stack[-1]] < nums[index]:
+        top = stack.pop()
+        result[top] = nums[index]
+
+    if i < len(nums): # 第一圈压入栈就可以了
+        stack.append(index)
+
+return result
+```
+
 ...
 
 #### 543. Diameter of Binary Tree
@@ -218,12 +240,12 @@ class Solution(object):
         hashmap = {}
         for task in tasks:
             hashmap[task] = hashmap.get(task, 0) + 1
-      
+  
         maxheap = []
         for task in hashmap:
             freq = hashmap[task]
             heapq.heappush(maxheap, (-freq, task))
-      
+  
         coolq = deque()
 
         # INITIAL STATUS:
@@ -241,7 +263,7 @@ class Solution(object):
             while coolq and coolq[0][2] <= time:
                 freq, task, T = coolq.popleft()
                 heapq.heappush(maxheap, (freq, task))
-              
+          
                     # 如果T是time或者time已经超过了T，说明可以执行
                     # 这里要用while循环一直弹出直到不能执行吗？
                     # 如果能执行了，就放回最大堆
@@ -257,11 +279,11 @@ class Solution(object):
                 # 然后执行任务后频率降低
                 freq, task = top
                 freq += 1
-              
+          
                 # 把使用后的任务放入冷却队列
                 # 在放进冷却队列之前计算可用时间：
                 # 什么时候能用呢？
-                # 可用时间 = 当前时间T + 间隔时间N + 1       
+                # 可用时间 = 当前时间T + 间隔时间N + 1   
                 if freq != 0:
                     T = time + n + 1
                     coolq.append((freq, task, T))
@@ -318,8 +340,6 @@ class Solution(object):
 
 ...
 
-
-
 ## 651 - 700
 
 ...
@@ -371,7 +391,7 @@ class Solution:
         ]
 
         visited = set() # 用set存储(r,c)
-        
+    
         def dfs(r, c):
             # 首先base case判断该位置是否valid：
             # 1、 是否越界
@@ -687,6 +707,10 @@ Koko吃香蕉问题就是这类问题的完美范例：
 
 ...
 
+#### 918. Maximum Sum Circular Subarray
+
+这道题找的是循环不重复使用最大和子数组，那么本质上其实就是在找最小和子数组。
+
 ...
 
 ## 951 - 1000
@@ -707,8 +731,14 @@ Koko吃香蕉问题就是这类问题的完美范例：
 
 ...
 
+#### 978. Longest Turbulent Subarray
+
+找到最长的”忽大忽小“或者”忽小忽大“子数组；如果相邻元素相等则不符合要求。这道题严格来讲不算Kadane算法，但是思想很相似，只不过是把最大和改成了最大长度；把出现负数重置计算改成了出现不符合要求的情况重置计算。
+
 ...
 
 #### 994. Rotting Oranges
+
+普通的graph题，略。
 
 ...
