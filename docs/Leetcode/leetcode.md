@@ -1,14 +1,6 @@
-# Leetcode 1 - 500
+# Leetcode Temporary
 
-※ 带有这个标志的表示这道题的算法思路是首次出现或者属于foundation/basic级别的，可以复用在其他题目上。带有这个标志的题必须完全熟悉，建议不熟悉的情况下多复习乃至全文背诵。
-
-※※ 表示第二次或者第N次做的时候依然一下子没想出来解法，这种题可能有特别的奇技淫巧。
-
-🚫表示过于简单，不易展示。这种题感觉有点凑题量了，其中的技巧在其他题中都能找到。
-
-(Mark) 就是还没纯手撸解决过，暂时Mark，等有空再手撸解决。一般Mark的都是比较复杂和难的题，在近期面试中碰到的可能性不大的，但是解题思路和方法值得学习的。
-
-(205)的意思是这道题和(205)那道题一模一样，没必要重复看。
+本页面已经停止维护，并将不断删除内容，直到全部内容删除完毕为止。今后不再做一道题记录一道题，而是只记录重要的题到我的roadmap中。
 
 ## No.1 - No.50
 
@@ -74,6 +66,46 @@ class Solution(object):
 这道题初见较难。如果考虑行列和形状，会导致解法变得复杂。正确思路应该是直接生成对应的行，然后分析当前遍历字符应当处于哪一行，按顺序添加进去。
 
 难点：向上放置的时候，应放行数  = cycle_len - cycle_index，可以想象循环最终一定是在第一行，因此在向上部分，应放行数就等于循环终点 + 离终点的距离。
+
+#### 7. Reverse Integer
+
+主要考察：
+（1）%10：取出末尾数字
+（2）//10：移除末尾数字
+（3）整数溢出：
+最小32位负数是 -2**31，最大32位正数是2*31-1
+那么如何在溢出之前检查呢？
+这里的技巧是：
+如果number = number * 10 + last_digit > MAX_INT
+那么数学公式变换后就是：
+if number > (MAX_INT - last_digit)//10:
+    return 0
+
+```python
+class Solution:
+    def reverse(self, x: int) -> int:
+        # 定义32位整数范围的最大值
+        INT_MAX = 2**31 - 1
+  
+        result = 0
+        sign = 1 if x >= 0 else -1
+        x = abs(x)
+
+        while x != 0:
+            digit = x % 10
+
+            # --- 这是最关键的检查 ---
+            # 在执行 result * 10 之前，预判是否会溢出
+            # INT_MAX // 10 的值是 214748364
+            if result > INT_MAX // 10 or (result == INT_MAX // 10 and digit > 7):
+                return 0 # 如果会溢出，立即返回 0
+      
+            # --- 检查通过，可以安全地执行 ---
+            result = result * 10 + digit
+            x //= 10
+
+        return sign * result
+```
 
 ...
 
@@ -931,6 +963,8 @@ Space: O(1)
 
 ...
 
+#### 43. Multiply Strings
+
 ...
 
 #### 45. ※ Jump Game II
@@ -1077,6 +1111,35 @@ for row in transposed_A:
 #### 49. Group Anagrams
 
 hashmap基础题，没什么难点。
+
+#### 50. Pow(x,n)
+
+Fast Exponentiation:
+
+```python
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        # 边界情况：n = 0，任何数的 0 次方都是 1
+        if n == 0:
+            return 1.0
+  
+        # 边界情况：n < 0，转换为 1 / myPow(x, -n)
+        if n < 0:
+            return 1.0 / self.myPow(x, -n)
+  
+        # --- 快速幂核心逻辑 ---
+  
+        # 递归地计算 myPow(x, n/2)
+        # n // 2 确保了 n 会不断变小，最终达到 n=0 或 n=1 的基本情况
+        half = self.myPow(x, n // 2)
+  
+        # 如果 n 是偶数, myPow(x, n) = myPow(x, n/2) * myPow(x, n/2)
+        if n % 2 == 0:
+            return half * half
+        # 如果 n 是奇数, myPow(x, n) = myPow(x, n/2) * myPow(x, n/2) * x
+        else:
+            return half * half * x
+```
 
 ## No.51 - No.100
 
@@ -1378,7 +1441,39 @@ return result
 
 ...
 
+#### 62. Unique Paths
+
+2d dp入门题目。
+
+#### 63. Unique Paths II
+
+2d dp入门题目。
+
 ...
+
+#### 66. Plus One
+
+...
+
+```
+假设我们加的数字是K（K是个位数）：
+if k == 0:
+    return digits
+
+carry = k
+for i in range(len(digits)-1,-1,-1):
+    if carry == 0:
+        return digits
+  
+    cur_sum = digits[i] + carry
+    digits[i] = cur_sum % 10
+    carry = cur_sum // 10
+
+if carry > 0:
+    digits.insert(0,carry)
+
+return digits
+```
 
 ...
 
@@ -1387,6 +1482,10 @@ return result
 这道题直观思路简单，直接greedy一行一行往上填，难点是把代码coding出来（写了几次总是这儿那儿漏点东西），特别是分配带有多个可能不相等的空格的行的时候。
 
 ...
+
+#### 70. Climbing Stairs
+
+1D DP教学题，尝试用两种方法来解决。
 
 #### 71. Simplify Path
 
@@ -2940,11 +3039,38 @@ class Solution:
 
 ...
 
-#### 136. 🚫Single Number
+#### 136. Single Number
 
-用iter()返回最后剩下的set中的那一个数字。
+但其实这是一道bit manipulation题目，只有bit方法可以实现O(1) time & O(n) space.
 
-return next(iter(s))
+这道题用的是XOR：
+
+XOR 运算有两个关键属性非常适合这道题：
+
+1. 任何数和 0 进行异或运算，结果是其本身：**a**⊕**0**=**a**
+2. 任何数和其自身进行异或运算，结果是 0：**a**⊕**a**=**0**
+
+```python
+from typing import List
+
+def singleNumber_loop(nums: List[int]) -> int:
+    """
+    使用 for 循环和 XOR 解决 "Single Number" 问题。
+
+    时间复杂度: O(n)
+    空间复杂度: O(1)
+    """
+    result = 0
+    for num in nums:
+        # 使用 ^= 操作符进行异或运算
+        result ^= num
+    return result
+
+# --- 示例 ---
+print(f"输入 [2, 2, 1], 输出: {singleNumber_loop([2, 2, 1])}")     # 输出: 1
+print(f"输入 [4, 1, 2, 1, 2], 输出: {singleNumber_loop([4, 1, 2, 1, 2])}") # 输出: 4
+print(f"输入 [1], 输出: {singleNumber_loop([1])}")         # 输出: 1
+```
 
 ...
 
@@ -3634,7 +3760,94 @@ class Solution(object):
 
 ...
 
-...
+#### 190. Reverse Bits
+
+其实就是把所有bit shift出来，然后存储到一个新的变量中，最后return那个新的变量。
+
+（1）用&1获得最后一位，如果n&1==1，最后一位就是1；如果n&1==0，最后一位就是0。记录该数字为d。
+（2）用>>1把最后一位移除掉
+（3）新数字末尾腾出一位：x = x << 1
+（4）把刚去出的那一位填到空位上：x = x | d
+
+    x = 0
+        for _ in range(32):
+            d = n & 1
+            n = n >> 1
+            x = x << 1
+            x = x | d
+        return x
+
+#### 191. Number of 1 Bits
+
+这道题也是一道非常经典的**位操作 (Bit Manipulation)** 题目，主要考察如何高效地统计一个整数的二进制表示中有多少个 '1'。
+
+这里介绍两种最核心的位操作方法
+
+**方法一：循环检查每一位**
+
+这是最直观的方法。我们可以通过一个循环，每次检查整数的最后一位是否为 '1'，然后将整个数向右移动一位，直到这个数变为 0 为止。
+
+1. **检查最后一位** ：使用与运算 `n & 1`。如果结果是 1，说明 `n` 的二进制表示的最后一位是 '1'，计数器加一。
+2. **去掉最后一位** ：使用无符号右移 `>>` 操作，将 `n` 右移一位 (`n = n >> 1`)，以便在下一轮循环中检查新的最后一位。
+3. **循环终止** ：当 `n` 变为 0 时，说明所有位都已检查完毕。
+
+**Python**
+
+```
+def hammingWeight_loop(n: int) -> int:
+    count = 0
+    while n > 0:
+        # 检查最后一位是否为 1
+        if n & 1:
+            count += 1
+        # 右移一位，去掉最后一位
+        n = n >> 1
+    return count
+
+# 示例: n = 11 (二进制 1011)
+# 1. 1011 & 1 = 1 -> count = 1, n = 101
+# 2.  101 & 1 = 1 -> count = 2, n = 10
+# 3.   10 & 1 = 0 -> count = 2, n = 1
+# 4.    1 & 1 = 1 -> count = 3, n = 0
+# 循环结束，返回 3
+```
+
+**方法二：巧用 `n & (n - 1)` (最优技巧)**
+
+这是一个非常巧妙且高效的技巧，也是面试时最希望被看到的解法。💡
+
+ **核心原理** ：执行一次 `n & (n - 1)` 操作，会将 `n` 的二进制表示中 **最右边的那个 '1' 变成 '0'** 。
+
+我们可以利用这个特性，循环执行该操作，直到 `n` 变为 0。循环的次数就是原数中 '1' 的个数。
+
+* **示例** : `n = 11` (二进制 `1011`)
+
+1. `n = 1011`, `n - 1 = 1010` -> `1011 & 1010 = 1010`。`n` 变为 `10`。 (计数 1)
+2. `n = 1010`, `n - 1 = 1001` -> `1010 & 1001 = 1000`。`n` 变为 `8`。 (计数 2)
+3. `n = 1000`, `n - 1 = 0111` -> `1000 & 0111 = 0000`。`n` 变为 `0`。 (计数 3)
+
+* 循环结束，总共执行了 3 次，所以 '1' 的个数是 3。
+
+这种方法的循环次数直接取决于 '1' 的个数，通常比方法一更快。
+
+**Python**
+
+```
+def hammingWeight_kernighan(n: int) -> int:
+    count = 0
+    while n > 0:
+        # 每次操作消除最右边的一个 1
+        n = n & (n - 1)
+        count += 1
+    return count
+```
+
+总结：
+
+* **方法一** 直观易懂，但循环次数取决于数字的总位数。
+* **方法二** 更为高效，循环次数只取决于 '1' 的个数，是解决此类问题的 **最佳算法** 。✅
+
+当然，在非面试的日常编码或竞赛中，你也可以直接用 Python 的内置功能 `bin(n).count('1')` 来快速解决。
 
 ...
 
@@ -3643,6 +3856,14 @@ class Solution(object):
 ...
 
 ...
+
+...
+
+#### 198. House Robber
+
+非常经典的1D DP入门题：打家劫舍
+
+尝试用两种DP方法（自上而下/自下而上）来解决
 
 #### 199. Binary Tree Right Side View
 
@@ -4743,6 +4964,10 @@ Anagram就是用到了一样的词汇，用hashmap加减统计是最方便的，
 
 ...
 
+#### 268. Missing Number
+
+找到缺失的数字。这道题是运用 **XOR (异或，符号 `^`)** 操作的一个绝佳案例。它能让我们在不开辟额外存储空间，并且只遍历一次数组的情况下，找到那个缺失的数字。
+
 #### 269. Alien Dictionary (Hard)
 
 这道题的难点不是构图或拓扑排序，难点在单词字符串处理上。
@@ -5031,6 +5256,25 @@ function removeInvalidParentheses(s):
 
 ...
 
+#### 338. Counting Bits
+
+这道题就是让你计算从0到N的每一个数字中1的个数
+Call Q191's function，can achieve O(NlogN) time.
+This Q actually has a O(N) time solution: 用递推公式，来实现新数字的更好算法。感兴趣的同学可以自行查阅相关资料。
+
+ans[i] = ans[i >> 1] + (i & 1)
+
+ans[i] = ans[i & (i - 1)] + 1
+
+```
+def countBits_kernighan_dp(n: int) -> List[int]:
+    ans = [0] * (n + 1)
+    for i in range(1, n + 1):
+        # 应用递推公式
+        ans[i] = ans[i & (i - 1)] + 1
+    return ans
+```
+
 ...
 
 #### 347. ※ Top K Frequent Elements
@@ -5064,10 +5308,30 @@ retrieve the number of heapq
 
 ...
 
+#### 371. ※ Sum of Two Integers
+
+```
+mask = 0xFFFFFFFF
+
+while (b&mask) != 0:
+    carry = (a & b) << 1
+
+    a = a ^ b
+
+    b = carry
+
+if (a & mask) > 0x7FFFFFFF:
+    return ~(a^mask)
+else:
+    return a & mask
+
+
+
+```
+
 ...
 
 #### 373. Find K Pairs with Smallest Sums
-
 
 我们用一个非常生活化的例子： **在自助餐厅选最便宜的套餐** 。
 
@@ -5420,5 +5684,726 @@ traverse num3, num4 to count if (num3 + num4) is in hashmap
 这道题用mono stack解。
 
 ...
+
+...
+
+## 501 - 550
+
+...
+
+#### 503. Next Greater Element II
+
+我初见的解法是直接把list翻倍，然后常规mono stack。这里要注意，要记录index而不是值，因为nums中有重复元素。
+
+通过取模运算可以省去list翻倍，并且本题需要的result就是下一个最大列表，所以不需要hashmap直接存在result上就可以：
+
+```python
+stack = []
+result = [-1] * len(nums)
+for i in range(len(nums)*2):
+    index = i % len(nums)
+
+    while stack and nums[stack[-1]] < nums[index]:
+        top = stack.pop()
+        result[top] = nums[index]
+
+    if i < len(nums): # 第一圈压入栈就可以了
+        stack.append(index)
+
+return result
+```
+
+...
+
+#### 543. Diameter of Binary Tree
+
+对于树中的 **任何一个节点** ，我们可以思考：
+
+如果最长路径**经过**我这个节点，那么它的长度就是 `我的左子树深度 + 我的右子树深度`。
+
+但是，最长路径也可能**不经过**我，而是完全在我的左子树里，或者完全在我的右子树里。
+
+所以，全局的直径就是这三者中的最大值：
+
+* `max(左子树的直径, 右子树的直径, 穿过当前根的路径(左深度+右深度))`
+
+这个思路虽然正确，但实现起来有点复杂。一个更优雅、更高效的实现是使用一个辅助函数，通常是计算**深度**的函数，然后在计算深度的“途中”，顺便把直径给算出来。
+
+#### **“计算深度，顺便求直径” 的算法**
+
+1. 我们需要一个全局变量（或者在类中用 `self.variable`）来记录我们目前找到的“最大直径”，我们叫它 `max_diameter`，初始化为0。
+2. 我们写一个辅助函数 `depth(node)`，这个函数的**主要任务**是返回以 `node` 为根的子树的 **最大深度** 。
+3. 在这个 `depth` 函数内部，我们执行以下操作：
+   * **递归出口** ：如果 `node` 是空，深度为0，直接 `return 0`。
+   * **递归计算** ：分别递归调用 `depth(node.left)` 得到 `左深度`，`depth(node.right)` 得到 `右深度`。
+   * **“顺便”更新直径** ：在当前这个 `node`，穿过它的最长路径长度是 `左深度 + 右深度`。我们用这个值和全局的 `max_diameter` “打个擂台”，把更大的那个存入 `max_diameter`。即 `self.max_diameter = max(self.max_diameter, 左深度 + 右深度)`。
+   * **返回本职工作的结果** ：`depth` 函数的本职工作是返回深度，所以它返回 `1 + max(左深度, 右深度)`。
+4. 主函数 `diameterOfBinaryTree` 里，我们先初始化 `self.max_diameter = 0`，然后调用 `depth(root)` 启动整个过程，最后返回 `self.max_diameter` 即可。
+
+这个过程本质上是一个 **后序遍历** ：我们总是先处理完左、右子树（计算出它们的深度），然后才在当前节点进行操作（更新直径，并计算自己的深度）。
+
+### 正确的 Python 代码实现
+
+**Python**
+
+```
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution(object):
+    def diameterOfBinaryTree(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: int
+        """
+        # 使用一个实例变量来充当全局变量，记录遍历过程中发现的最大直径
+        self.max_diameter = 0
+  
+        # 调用辅助函数来启动深度计算和直径更新的过程
+        self.depth(root)
+  
+        # 整个树遍历完后，self.max_diameter 就保存了最终答案
+        return self.max_diameter
+
+    def depth(self, node):
+        """
+        这个辅助函数有两个使命：
+        1. [返回值]：计算并返回以 `node` 为根的子树的最大深度。
+        2. [副作用]：在计算深度的过程中，顺便更新 `self.max_diameter`。
+        """
+        # 递归的出口：空节点的深度为-1（因为我们计算的是边的数量）。
+        # 如果计算节点数，则返回0。这里我们用边的数量，所以左深度+右深度正好是路径长度。
+        if not node:
+            return -1
+  
+        # 递归地计算左、右子树的深度
+        left_depth = self.depth(node.left)
+        right_depth = self.depth(node.right)
+  
+        # “顺便”更新最大直径：
+        # 穿过当前 node 的最长路径 = (1+左深度) + (1+右深度) = 2 + left_depth + right_depth
+        # 这里的深度是边的数量。
+        # 如果深度是节点数，则为 left_depth + right_depth
+        # LeetCode定义为边的数量，所以是 left_depth + right_depth + 2
+        # (从左最深叶子到左孩子是left_depth+1条边，右边同理)
+        diameter_at_this_node = (left_depth + 1) + (right_depth + 1)
+        self.max_diameter = max(self.max_diameter, diameter_at_this_node)
+  
+        # [返回值] 完成本职工作：返回当前节点的深度
+        return 1 + max(left_depth, right_depth)
+
+```
+
+ **代码修正与说明** ：LeetCode对直径的定义是“路径上边的数量”。
+
+* 一个节点的 **深度** （或高度）通常也用**边的数量**来定义。一个叶子节点的深度是0，空节点是-1。
+* 穿过一个节点的最长路径 = `左子树的高度` + `右子树的高度` + 2 (连接根与左右子树的两条边)。
+* 我的 `depth` 函数返回的是高度（从该节点到最远叶子的边数）。所以 `left_depth` 和 `right_depth` 就是左右子树的高度。
+* 因此，`diameter_at_this_node` 的计算 `(left_depth + 1) + (right_depth + 1)` 是完全正确的。
+
+...
+
+#### 543S. Find the path of Largest Diameter (Mark)
+
+不仅找到543中要求的最大diameter，还要把这个path输出出来。
+
+...
+
+...
+
+...
+
+## 551 - 600
+
+...
+
+...
+
+...
+
+#### 560. ※ Subarray Sum Equals K
+
+知识点：前缀和/prefix sum
+
+这道题的关键：找到subarray，说明不能对原本的array进行排序操作。因此对于完全无序的array，需要使用prefix sum。
+
+prefix sum的核心思想是记账和查账：
+
+* nums: 每天的收入（正数）或支出（负数）
+* current_sum: 当前的前缀和：到今天为止，账户总余额
+* k: 想要查找的某笔交易金额，比如你想找到某段时间，净收入正好是10元
+* prefix_sum_freq: 一个完美的记账本，记录了历史上每一天结束的时候，你的账户余额是多少，并且这个余额出现过几次
+
+关键公式：第i-j天的净收入 = 第j天的总余额 - 第i-1天的总余额
+
+即： sum(i,j) = prefix_sum(j) - prefix_sum(i-1)
+
+**前缀和字典哈希表的结构：{前缀和：出现次数}**
+
+```
+设立一个hashmap:{前缀和:出现次数}
+初始化hashmap = {0: 1}，这一步非常关键，保证里程计/账本有开头，即0出现了一次
+目的：查找和为k的连续区段
+traverse 列表：
+    如果（当前总余额-k）在hashmap中出现过：
+        查找其出现次数count
+        总计数器 += count
+    计算当前总余额，记录在前缀和hashmap中
+```
+
+为什么不会重复？不会多算？因为你可以想象我们开着车前进，然后不断记录总里程。在每个时刻，我们记录的都是当下的总里程，找的都是以当下的地点为结束、往前数区段长度为k的子数组。换句话说，当遍历到nums[i]的时候，我们能找到的所有的子数组，他们的终点必然都是nums[i]，因此不存在重复的问题。
+
+在每一个当下时刻，我们都以当前位置为固定的终点，探寻有多少个不同的大于等于0的起点可以满足：从该起点到当下位置的区段长度为K的这个条件。
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
+
+#### 567. Permutation in String
+
+这道题很简单，就是要注意在删除hashmap的字母对应的频率的时候，如果频率降低到0，一定要记得把key也删掉，否则后面的判断两个hashmap是否相等就没有意义了。
+
+...
+
+...
+
+#### 572. Subtree of Another Tree
+
+基础Tree题
+
+...
+
+...
+
+...
+
+## 601 - 650
+
+...
+
+#### 621. Task Scheduler
+
+这道题两种解法：heap+冷却队列；贪心数学解。
+
+我们讲heap法，贪心数学解不是通用解，感兴趣的同学可以自己去搜搜或者让gemini讲一下。
+
+首先，我们可以用频率当作排序的依据，维护一个heap。
+
+然后，我们要考虑冷却（也可以理解为间隔）。
+
+**完美的解决方案：最大堆 + 冷却队列**：
+
+1. **最大堆** ：存放所有**当前可用**的任务。堆顶永远是频率最高的那个。
+2. **冷却队列** ：存放所有**正在冷却**的任务。队列里存的是 `(任务剩余频率, 可用时间点)`。
+3. 引入一个全局 **时间计数器 `time`** ，从0开始，一步步模拟CPU的运作。
+
+初见学习版本：
+
+```python
+from collections import deque
+import heapq
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        time = 0
+        hashmap = {}
+        for task in tasks:
+            hashmap[task] = hashmap.get(task, 0) + 1
+  
+        maxheap = []
+        for task in hashmap:
+            freq = hashmap[task]
+            heapq.heappush(maxheap, (-freq, task))
+  
+        coolq = deque()
+
+        # INITIAL STATUS:
+        # time = 0
+        # maxheap = [(-3, 'A'), (-3, 'B')]
+        # coolq = []
+
+        while maxheap or coolq:
+            # 当任务和冷却队列不为空的时候
+            # 继续循环
+            # 循环开始时，时间步+1
+            time += 1
+
+            # 检查冷却队列
+            while coolq and coolq[0][2] <= time:
+                freq, task, T = coolq.popleft()
+                heapq.heappush(maxheap, (freq, task))
+  
+                    # 如果T是time或者time已经超过了T，说明可以执行
+                    # 这里要用while循环一直弹出直到不能执行吗？
+                    # 如果能执行了，就放回最大堆
+                    # 这里我有个问题：如果time到了才放回去，会不会不是最优？比如假如time==3的时候能执行了，这个时候才放回去？不会差一截吗？
+
+
+
+            # 处理maxheap
+            if maxheap:
+                top = heapq.heappop(maxheap)
+                # 这个任务就是要执行的任务
+                # 现在执行了这个任务
+                # 然后执行任务后频率降低
+                freq, task = top
+                freq += 1
+  
+                # 把使用后的任务放入冷却队列
+                # 在放进冷却队列之前计算可用时间：
+                # 什么时候能用呢？
+                # 可用时间 = 当前时间T + 间隔时间N + 1   
+                if freq != 0:
+                    T = time + n + 1
+                    coolq.append((freq, task, T))
+
+                # 好了，现在maxheap处理完了
+
+
+        return time
+```
+
+...
+
+...
+
+#### 632. Smallest Range Covering Elements from K Lists
+
+这道题也是merge k ways的变体，但是难点在于入口不是很直观。一般Merge K Ways问题就是先找到一个起始点，然后不断把最小的元素从heap中取出来，同时把最小元素的邻居加入heap。
+
+解题思路：
+1、预处理：
+（1）把每个队列的最小值放入heap中，同时记录heap中的最大值
+（2）将当前范围记录为result:[c,d]
+2、主循环while heap：
+（1）弹出heap top， 并push这个top的邻居。
+（2）邻居入heap后，更新heap中的最大值。
+（3）获得新的范围[a,b]
+（4）对比新范围和result，如果新范围更小，则更新result
+3、主循环退出条件：
+主循环内更新邻居的条件是邻居存在，如果邻居不存在，则break主循环。我们不能在一路缺席的情况下继续查找，因为必须保证每一路都还有一个元素。
+
+...
+
+## 651 - 700
+
+...
+
+...
+
+...
+
+#### 662. Maximum Width of Binary Tree
+
+这道题并非简单的找到最大宽度是多少，还要找出最大宽度的那一行从最左边到最右边的所有元素（包含中间的None）。详细教程见数据结构Tree中的相关章节。
+
+#### 662S. Path of Max Width (Mark)
+
+在662的基础上，把最大宽度的那一行的元素（包含None）以list形式return。
+
+...
+
+#### 692.※ Top K Frequent Words
+
+这道题关键点在于构建min-heap以及理解python中的排序机制。
+
+这道题的关键在于将(-freq, word)以tuple形式存入heap中，这样在排序的时候，会先排列-freq，然后排列word。
+
+...
+
+...
+
+...
+
+#### 695. Max Area of Island
+
+和200岛屿题差不太多。这道题是一个非常标准的图的模板题，建议一定要记住。
+
+```python
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        if not grid:
+            return 0
+
+        rows = len(grid)
+        cols = len(grid[0])
+
+        directions = [
+            [-1, 0],
+            [1, 0],
+            [0, -1],
+            [0, 1]
+        ]
+
+        visited = set() # 用set存储(r,c)
+  
+        def dfs(r, c):
+            # 首先base case判断该位置是否valid：
+            # 1、 是否越界
+            # 2、 是否不是陆地
+            # 3、 是否已经访问过
+            if (r < 0 or r >= rows or
+                c < 0 or c >= cols or
+                grid[r][c] == 0 or
+                (r,c) in visited ):
+                return 0
+
+            # 核心逻辑
+            # 如果没有在base case中被排除，那么这个点可访问
+            visited.add((r,c))
+
+            # 然后递归求面积
+            S = 1
+            for dr, dc in directions:
+                S += dfs(r+dr, c+dc)
+
+            # return area
+            return S
+
+        max_area = 0
+        # traverse whole grid
+        for r in range(rows):
+            for c in range(cols):
+                ## 如果发现了一个新的岛屿起点
+                ## 即没有visited并且是1
+                if (r,c) not in visited and grid[r][c] == 1:
+                    area = dfs(r, c)
+                    max_area = max(area, max_area)
+
+        return max_area
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+...
+
+...
+
+...
+
+#### 700. 基础题
+
+略
+
+## 701 - 750
+
+#### 701. Insert into BST
+
+基础题，略。
+
+...
+
+#### 703. Kth Largest Element in a Stream
+
+略。题目是越来越长了，内容是没啥可写的。
+
+...
+
+#### 704. Binary Search
+
+就是普通的Binary Search。
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
+
+#### 739. Daily Temperatures
+
+单调栈教学题，非常经典与优雅的思维方式。
+
+...
+
+## 751 - 800
+
+...
+
+...
+
+#### 771.🚫Jewels and Stones
+
+🚫过于简单，不易展示。
+
+...
+
+...
+
+#### 786. K-th Smallest Prime Fraction
+
+This is a merge k ways problem.
+
+...
+
+...
+
+## 801 - 850
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
+
+# 851 - 900
+
+...
+
+...
+
+...
+
+#### 853. ※ Car Fleet
+
+这本质上就是一个单调递增stack的问题，把到达时间作为value算出来，然后维护一个后面的值必须比前面的值小的stack。因为如果前面的value大于后面的，那么前面的车就必须合并到后面的车队中。
+
+这里要注意，处理的时候要按照位置信息来处理。因为原始的position是无序的。所以要把位置信息和速度打包为(position, speed)，然后按照position从大到小排序，即从离终点最近的地方开始看。（单调递增栈）
+
+如果从初始出发点开始看的话，则需要维护一个单调递减栈，并调整top节点的数值，容易出错。所以这道题比较适合用单调递增栈，然后从终点开始往回看。
+
+不过这道题的最佳实践是greedy贪心。但是本质上贪心解法就是把这个单调递增栈的使用进行了优化。
+
+mono stack solution:
+
+```python
+cars = sorted(zip(position, speed), key=lambda x: -x[0])
+
+stack = []
+for pos, spd in cars: 
+    arrival_time = float(target - pos) / spd
+    if not stack or arrival_time > stack[-1]:
+        stack.append(arrival_time)
+
+return len(stack)
+```
+
+greedy其实就是在此基础上，把stack改为一个单独的变量，比如leader_time。为什么能这么改呢？因为这道题我们只用到了最顶上的值，而不关注top下面的值。**换句话说：因为不需要追溯历史状态，只依赖于最近的/最重要的一个历史状态，所以可以用一个变量来记录这个状态，从而把这道题转换为一个贪心问题。**
+
+```python
+cars = sorted(zip(position, speed), key=lambda x: -x[0])
+
+leader_time = 0
+count = 0
+for pos, spd in cars: 
+    arrival_time = float(target - pos) / spd
+    if arrival_time > leader_time:
+        count += 1
+        leader_time = arrival_time
+
+return count
+```
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
+
+...
+
+#### 875. ※ Koko Eating Bananas
+
+【教程：完成任务的最小代价类题】
+
+复习的时候注意这道题的两个要点（很容易错）：
+
+* 计算小时的时候， hours = (pile + k - 1 ) // k
+* 因为是二分查找，所以不需要min_k来存储最小值
+* 最后不要直接return mid，因为如果最后一次计算的mid不合格，会返回错误答案。但是left却一定是正确的。
+
+下面是初见这道题的讲解：当遇到一个问题，要求你在满足某个 **约束条件** （比如时间限制、数量限制）的前提下，找到一个尽可能小的“代价”（比如速度、容量、费用等），这通常是使用 **“对答案进行二分查找”** 的强烈信号。
+
+Koko吃香蕉问题就是这类问题的完美范例：
+
+* **任务：** 吃完所有香蕉。
+* **代价：** Koko的吃饭速度 `k`。
+* **约束条件：** 总耗时必须在 `h` 小时以内。
+* **目标：** 找到能完成任务的 **最小代价** （即最小速度 `k`）。
+
+**第一步：分析问题，验证思路**
+
+1. **暴力的想法是什么？（线性搜索代价）**
+   我们可以从最小的代价（速度 `k=1`）开始尝试，计算出总时间。如果时间不满足约束（超过 `h` 小时），就将代价增加一点（尝试 `k=2`），再计算... 直到找到第一个满足条件的 `k`。
+
+* **这个方法可行吗？** 代价 `k` 的取值范围可达 `10^9`。一个一个地尝试，一定会超时。线性搜索的效率太低。
+
+2. **二分查找的适用性分析：代价与效果的单调性**
+   二分查找依赖于关键特性： **单调性** 。我们来分析“代价”和“效果”之间的关系：
+
+   * **代价 (`k`) 越大** (速度越快)，完成任务的**效果就越“好”** (总耗时越短)。
+   * **代价 (`k`) 越小** (速度越慢)，完成任务的**效果就越“差”** (总耗时越长)。
+
+   这种单调关系是使用二分查找的理想场景。我们可以对**代价 `k` 的可能范围**进行二分查找。
+   对于一个猜测的代价 `mid`：
+
+   * 如果这个代价 `mid` 可以满足约束条件（`TotalTime(mid) <= h`），说明它是一个 **可行的代价** 。那么任何比它更高的代价也一定可行。但我们想要最小代价，所以应该去尝试 **更低的代价** 。
+   * 如果这个代价 `mid` 不满足约束条件（`TotalTime(mid) > h`），说明它是一个 **不可行的代价** 。我们必须**提高代价**才能完成任务。
+
+   我们的目标就是精准地找到“不可行”和“可行”的那个 **临界点** 。这个算法模式被称为  **“对答案（代价）进行二分查找” (Binary Search on the Answer)** 。
+
+**第二步：算法核心步骤**
+
+1. **确定代价的搜索范围 `[left, right]`**
+
+* `left` (最小可能代价): 速度 `k` 最小为 `1`。
+* `right` (最大可能代价): 一个合理的上界是 `max(piles)`。因为如果速度比最大的那堆香蕉还快，再提速对单堆耗时（1小时）也没有帮助了。
+
+2. **开始二分循环 (`while left <= right`)**
+
+   * 取中间值 `mid = left + (right - left) // 2`。这个 `mid` 是我们 **猜测的代价** 。
+   * **编写一个检查函数 `check(mid)`** ：该函数用于验证，当我们付出 `mid` 的代价时，是否能满足约束条件。
+   * 在此题中，`check(k)` 就是计算速度为 `k` 时的总耗时。
+
+   **Python**
+
+   ```
+   # 检查函数：计算当速度为 k 时，是否能在 h 小时内完成
+   def check(k):
+       hours_needed = 0
+       for pile in piles:
+           hours_needed += (pile + k - 1) // k # 向上取整
+       return hours_needed <= h
+   ```
+
+   * **根据检查结果调整搜索范围:**
+     * **如果 `check(mid)` 为真 (代价可行):** 我们找到了一个可行的代价 `mid`。但它不一定是最小的。我们将它 **暂存为候选答案** ，然后去它的**左半部分** `[left, mid - 1]` 寻找更小的可行代价。
+     * **如果 `check(mid)` 为假 (代价不可行):** 这个代价太小了，任务无法完成。我们必须付出更高的代价，所以去它的**右半部分** `[mid + 1, right]` 寻找答案。
+3. **循环结束，返回结果**
+   当循环结束时，我们暂存的候选答案就是所有可行代价中最小的那一个。
+
+第三步：应用与拓展
+
+“对答案进行二分查找”是一个非常通用的上层思想，它可以解决许多看似不同的优化问题。我们可以将其细分为几种常见的模式：
+
+**模式一：寻找完成任务的最小代价 (本题模式)**
+
+* **特征：** 寻找最小的 `cost` (速度、容量、能力)，以满足某个 `constraint` (时间、天数)。
+* **例子：**
+  * **LeetCode 875. Koko 吃香蕉:** 求最小速度。
+  * **LeetCode 1011. 在 D 天内送达包裹的能力:** 求最低运载能力。`check(capacity)` 函数计算在该运力下需要多少天。
+
+**模式二：最小化最大值**
+
+* **特征：** 对一个集合进行划分，使得所有划分出的子集里，那个拥有**最大属性值**的子集，其属性值被 **最小化** 。
+* **例子：**
+  * **LeetCode 410. 分割数组的最大值:** 将数组分为 `m` 份，求所有子数组“和”中的最大值，并使其最小。二分查找的就是这个“最大和的上限”。
+
+**模式三：最大化最小值**
+
+* **特征：** 对一个集合进行划分，使得所有划分出的子集里，那个拥有**最小属性值**的子集，其属性值被 **最大化** 。
+* **例子：**
+  * **LeetCode 1231. 分享巧克力:** 将巧克力分给 `k` 人，求所有人获得甜度中的最小值，并使其最大。二分查找的就是这个“最小甜度的下限”。
+
+...
+
+...
+
+...
+
+...
+
+...
+
+## 901 - 950
+
+...
+
+...
+
+#### 912. Sort an Array
+
+就是手写排序算法。这道题用QuickSort是很难通过的，需要大量优化。这种情况下MergeSort比较推荐使用，稳定性比较高，不会被刻意设置的针对性testcase狙击。这道题也不能用BucketSort，所以最适合用的是MergeSort。
+
+...
+
+...
+
+...
+
+#### 918. Maximum Sum Circular Subarray
+
+这道题找的是循环不重复使用最大和子数组，那么本质上其实就是在找最小和子数组。
+
+...
+
+## 951 - 1000
+
+...
+
+...
+
+...
+
+...
+
+...
+
+#### 973. K Closest Points to Origin
+
+最大堆，略。
+
+...
+
+#### 978. Longest Turbulent Subarray
+
+找到最长的”忽大忽小“或者”忽小忽大“子数组；如果相邻元素相等则不符合要求。这道题严格来讲不算Kadane算法，但是思想很相似，只不过是把最大和改成了最大长度；把出现负数重置计算改成了出现不符合要求的情况重置计算。
+
+...
+
+#### 994. Rotting Oranges
+
+普通的graph题，略。
 
 ...
