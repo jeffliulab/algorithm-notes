@@ -1,0 +1,2885 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Jeff Liu">
+      
+      
+        <link rel="canonical" href="https://jeffliulab.github.io/algorithm-notes/%E7%AE%97%E6%B3%95%E5%AE%9D%E5%85%B8/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../data_structures/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>算法宝典 - Jeff's Algorithm and Leetcode Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Jeff&#39;s Algorithm and Leetcode Notes" class="md-header__button md-logo" aria-label="Jeff's Algorithm and Leetcode Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jeff's Algorithm and Leetcode Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              算法宝典
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../zh/%E7%AE%97%E6%B3%95%E5%AE%9D%E5%85%B8/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Jeff&#39;s Algorithm and Leetcode Notes" class="md-nav__button md-logo" aria-label="Jeff's Algorithm and Leetcode Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Jeff's Algorithm and Leetcode Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    INTRO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Common
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Common
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    算法宝典
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法宝典
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python基本功
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Python基本功">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    <span class="md-ellipsis">
+      list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuple" class="md-nav__link">
+    <span class="md-ellipsis">
+      tuple
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    <span class="md-ellipsis">
+      String
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iter" class="md-nav__link">
+    <span class="md-ellipsis">
+      iter()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dict-hashmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      dict (hashmap)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本数学运算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      字母处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matrix处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deque" class="md-nav__link">
+    <span class="md-ellipsis">
+      deque
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heapq" class="md-nav__link">
+    <span class="md-ellipsis">
+      heapq
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      python中的函数
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="python中的函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python中的实例变量和类变量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#closure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Closure 闭包
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assert
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arrayliststackslidingwindow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Array/List/Stack/SlidingWindow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Array/List/Stack/SlidingWindow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-arraylist" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Array/List 面试核心技巧汇总
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Array/List 面试核心技巧汇总">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-two-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 双指针 (Two Pointers)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-sliding-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 滑动窗口 (Sliding Window)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-prefix-sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 前缀和 (Prefix Sum)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-hash-map-dictionary" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 哈希表 (Hash Map / Dictionary)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-binary-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 二分查找 (Binary Search)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-monotonic-stackqueue" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 单调栈/队列 (Monotonic Stack/Queue)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-in-place-modification-cyclic-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 原地修改 / 循环排序 (In-place Modification / Cyclic Sort)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-greedy-sorting" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 贪心 + 排序 (Greedy + Sorting)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sliding-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sliding Window
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sliding Window">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      寻找最长长度的子序列问题
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      所有子序列问题合集
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="所有子序列问题合集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      类型一：连续子数组/子串问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      类型二：非连续子序列问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      类型三：本质是集合问题的子序列问题
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sorting-and-searching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sorting and Searching
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sorting and Searching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sorting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sorting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sorting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Sort
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#searching" class="md-nav__link">
+    <span class="md-ellipsis">
+      常见的Searching
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常见的Searching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binary Search
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Graph
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Graph">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      DFS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      BFS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BFS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shortest-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shortest Path
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      多源扩散
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backtracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backtracking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Backtracking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-permutationcombination" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Permutation/Combination
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Permutation/Combination">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何选择正确的回溯方法？（决策清单）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      回溯问题思路清单
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      DP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      为什么面试官喜欢考动态规划？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      面试中常见的 DP 类型有哪些？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="面试中常见的 DP 类型有哪些？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 入门级/基础模型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-dp-linear-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 一维序列 DP (Linear DP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-dp-grid-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 二维矩阵/网格 DP (Grid DP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-dp-string-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 字符串 DP (String DP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-knapsack-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 背包问题 (Knapsack Problem)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dp_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何在面试中优雅地解答一道 DP 题？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      算法天梯题目整理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="算法天梯题目整理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stack类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stack_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack &gt;&gt; 辅助栈/节点强化思想
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack &gt;&gt; 括号问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monotonic-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      辅助栈/节点强化思想 &gt;&gt; 单调栈 Monotonic Stack
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_structures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Structures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Leetcode/leetcode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Leetcode Temporary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Machine Learning
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Machine Learning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ML/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    常见面试问题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Hard Questions
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Hard Questions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Hard/hard_01.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hard_Questions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python基本功
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Python基本功">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    <span class="md-ellipsis">
+      list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuple" class="md-nav__link">
+    <span class="md-ellipsis">
+      tuple
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    <span class="md-ellipsis">
+      String
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iter" class="md-nav__link">
+    <span class="md-ellipsis">
+      iter()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dict-hashmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      dict (hashmap)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本数学运算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      字母处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Matrix处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deque" class="md-nav__link">
+    <span class="md-ellipsis">
+      deque
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heapq" class="md-nav__link">
+    <span class="md-ellipsis">
+      heapq
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      python中的函数
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="python中的函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python中的实例变量和类变量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#closure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Closure 闭包
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assert
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arrayliststackslidingwindow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Array/List/Stack/SlidingWindow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Array/List/Stack/SlidingWindow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-arraylist" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Array/List 面试核心技巧汇总
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Array/List 面试核心技巧汇总">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-two-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 双指针 (Two Pointers)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-sliding-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 滑动窗口 (Sliding Window)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-prefix-sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 前缀和 (Prefix Sum)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-hash-map-dictionary" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 哈希表 (Hash Map / Dictionary)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-binary-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 二分查找 (Binary Search)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-monotonic-stackqueue" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 单调栈/队列 (Monotonic Stack/Queue)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-in-place-modification-cyclic-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 原地修改 / 循环排序 (In-place Modification / Cyclic Sort)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-greedy-sorting" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 贪心 + 排序 (Greedy + Sorting)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sliding-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sliding Window
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sliding Window">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      寻找最长长度的子序列问题
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      所有子序列问题合集
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="所有子序列问题合集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      类型一：连续子数组/子串问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      类型二：非连续子序列问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      类型三：本质是集合问题的子序列问题
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sorting-and-searching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sorting and Searching
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sorting and Searching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sorting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sorting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sorting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Sort
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#searching" class="md-nav__link">
+    <span class="md-ellipsis">
+      常见的Searching
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常见的Searching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binary Search
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Graph
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Graph">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      DFS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      BFS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BFS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shortest-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shortest Path
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      多源扩散
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backtracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backtracking
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Backtracking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-permutationcombination" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Permutation/Combination
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Permutation/Combination">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何选择正确的回溯方法？（决策清单）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      回溯问题思路清单
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      DP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      为什么面试官喜欢考动态规划？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      面试中常见的 DP 类型有哪些？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="面试中常见的 DP 类型有哪些？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 入门级/基础模型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-dp-linear-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 一维序列 DP (Linear DP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-dp-grid-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 二维矩阵/网格 DP (Grid DP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-dp-string-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 字符串 DP (String DP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-knapsack-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 背包问题 (Knapsack Problem)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dp_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何在面试中优雅地解答一道 DP 题？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      算法天梯题目整理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="算法天梯题目整理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stack类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stack_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack &gt;&gt; 辅助栈/节点强化思想
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack &gt;&gt; 括号问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monotonic-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      辅助栈/节点强化思想 &gt;&gt; 单调栈 Monotonic Stack
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">算法宝典</h1>
+<p>算法宝典、leetcode500、algorithms roadmap等的编撰，感谢以下团体的帮助：</p>
+<ul>
+<li>Leetcode的题</li>
+<li>Neetcode的教程和roadmap</li>
+<li>TikTok的面试（给了我刷题和整理数据结构及算法知识的动机）</li>
+</ul>
+<h2 id="python">Python基本功</h2>
+<h3 id="list">list</h3>
+<p>注意，list是引用对象，所以在backtrack或者其他需要存储list值的情况的时候，需要用list(cur_list)进行一个转换处理。list(cur_list)代表创建一个cur_list的副本。</p>
+<p>list处理中的一些常见处理方法</p>
+<pre><code>zip：可以同时遍历两个list
+for elementA, elementB in zip(listA, listB)
+注意如果list长度不一样，最短的遍历完成后就会结束遍历
+</code></pre>
+<p>...</p>
+<p>...</p>
+<p>在list中插入值</p>
+<pre><code>ls.insert(2, 'X')
+在index为2的地方插入新的值，后面的值顺延
+</code></pre>
+<p>...</p>
+<p>...</p>
+<p>...</p>
+<h3 id="tuple">tuple</h3>
+<p>tuple在python中非常重要和常见，以下是常见用法：</p>
+<pre><code># 建立元组
+t = (1, 2, 3)
+
+# 解包元组
+a, b, c = (1, 2, 3)
+</code></pre>
+<p>把tuple转换为string：</p>
+<pre><code>t = ('a,', 'b', 'c')
+result = ''.join(t)
+</code></pre>
+<p>...</p>
+<p>...</p>
+<h3 id="string">String</h3>
+<p>String Slicing是一个重点，很容易弄错。注意字符串string是不可变对象，所以切片后相当于创建了一个新的字符串，如果想修改原字符串的话需要重新赋值。</p>
+<pre><code># 切片的时候[a:b]是不包含s[b]这个字符的，所以：
+s[:k] 会获取索引 0 到 k-1的所有元素，因此其长度正好是k
+s[x:x+k] 会切一个长度为k的字符串
+s[x:x] 会切出一个空字符，即''
+s[:-1] 会删掉字符串最后一个元素
+</code></pre>
+<p>string可以直接replace内容，注意这个method是返回新字符</p>
+<pre><code>s = &quot;lsjkflsdjf//slkdfjsldkf&quot;
+s = s.replace(&quot;//&quot;, &quot;/&quot;)      # 将字符串中的 // 替换为 /
+s = s.replace(&quot;//&quot;, &quot;/&quot;, 2)   # 最多替换2次
+</code></pre>
+<p>string的.join()方法在连接list或者tuple的时候，是在所有元素中间进行连接；并且，必须确保所有元素都是string，否则会TypeError。</p>
+<pre><code>s = '\'.join(list)
+</code></pre>
+<p>string的split()方法对于首字符和尾字符，切掉以后会保留一个空字符：</p>
+<pre><code>string = &quot;/a/b/c/d/e/&quot;
+result = string.split(&quot;/&quot;)
+上述操作的结果是：['', 'a', 'b', 'c', 'd', 'e', '']
+</code></pre>
+<p>查找字符串中是否有xxx:</p>
+<pre><code>string.find('xxx)
+如果有的话会返回首次出现的位置
+如果没有的话会返回-1
+</code></pre>
+<p>把string对象转换为list：</p>
+<pre><code>string = &quot;helloworld&quot;
+ls = list(string)
+</code></pre>
+<p>...</p>
+<p>...</p>
+<p>...</p>
+<h3 id="iter">iter()</h3>
+<p>iter()是一个强大的迭代器，可以迭代任何可迭代对象，如list, tuple, str, set, dict, generator等。</p>
+<p>比如说，假如set中现在只剩下了一个元素，应该怎么办呢？</p>
+<pre><code>cur_set = set([15])
+iter = iter(cur_set)
+this_element = next(iter)
+</code></pre>
+<h3 id="dict-hashmap">dict (hashmap)</h3>
+<p>hashmap的key必须是不可变的，但是可以存放list作为value。</p>
+<p>hashmap的常见用法：</p>
+<pre><code class="language-python"># 创建hashmap/dict
+hashmap = {}
+hashmap = dict(name='Bob', age=25)
+hashmap = dict(list_x)
+hashmap = dict(zip(list_a, list_b))
+
+# 访问元素
+hashmap['name']
+hashmap.get('name') # 如果没有，会return None
+hashmap.get('name',0) # 如果没有，会创建并给予默认值0
+
+# 添加及修改元素
+hashmap['key'] = 30
+hashmap['key'] = 60 # 修改上面的30（value）
+
+# 删除元素
+del hashmap['key'] # 如果不存在会报错
+hashmap.pop('key') # 删除并return 对应的value
+hashmap.pop('key', &quot;Not Found&quot;) # 删除，如果删除失败则返回自定义字符
+
+# clear 清空hashmap
+hashmap.clear()
+
+# traverse
+for key in hashmap:
+    ...
+for key in hashmap.keys():
+    ...
+for value in hashmap.values():
+    ...
+for key, value in hashmap.items():
+    ...
+
+# 获取key的数量
+len(hashmap)
+
+# 查找key是否在hashmap中
+if key in hashmap:
+    ...
+
+# update() 暂时用不到
+# copy() 暂时用不到
+</code></pre>
+<p>有一个非常常见的用法，就是比较两个hashmap是否相等。在这种题目中，一定要注意，假设hashmap存储的是元素和频率，那么当一个元素的频率降低到0后，一定要记得删除，否则两个hashmap是不相等的。</p>
+<h3 id="_2">基本数学运算</h3>
+<p>除法:</p>
+<pre><code>-1 / 2 == - 0.5
+float(-1) / 2 == - 0.5
+int(-1/2) == 0  # 向零截断
+-1 // 2 == -1   # 向下取整（向负无穷大取整）
+</code></pre>
+<p>注意，如果遇到两个整数相除，算法比赛和leetcode的要求都是向零截断，即保持和C/C++行为一致。</p>
+<p>为了防止错误，请使用标准写法： int(float(1)/2)</p>
+<p>那么什么时候用向下取整呢？在下面场景中，需要用向下取整：</p>
+<ul>
+<li>二分查找中mid=(left+right)//2，可以让mid始终偏左，从而避免无限循环</li>
+<li>把n个元素划分为k个区间，每个区间最多容纳n//k个元素</li>
+<li>tree中的parent索引：parent = (i-1)//2; left_child = 2*i+1, right_child = 2*i + 2</li>
+</ul>
+<p>...</p>
+<p>...</p>
+<h3 id="_3">字母处理</h3>
+<p>把字母转变为数字，然后偏移后再恢复为字母</p>
+<pre><code>base = ord('A')
+new_letter = base + 3
+new_letter = chr(new_letter) # 转回为D
+
+如果偏移量可能超过Z的范围，可以这么写：
+letter = 'A'
+offset = 3
+new_letter = chr((ord(letter) - ord('A') + offset) % 26 + ord('A'))  # new_letter 为 D
+</code></pre>
+<p>一些常用的处理字母的方法</p>
+<pre><code class="language-python"># 设置一个长度为26的字母频率表
+alphabet_counts = [0] * 26
+
+# 出现了一个字母，更新该字母的频率（假设都是大写字母）
+alphabet_index = ord(THIS_ALPHA) - ord('A')
+alphabet_counts[alphabet_index] += 1
+
+# 找到频率最高的字母和其频率
+初始化 max_frequency = 0
+初始化 most_frequent_alpha_index = -1
+遍历并更新
+</code></pre>
+<p>...</p>
+<p>...</p>
+<h3 id="matrix">Matrix处理</h3>
+<p>坐标与边界时核心</p>
+<p>方向数组用来控制移动，比如最常用的：</p>
+<pre><code>directions = [
+    [0, 1],
+    [0, -1],
+    [-1, 0],
+    [1, 0]
+]
+</code></pre>
+<p>...</p>
+<p>...</p>
+<p>...</p>
+<h3 id="deque">deque</h3>
+<p>deque即double-ended queue，双端队列。deque的特点是无论从头部还是尾部添加删除元素都很快，都是O(1)时间。</p>
+<p>主要用法：</p>
+<pre><code class="language-python"># 创建deque
+from collections import deque
+queue = deque()
+queue = deque([1, 2, 3, 4])
+
+# 从两端添加元素
+queue.append(5)      # 从右端添加元素
+queue.appendleft(0)  # 从左端添加元素
+
+# 从两端删除元素
+queue.pop()     # return 弹出的元素
+queue.popleft() # return 弹出的元素
+
+# 旋转
+queue = deque(['a', 'b', 'c', 'd', 'e'])
+queue.rotate(2)   # 向右旋转2步，变成 ['d', 'e', 'a', 'b', 'c']
+queue.rotate(-3)  # 向左旋转3步，变成 ['b', 'c', 'd', 'e', 'a']
+</code></pre>
+<p>...</p>
+<h3 id="heapq">heapq</h3>
+<p>heapq是最小堆</p>
+<pre><code>import heapq
+
+（1）创建一个最小堆 O(N)
+min_heap = []
+
+（2）添加一个元素到最小堆中 O(logN)
+heapq.heappush(min_heap, element)
+
+（3）取出最小堆中得最小值（也就是堆顶） O(1)
+min_val = min_heap[0]
+
+（4）删除最小值并得到这个数字 O(logN)
+removed_val = heapq.heappop(min_heap)
+</code></pre>
+<p>注意，heap不能任意删除元素，如果要删除某个元素，删除后就需要重新建堆：</p>
+<pre><code>heap.remove(element)
+heapq.heapify(heap) # O(N)的时间复杂度！
+</code></pre>
+<p>...</p>
+<p>...</p>
+<h3 id="python_1">python中的函数</h3>
+<pre><code class="language-python">def outer_function(x):
+    y = 10  # 这是一个局部变量，只存在于 outer_function 内部
+
+    def inner_function(z):
+        # 在这里：
+        # z 是 inner_function 的参数
+        # x 是一个自由变量 (它不是 inner_function 的参数，也不是其内部定义的局部变量)
+        # y 也是一个自由变量 (同上)
+        # result 是 inner_function 内部的局部变量
+        result = x + y + z
+        return result
+    return inner_function
+
+# 调用 outer_function，它返回 inner_function
+my_closure = outer_function(5)
+
+# 现在调用返回的 inner_function
+# 即使 outer_function 已经执行完毕，my_closure (即 inner_function) 仍然能记住 x 和 y 的值
+print(my_closure(2)) # 输出: 5 + 10 + 2 = 17
+</code></pre>
+<p>...</p>
+<h4 id="python_2">Python中的实例变量和类变量</h4>
+<p>在python中，self声明的变量就是实例变量instance variable。写在函数之前、class之后，和class同级的类变量在python中不需要用self声明，比如：</p>
+<pre><code class="language-python">class MyClass:
+    # 这是一个类变量
+    # 属于 MyClass 这个类本身，所有 MyClass 的实例都共享它
+    class_variable_name = &quot;I belong to the class!&quot;
+
+    def __init__(self, instance_value):
+        # 这是一个实例变量
+        # 属于 MyClass 的每一个具体实例
+        self.instance_variable_name = instance_value
+
+    def show_variables(self):
+        # 通过类名访问类变量
+        print(f&quot;Class Variable: {MyClass.class_variable_name}&quot;)
+        # 通过 self 访问实例变量
+        print(f&quot;Instance Variable: {self.instance_variable_name}&quot;)
+
+# 创建实例
+obj1 = MyClass(&quot;Value for obj1&quot;)
+obj2 = MyClass(&quot;Value for obj2&quot;)
+
+# 访问类变量（推荐通过类名）
+print(MyClass.class_variable_name) # 输出: I belong to the class!
+
+# 访问实例变量
+print(obj1.instance_variable_name) # 输出: Value for obj1
+print(obj2.instance_variable_name) # 输出: Value for obj2
+
+# 验证共享性：修改类变量会影响所有实例
+MyClass.class_variable_name = &quot;I've been changed by the class!&quot;
+print(obj1.class_variable_name) # 输出: I've been changed by the class!
+print(obj2.class_variable_name) # 输出: I've been changed by the class!
+</code></pre>
+<h4 id="closure">Closure 闭包</h4>
+<p>在 Python 的嵌套函数中，如果要修改的变量是一个位于嵌套函数之外的 <strong>可变对象（mutable object）</strong> ，比如列表（list）、集合（set）或字典（dict），你是<strong>可以修改这个对象自身的内容</strong>的，因为你并没有对变量名进行重新赋值。</p>
+<p>但是，你<strong>不能在嵌套函数中对外部函数的变量进行重新赋值（re-assignment）</strong> ，除非使用了 <code>nonlocal</code> 关键字。</p>
+<p>Closure可以理解为python中函数的一个个性化副本。因为他不是class的instance，所以closure不是instance，但却是一个可以根据导入参数而个性化定制的函数副本。</p>
+<p>注意：在嵌套函数内部访问外部函数是可以的，但是不能修改！python的闭包（closure）只允许访问，而不允许修改！</p>
+<p>如果要修改，需要用nonlocal（python3中引入）！</p>
+<pre><code class="language-python">def create_coffee_brewer(preferred_temperature):
+    &quot;&quot;&quot;
+    这个函数用来创建一个“咖啡冲泡器”。
+    它会记住你偏好的温度。
+    &quot;&quot;&quot;
+    print(f&quot;咖啡机设置：记住您的偏好温度是 {preferred_temperature}°C&quot;)
+
+    # 这是一个嵌套函数，它才是真正的“冲泡”动作
+    def brew_coffee(coffee_type):
+        print(f&quot;开始冲泡 {coffee_type}...&quot;)
+        print(f&quot;使用预设温度 {preferred_temperature}°C 进行冲泡。&quot;)
+        print(&quot;您的咖啡冲泡好了！享受吧！&quot;)
+        print(&quot;-&quot; * 30) # 分隔线
+
+    return brew_coffee # 返回这个冲泡函数
+
+# 小明喜欢喝 92°C 的咖啡
+xiaoming_brewer = create_coffee_brewer(92) 
+# 输出：咖啡机设置：记住您的偏好温度是 92°C
+
+# 小红喜欢喝 88°C 的咖啡
+xiaohong_brewer = create_coffee_brewer(88)
+# 输出：咖啡机设置：记住您的偏好温度是 88°C
+
+print(&quot;\n--- 不同的咖啡冲泡 ---&quot;)
+
+# 现在小明开始冲泡他的拿铁
+xiaoming_brewer(&quot;拿铁&quot;)
+# 输出：
+# 开始冲泡 拿铁...
+# 使用预设温度 92°C 进行冲泡。
+# 您的咖啡冲泡好了！享受吧！
+# ------------------------------
+
+# 小红开始冲泡她的美式
+xiaohong_brewer(&quot;美式&quot;)
+# 输出：
+# 开始冲泡 美式...
+# 使用预设温度 88°C 进行冲泡。
+# 您的咖啡冲泡好了！享受吧！
+# ------------------------------
+
+# 即使 create_coffee_brewer 函数已经执行完了，
+# xiaoming_brewer 和 xiaohong_brewer 仍然分别“记住”了它们各自的温度。
+</code></pre>
+<p>...</p>
+<h3 id="assert">Assert</h3>
+<p>python中assert很简单。</p>
+<p>...</p>
+<h2 id="arrayliststackslidingwindow">Array/List/Stack/SlidingWindow</h2>
+<p>因为在python中，array, dynamic list, stack都是用list来实现，所以这里归为一类。</p>
+<h3 id="1-arraylist">1. Array/List 面试核心技巧汇总</h3>
+<p>下面是8个你应该熟练掌握的核心技巧。</p>
+<h4 id="1-two-pointers">1. 双指针 (Two Pointers)</h4>
+<p>这是最基本也是最高频的技巧之一，通过使用两个指针在数组上同向或反向移动来解决问题。</p>
+<ul>
+<li><strong>核心思想</strong> ：通过指针的移动，将 O(N²) 的暴力解法优化到 O(N)。</li>
+<li><strong>适用场景/题目关键词</strong> ：</li>
+<li><strong>排序数组 (Sorted Array)</strong> ：这是双指针最常见的应用场景。</li>
+<li><strong>寻找数对 (Find a pair)</strong> ：如“两数之和”、“三数之和”。</li>
+<li><strong>回文判断 (Palindrome)</strong> ：一个指针从头，一个指针从尾。</li>
+<li><strong>原地修改/删除 (In-place modification)</strong> ：如“删除有序数组中的重复项”、“移动零”。</li>
+<li><strong>链表中的环、中点</strong> ：快慢指针是其在链表中的变体。</li>
+<li>
+<p><strong>如何判断</strong> ：</p>
+</li>
+<li>
+<p><strong>反向指针 (Colliding Pointers)</strong> ：题目涉及<strong>已排序</strong>的数组，并且要求寻找满足特定条件的<strong>数对</strong>或 <strong>三元组</strong> 。指针一个在头 <code>left</code>，一个在尾 <code>right</code>，向中间靠拢。</p>
+</li>
+<li><strong>快慢指针 (Fast &amp; Slow Pointers)</strong> ：主要用于 <strong>链表</strong> ，判断是否有环、寻找环的入口、寻找中点。在数组中可用于“删除重复项”等。一个指针走得快，一个走得慢。</li>
+<li>
+<p><strong>同向指针 (Same-direction Pointers)</strong> ：通常与<strong>滑动窗口</strong>结合，一个指针 <code>j</code>探索新元素，一个指针 <code>i</code>收缩边界。</p>
+</li>
+<li>
+<p><strong>典型例题</strong> ：</p>
+</li>
+<li>LeetCode 1: Two Sum (若数组已排序)</li>
+<li>LeetCode 15: 3Sum</li>
+<li>LeetCode 125: Valid Palindrome</li>
+<li>LeetCode 26: Remove Duplicates from Sorted Array</li>
+</ul>
+<h4 id="2-sliding-window">2. 滑动窗口 (Sliding Window)</h4>
+<p>在数组上维护一个大小可变的“窗口”，不断滑动这个窗口来寻找满足特定条件的最优子数组/子串。</p>
+<ul>
+<li><strong>核心思想</strong> ：维护一个窗口 <code>[i, j]</code>，通过移动 <code>j</code>来扩大窗口，在不满足条件时移动 <code>i</code>来收缩窗口。避免了暴力枚举所有子数组的 O(N²) 复杂度。</li>
+<li><strong>适用场景/题目关键词</strong> ：</li>
+<li><strong>连续子数组/子串 (Contiguous/Consecutive Subarray/Substring)</strong> ：这是最明确的信号。</li>
+<li><strong>最长/最短... (Longest/Shortest...)</strong> : 要求找到满足条件的最长或最短的连续子数组。</li>
+<li><strong>最大/最小... (Maximum/Minimum...)</strong> : 例如求“和最大的定长子数组”。</li>
+<li><strong>包含... (Contains...)</strong> : 例如“找到包含所有目标字符的最短子串”。</li>
+<li><strong>如何判断</strong> ：题目要求对<strong>连续子数组</strong>进行操作，并且求解的目标是 <strong>最值</strong> （最长、最短、最多、最少）。滑动窗口通常处理的条件是 <strong>单调的</strong> ，比如窗口扩大，窗口内的不同字符数会增加或不变，不会减少。</li>
+<li><strong>典型例题</strong> ：</li>
+<li>LeetCode 3: Longest Substring Without Repeating Characters</li>
+<li>LeetCode 76: Minimum Window Substring</li>
+<li>LeetCode 209: Minimum Size Subarray Sum (注意和前缀和问题的区别，这里数组元素为正)</li>
+</ul>
+<h4 id="3-prefix-sum">3. 前缀和 (Prefix Sum)</h4>
+<p>我们刚刚深入讨论过的技巧，通过预计算累加和来快速求得任意区间的和。</p>
+<ul>
+<li><strong>核心思想</strong> ：<code>sum(i, j) = prefix_sum[j] - prefix_sum[i-1]</code>。将“求区间和”这个O(N)的操作降为O(1)。</li>
+<li><strong>适用场景/题目关键词</strong> ：</li>
+<li><strong>子数组的和 (Subarray Sum)</strong> ：这是最直接的信号。</li>
+<li><strong>和为K (Sum equals K)</strong> ：寻找和为特定值的子数组个数或是否存在。</li>
+<li><strong>矩阵的子矩阵和 (Submatrix Sum)</strong> ：可以扩展到二维。</li>
+<li><strong>如何判断</strong> ：题目反复要求计算 <strong>不同子数组的和</strong> ，特别是当数组中包含<strong>负数</strong>时（滑动窗口失效），或者要求寻找<strong>和为定值K</strong>的子数组个数时。通常需要搭配<strong>哈希表</strong>来存储和出现的频率。</li>
+<li><strong>典型例题</strong> ：</li>
+<li>LeetCode 560: Subarray Sum Equals K</li>
+<li>LeetCode 523: Continuous Subarray Sum (和为K的倍数)</li>
+<li>LeetCode 304: Range Sum Query 2D - Immutable</li>
+</ul>
+<h4 id="4-hash-map-dictionary">4. 哈希表 (Hash Map / Dictionary)</h4>
+<p>一种“万金油”工具，利用键值对提供O(1)复杂度的查找、插入和删除。</p>
+<ul>
+<li><strong>核心思想</strong> ：空间换时间。</li>
+<li><strong>适用场景/题目关键词</strong> ：</li>
+<li><strong>频率统计 (Frequency Count)</strong> ：如“出现次数超过一半的元素”。</li>
+<li><strong>查找/匹配 (Lookup/Matching)</strong> ：如“两数之和”的原地哈希解法。</li>
+<li><strong>去重 (Deduplication)</strong> 。</li>
+<li><strong>需要记录历史信息</strong> ：最典型的就是与“前缀和”技巧的结合。</li>
+<li><strong>如何判断</strong> ：当题目需要快速知道“某个元素是否存在”或“某个元素出现了几次”时，就应该立刻想到哈希表。它本身是一种数据结构，但使用它解决问题已经成为一种核心技巧。</li>
+<li><strong>典型例题</strong> ：</li>
+<li>LeetCode 1: Two Sum</li>
+<li>LeetCode 49: Group Anagrams</li>
+<li>与几乎所有其他技巧结合使用。</li>
+</ul>
+<h4 id="5-binary-search">5. 二分查找 (Binary Search)</h4>
+<p>在有序集合中进行高效查找的算法。</p>
+<ul>
+<li><strong>核心思想</strong> ：每次将搜索空间减半，实现O(log N)的查找效率。</li>
+<li><strong>适用场景/题目关键词</strong> ：</li>
+<li><strong>已排序数组 (Sorted Array)</strong> ：最直接的应用场景。</li>
+<li><strong>寻找特定值/边界 (Find an element/boundary)</strong> ：如“寻找第一个/最后一个出现的位置”。</li>
+<li><strong>旋转排序数组 (Rotated Sorted Array)</strong> 。</li>
+<li><strong>答案是一个范围内的整数</strong> ：当题目可以转化为“猜答案”时，例如“求一个最小值X，使得...条件成立”，可以在答案的取值范围 <code>[min_val, max_val]</code> 上进行二分。</li>
+<li>
+<p><strong>如何判断</strong> ：</p>
+</li>
+<li>
+<p>数组<strong>已排序</strong>是首要信号。</p>
+</li>
+<li>
+<p>题目虽然没说数组有序，但可以抽象出一个 <strong>单调的判断函数</strong> 。例如，题目的解在一个范围内，并且当 <code>x</code>是解时，所有 <code>&gt;x</code>的值也满足某种性质，这时就可以对答案进行二分。</p>
+</li>
+<li>
+<p><strong>典型例题</strong> ：</p>
+</li>
+<li>LeetCode 704: Binary Search</li>
+<li>LeetCode 33: Search in Rotated Sorted Array</li>
+<li>LeetCode 875: Koko Eating Bananas (对答案进行二分)</li>
+</ul>
+<h4 id="6-monotonic-stackqueue">6. 单调栈/队列 (Monotonic Stack/Queue)</h4>
+<p>维护一个内部元素单调递增或递减的栈/队列。</p>
+<ul>
+<li><strong>核心思想</strong> ：在遍历数组时，通过维护栈内元素的单调性，可以O(1)地找到当前元素左边/右边第一个比它大/小的元素。</li>
+<li><strong>适用场景/题目关键词</strong> ：</li>
+<li><strong>下一个更大/更小元素 (Next Greater/Smaller Element)</strong> 。</li>
+<li><strong>子数组范围问题</strong> ：例如“计算所有子数组的最小值之和”。</li>
+<li><strong>柱状图/矩形面积</strong> ：如“柱状图中最大的矩形”。</li>
+<li><strong>如何判断</strong> ：当问题需要寻找一个元素与其左/右侧<strong>第一个</strong>更大或更小元素之间的关系时，这几乎是单调栈的“专用赛道”。</li>
+<li><strong>典型例题</strong> ：</li>
+<li>LeetCode 496: Next Greater Element I</li>
+<li>LeetCode 84: Largest Rectangle in Histogram</li>
+<li>LeetCode 907: Sum of Subarray Minimums</li>
+</ul>
+<h4 id="7-in-place-modification-cyclic-sort">7. 原地修改 / 循环排序 (In-place Modification / Cyclic Sort)</h4>
+<p>在不使用额外数据结构（或只使用O(1)额外空间）的情况下，通过在原数组上进行元素交换来达到目的。</p>
+<ul>
+<li><strong>核心思想</strong> ：利用数组的索引和值之间的关系来放置元素。</li>
+<li><strong>适用场景/题目关键词</strong> ：</li>
+<li><strong>空间复杂度要求O(1)</strong> 。</li>
+<li>数组元素在<strong>特定范围</strong>内，如 <strong>1到N</strong> 。</li>
+<li><strong>寻找重复/缺失的数字 (Find duplicate/missing number)</strong> 。</li>
+<li><strong>如何判断</strong> ：当题目明确要求 <code>O(1)</code>空间复杂度，并且数组元素范围和数组长度有密切关系时（如 <code>N</code>个元素，范围是 <code>[1, N]</code>），应优先考虑能否将数字 <code>i</code> 放到数组的第 <code>i-1</code> 个索引位置。</li>
+<li><strong>典型例题</strong> ：</li>
+<li>LeetCode 448: Find All Numbers Disappeared in an Array</li>
+<li>LeetCode 287: Find the Duplicate Number</li>
+<li>LeetCode 41: First Missing Positive</li>
+</ul>
+<h4 id="8-greedy-sorting">8. 贪心 + 排序 (Greedy + Sorting)</h4>
+<p>先对数组进行排序，然后根据某种贪心策略进行选择，以期得到全局最优解。</p>
+<ul>
+<li><strong>核心思想</strong> ：排序使得问题呈现出某种规律，从而让每一步的局部最优选择能够导向全局最优。</li>
+<li><strong>适用场景/题目关键词</strong> ：</li>
+<li><strong>区间问题 (Intervals)</strong> ：如合并区间、无重叠区间、会议室安排。</li>
+<li><strong>分配/调度问题</strong> 。</li>
+<li><strong>如何判断</strong> ：当问题涉及多个“物品”或“事件”（如区间），需要从中选择一部分来满足某个条件或达到最优时，可以尝试先排序，再遍历做贪心选择。排序的依据（按起点、按终点）是解题关键。</li>
+<li><strong>典型例题</strong> ：</li>
+<li>LeetCode 56: Merge Intervals</li>
+<li>LeetCode 435: Non-overlapping Intervals</li>
+<li>LeetCode 452: Minimum Number of Arrows to Burst Balloons</li>
+</ul>
+<p>...</p>
+<h3 id="sliding-window">Sliding Window</h3>
+<p>滑动窗口非常考验思考。</p>
+<h4 id="_4">寻找最长长度的子序列问题</h4>
+<p>寻找最长长度的子序列问题，其对于window的设置有两个特点要记住：</p>
+<ul>
+<li>高水位原则：算法目的是找到最高水位，因此不关心退步，即比最高window更小的window是不需要精确维护的</li>
+<li>乐观锁（参考leetcode424）：window的潜力由一个过去的max_freq锁死。当且仅当新的window超过该潜力的时候，才需要更新，否则不需要更新。</li>
+</ul>
+<p>...</p>
+<p>...</p>
+<h3 id="_5">所有子序列问题合集</h3>
+<p>下面将常见的题型、思想和解法进行归类：</p>
+<h4 id="_6">类型一：连续子数组/子串问题</h4>
+<p>这类问题通常要求在数组的一个连续片段上进行计算。</p>
+<table>
+<thead>
+<tr>
+<th>子类型</th>
+<th>核心方法</th>
+<th>适用场景</th>
+<th>经典例题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>求最值/特定性质</strong></td>
+<td><strong>滑动窗口 (Sliding Window)</strong></td>
+<td>寻找满足某个条件的最长/最短/数量最多的连续子数组。窗口可以根据条件进行伸缩。</td>
+<td>LeetCode 3: 无重复字符的最长子串``LeetCode 209: 长度最小的子数组</td>
+</tr>
+<tr>
+<td><strong>和/差有关</strong></td>
+<td><strong>前缀和 + 哈希表 (Prefix Sum + HashMap)</strong></td>
+<td>求解子数组的和等于某个值 <code>k</code>的问题。哈希表用来存储 <code>{前缀和: 出现次数/索引}</code>，快速查找 <code>prefixSum - k</code>是否存在。</td>
+<td>LeetCode 560: 和为 K 的子数组``LeetCode 523: 连续的子数组和</td>
+</tr>
+<tr>
+<td><strong>最大/最小和</strong></td>
+<td><strong>动态规划 (Kadane's Algorithm)</strong></td>
+<td>寻找连续子数组的最大和。<code>dp[i]</code>定义为以 <code>nums[i]</code>结尾的最大子数组和。</td>
+<td>LeetCode 53: 最大子数组和</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_7">类型二：非连续子序列问题</h4>
+<p>这类问题允许你从数组中挑选元素，只要保持相对顺序即可。<strong>动态规划 (Dynamic Programming, DP)</strong> 是解决这类问题的王牌。</p>
+<table>
+<thead>
+<tr>
+<th>子类型</th>
+<th>核心方法</th>
+<th>适用场景 &amp; DP状态定义</th>
+<th>经典例题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>最长递增/递减子序列</strong></td>
+<td><strong>1. 动态规划 (</strong>O<strong>(</strong>N<strong>2</strong>)<strong>)</strong> `` <strong>2. DP + 二分查找 (</strong>O<strong>(</strong>N<strong>l</strong>o<strong>g</strong>N<strong>))</strong></td>
+<td><code>dp[i]</code>通常定义为以 <code>nums[i]</code>结尾的 LIS 的长度。更优的解法维护一个“耐心排序”数组。</td>
+<td>LeetCode 300: 最长递增子序列 (LIS)</td>
+</tr>
+<tr>
+<td><strong>两个序列的公共问题</strong></td>
+<td><strong>二维动态规划 (</strong>O<strong>(</strong>M<strong>t</strong>im<strong>es</strong>N<strong>))</strong></td>
+<td>比较两个字符串/数组 <code>s1</code>,<code>s2</code>。<code>dp[i][j]</code>通常定义为 <code>s1</code>的前 <code>i</code>个字符和 <code>s2</code>的前 <code>j</code>个字符的解。</td>
+<td>LeetCode 1143: 最长公共子序列 (LCS)``LeetCode 72: 编辑距离</td>
+</tr>
+<tr>
+<td><strong>组合/计数类子序列</strong></td>
+<td><strong>背包类动态规划 / DFS + 记忆化</strong></td>
+<td>问题可以转化为：是否能从数组中挑选一些元素（一个子序列）凑成目标值 <code>target</code>。</td>
+<td>LeetCode 416: 分割等和子集 <code>LeetCode 494: 目标和</code>LeetCode 322: 零钱兑换 (背包思想)</td>
+</tr>
+<tr>
+<td><strong>回文子序列</strong></td>
+<td><strong>区间动态规划</strong></td>
+<td><code>dp[i][j]</code>通常定义为从 <code>i</code>到 <code>j</code>的区间内的解。依赖于更小区间 <code>dp[i+1][j-1]</code>的解。</td>
+<td>LeetCode 516: 最长回文子序列</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_8">类型三：本质是集合问题的子序列问题</h4>
+<p>比如128题，最长连续子序列，本质是一个集合问题。</p>
+<p>...</p>
+<h2 id="sorting-and-searching">Sorting and Searching</h2>
+<p>排序和搜索问题</p>
+<h3 id="sorting">Sorting</h3>
+<h4 id="quick-sort">Quick Sort</h4>
+<p>...</p>
+<h3 id="searching">常见的Searching</h3>
+<p><strong>核心搜索算法概览</strong></p>
+<table>
+<thead>
+<tr>
+<th>算法 (Algorithm)</th>
+<th>时间复杂度 (Time Complexity)</th>
+<th>空间复杂度 (Space Complexity)</th>
+<th>数据结构要求</th>
+<th>核心思想</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>线性搜索 (Linear Search)</strong></td>
+<td><strong>O</strong>(<strong>n</strong>)</td>
+<td><strong>O</strong>(<strong>1</strong>)</td>
+<td>无要求</td>
+<td>逐个检查</td>
+</tr>
+<tr>
+<td><strong>二分搜索 (Binary Search)</strong></td>
+<td><strong>O</strong>(<strong>lo</strong>g<strong>n</strong>)</td>
+<td><strong>O</strong>(<strong>1</strong>)或<strong>O</strong>(<strong>lo</strong>g<strong>n</strong>)</td>
+<td><strong>必须有序</strong></td>
+<td>分而治之 (Divide and Conquer)</td>
+</tr>
+<tr>
+<td><strong>哈希查找 (Hash Search)</strong></td>
+<td>平均<strong>O</strong>(<strong>1</strong>), 最坏<strong>O</strong>(<strong>n</strong>)</td>
+<td><strong>O</strong>(<strong>n</strong>)</td>
+<td>哈希表 (Hash Table)</td>
+<td>直接映射</td>
+</tr>
+<tr>
+<td><strong>广度优先搜索 (BFS)</strong></td>
+<td><strong>O</strong>(<strong>V</strong>+<strong>E</strong>), V for nodes, E for edges</td>
+<td><strong>O</strong>(<strong>W</strong>)</td>
+<td>图 (Graph) / 树 (Tree)</td>
+<td>逐层扩展，找最短路径</td>
+</tr>
+<tr>
+<td><strong>深度优先搜索 (DFS)</strong></td>
+<td><strong>O</strong>(<strong>V</strong>+<strong>E</strong>), W for the widest layer's nodes</td>
+<td><strong>O</strong>(<strong>H</strong>)</td>
+<td>图 (Graph) / 树 (Tree)</td>
+<td>一条路走到底再回头</td>
+</tr>
+</tbody>
+</table>
+<h4 id="binary-search">Binary Search</h4>
+<p>判定条件容易写错，一定是left &lt;= right，因为左右指针相遇后还要再检查一次这个最后一个元素。</p>
+<h2 id="graph">Graph</h2>
+<h3 id="dfs">DFS</h3>
+<p>常用DFS模板：</p>
+<pre><code class="language-python">import collections
+class Solution(object):
+    def numIslands(self, grid):
+        &quot;&quot;&quot;
+        :type grid: List[List[str]]
+        :rtype: int
+        &quot;&quot;&quot;
+        if not grid:
+            return 0
+
+        rows = len(grid)
+        cols = len(grid[0])
+        count = 0
+
+        # 在开头先把移动的方向（一般都是四个）
+        directions = [
+            [0,1],
+            [0,-1],
+            [1,0],
+            [-1,0]
+        ]
+
+        def dfs(r,c):
+            for direction in directions:
+                dx, dy = direction
+                new_r, new_c = r + dx, c + dy
+
+                if 0 &lt;= new_r &lt; rows and 0 &lt;= new_c &lt; cols and grid[new_r][new_c] == '1':
+                    grid[new_r][new_c] = '0'
+                    dfs(new_r, new_c)
+
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == &quot;1&quot;:
+                    count += 1
+                    dfs(r, c)
+
+        return count
+
+</code></pre>
+<h3 id="bfs">BFS</h3>
+<p>BFS遍历图的时候，添加到队列的是当前queue中popleft得到的node<strong>所有的有效的、未访问过的邻居</strong>。</p>
+<p>常用BFS模板：</p>
+<pre><code class="language-python">import collections
+class Solution(object):
+    def numIslands(self, grid):
+        &quot;&quot;&quot;
+        :type grid: List[List[str]]
+        :rtype: int
+        &quot;&quot;&quot;
+        if not grid:
+            return 0
+
+        rows = len(grid)
+        cols = len(grid[0])
+        count = 0
+
+        # 在开头先把移动的方向（一般都是四个）
+        directions = [
+            [0,1],
+            [0,-1],
+            [1,0],
+            [-1,0]
+        ]
+
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == &quot;1&quot;:
+                    count += 1
+                    queue = deque() # empty queue
+                    queue.append((r,c)) # add to queue
+                    while queue:
+                        cur_r, cur_c = queue.popleft()
+                        for direction in directions:
+                            dx, dy = direction
+                            new_r, new_c = cur_r + dx, cur_c + dy
+                            if 0 &lt;= new_r &lt; rows and 0 &lt;= new_c &lt; cols and grid[new_r][new_c] == '1':
+                                # 有的题需要设置一个visited(set)来记录是否访问过
+                                grid[new_r][new_c] = '0'
+                                queue.append((new_r,new_c))
+
+        return count
+
+</code></pre>
+<p>常用BFS改DFS的方法：</p>
+<pre><code class="language-python">import collections
+class Solution(object):
+    def numIslands(self, grid):
+        &quot;&quot;&quot;
+        :type grid: List[List[str]]
+        :rtype: int
+        &quot;&quot;&quot;
+        if not grid:
+            return 0
+
+        rows = len(grid)
+        cols = len(grid[0])
+        count = 0
+
+        directions = [
+            [0,1],
+            [0,-1],
+            [1,0],
+            [-1,0]
+        ]
+
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == &quot;1&quot;:
+                    count += 1
+
+                    # ※ 把BFS中这里的deque改为stack就可以了
+                    stack = []
+                    stack.append((r,c)) # add to stack
+                    while stack:
+                        cur_r, cur_c = stack.pop()
+                        for direction in directions:
+                            dx, dy = direction
+                            new_r, new_c = cur_r + dx, cur_c + dy
+                            if 0 &lt;= new_r &lt; rows and 0 &lt;= new_c &lt; cols and grid[new_r][new_c] == '1':
+                                grid[new_r][new_c] = '0'
+                                stack.append((new_r,new_c))
+
+        return count
+
+</code></pre>
+<p>上述反映了DFS的本质是个stack，如果是dijskta的话就是把stack换成heap</p>
+<h4 id="shortest-path">Shortest Path</h4>
+<p>首先path题，比如从左上角找到右下角，不需要全局循环，而是从起点开始一层一层找。找最短路径用BFS。</p>
+<p>连通检查的时候务必记住三点检查，缺一不可：</p>
+<ol>
+<li>是否出界</li>
+<li>是否访问过</li>
+<li>是否通路</li>
+</ol>
+<p>然后在队列中，我们不光记录r, c, 还要记录length。</p>
+<p>最短路径基本思路如下：</p>
+<pre><code>首先检查起点和终点，如果起点和终点是障碍物，直接结束
+
+初始化队列，元素为(row, col, path_length)
+创建visited集合
+构建方向数组
+
+当队列中还有元素的时候：
+    头元素出队
+    检查头元素是否已经到达终点，如果已经到达，那么就return通路
+    探索合法方向的邻居：
+    检查邻居的有效性（三点检查缺一不可）
+    将有效的邻居加入队列和visited集合
+
+如果循环结束后还没有找到终点，说明没有通路
+</code></pre>
+<p>为什么检查到元素达到终点就能立刻return呢？这是因为BFS探索是一层一层往外探索的，所以BFS第一次找到的路径，一定是最短的！</p>
+<h4 id="_9">多源扩散</h4>
+<p>如果一个matrix中有多个源头同时进行扩散，那么非常适合用BFS来解决。只要把源头全部入队，然后开始一层一层（层序遍历），就可以完成。</p>
+<p>...</p>
+<h2 id="backtracking">Backtracking</h2>
+<h3 id="1-permutationcombination">1. Permutation/Combination</h3>
+<p>排列组合问题长得很像，解题的时候都是在常规回溯上进行Pruning，只是根据排列or组合的不同需要选择startIndex or used list来pruning。</p>
+<p>这两个工具的选用，取决于一个根本问题：<strong>你是在解决“组合(Combination)”问题还是“排列(Permutation)”问题？</strong></p>
+<ol>
+<li><strong><code>startIndex</code> 标记为核心的主框架：用于组合类问题 (Subsets, Combination Sum)</strong></li>
+<li><strong>核心目的</strong> ：避免产生重复的 <strong>组合</strong> 。</li>
+<li><strong>问题特征</strong> ：元素的顺序不重要。<code>[1, 2]</code> 和 <code>[2, 1]</code> 被视为同一个组合。</li>
+<li><strong>工作原理</strong> ：通过 <code>startIndex</code>，我们强制规定了下一次选择的数 <strong>必须在当前数之后</strong> （或就是当前数）。例如，当你选择了 <code>nums[i]</code> 之后，下一次递归从 <code>backtrack(i+1)</code> 开始，你就再也没有机会回头去选择 <code>nums[i]</code> 之前的数了。这天然地保证了所有组合都是按索引升序的，从而避免了 <code>[1, 2]</code> 和 <code>[2, 1]</code> 同时出现。</li>
+<li><strong>一句话总结</strong> ：<strong><code>startIndex</code> 是为了防止往回取数，从而避免重复组合。</strong></li>
+<li><strong><code>used</code> 数组为核心的主框架：用于排列类问题 (Permutations)</strong></li>
+<li><strong>核心目的</strong> ：记录在当前<strong>路径</strong>下，哪些位置的数已经被使用过。</li>
+<li><strong>问题特征</strong> ：元素的顺序很重要。<code>[1, 2]</code> 和 <code>[2, 1]</code> 是两个不同的排列。</li>
+<li><strong>工作原理</strong> ：在生成排列时，你每次都需要从<strong>所有数</strong>中进行选择（除了已经用过的）。所以 <code>for</code> 循环必须每次都从 <code>0</code> 开始。<code>used</code> 数组就像一个笔记本，告诉你对于当前正在构建的这个排列，哪些数字（通过它们的原始索引）已经被放进去了，不能再放了。</li>
+<li><strong>一句话总结</strong> ：<strong><code>used</code> 数组是为了防止同一个元素在一个排列中被重复使用。</strong></li>
+</ol>
+<p><strong>对于你正在做的 <code>Subsets II</code> 这道题，它是一个组合问题（子集的顺序不重要），所以我们选择 <code>startIndex</code> 方案。</strong></p>
+<h4 id="_10">如何选择正确的回溯方法？（决策清单）</h4>
+<p>当遇到一个回溯问题时，可以按以下顺序问自己几个问题来确定模板：</p>
+<p><strong>问题1：结果中的元素顺序是否重要？</strong></p>
+<ul>
+<li><strong>是 (顺序重要) -&gt; 这是排列问题</strong> -&gt;  <strong>使用 <code>used</code> 数组</strong> ，<code>for</code> 循环从 <code>0</code> 开始。</li>
+<li><strong>否 (顺序不重要) -&gt; 这是组合/子集问题</strong> -&gt;  <strong>使用 <code>startIndex</code></strong> ，<code>for</code> 循环从 <code>startIndex</code> 开始。</li>
+</ul>
+<p><strong>问题2：输入数组中是否有重复元素？</strong></p>
+<ul>
+<li><strong>是 -&gt; 需要去重</strong> -&gt;  <strong>必须先排序 <code>nums.sort()</code></strong> ，然后在 <code>for</code> 循环中加入剪枝逻辑。</li>
+<li>排列问题的剪枝：<code>if i &gt; 0 and nums[i] == nums[i-1] and not used[i-1]: continue</code></li>
+<li>组合问题的剪枝：<code>if i &gt; startIndex and nums[i] == nums[i-1]: continue</code></li>
+<li><strong>否 -&gt; 不需要去重</strong> -&gt; 使用基础模板即可。</li>
+</ul>
+<p><strong>问题3：输入数组中的元素是否可以被无限次重复使用？</strong> (主要针对组合问题)</p>
+<ul>
+<li><strong>是 (例如 LeetCode 39. Combination Sum)</strong> -&gt; 递归时 <code>startIndex</code> 不变，即 <code>backtrack(i, ...)</code>，允许下一轮继续选择当前数。</li>
+<li><strong>否 (例如 LeetCode 40. Combination Sum II / Subsets)</strong> -&gt; 递归时 <code>startIndex</code> 加一，即 <code>backtrack(i + 1, ...)</code>，不允许重复使用同一个位置的元素。</li>
+</ul>
+<h4 id="_11">回溯问题思路清单</h4>
+<p>下表列举了最核心的排列组合问题的区别及注意要点：</p>
+<table>
+<thead>
+<tr>
+<th>目标 (Problem)</th>
+<th>关键点 (Key Points)</th>
+<th>回溯主干逻辑 (Core Logic)</th>
+<th>去重/剪枝逻辑 (Pruning)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>46. Permutations <br />(全排列)</strong> <code>[1,2,3]</code></td>
+<td><strong>排列</strong>(顺序重要)<br />无重复元素</td>
+<td><code>used</code>数组记录已用元素。<br /><code>for</code>循环从 <code>0</code>到 <code>n-1</code> 。<br />递归 <code>backtrack()</code>。</td>
+<td>无</td>
+</tr>
+<tr>
+<td><strong>47. Permutations II<br /> (全排列II)</strong> <code>[1,1,2]</code></td>
+<td><strong>排列</strong>(顺序重要)<br /><strong>有重复元素</strong>需要避免重复结果</td>
+<td><code>used</code>数组。循环从 <code>0</code>到 <code>n-1</code> 。<br />递归 <code>backtrack()</code>。</td>
+<td><strong>先排序<br />剪枝条件</strong> ：如果当前数字与前一个相同，<br />并且前一个相同的数字在当前排列中 <br /><strong>没有被使用</strong>，则跳过当前数字。<br /><code>if i &gt; 0 &amp;&amp; nums[i] == nums[i-1] &amp;&amp; !used[i-1]</code></td>
+</tr>
+<tr>
+<td><strong>78. Subsets<br /> (子集)</strong> <br />  <code>[1,2,3]</code></td>
+<td><strong>组合</strong>(顺序不重要)<br />无重复元素</td>
+<td><code>startIndex</code>记录起点。<br /><code>for</code>循环从 <code>startIndex</code>到 <code>n-1</code>。 <br />递归 <code>backtrack(i + 1)</code>。</td>
+<td>无</td>
+</tr>
+<tr>
+<td><strong>90. Subsets II <br />(子集II)</strong> <code>[1,2,2]</code></td>
+<td><strong>组合</strong>(顺序不重要)<br /><strong>有重复元素</strong></td>
+<td><code>startIndex</code>记录起点。循环从 <code>startIndex</code>到 <code>n-1</code>。 <br />递归 <code>backtrack(i + 1)</code>。</td>
+<td><strong>先排序</strong> 。<br /><strong>剪枝条件</strong> ：在同一层递归中，<br />如果当前数字与前一个数字相同，<br />则跳过当前数字。</td>
+</tr>
+<tr>
+<td><strong>39. Combination Sum<br /> (组合总和)</strong>  <code>[2,3,6,7]</code>,<code>target=7</code></td>
+<td><strong>组合</strong>(顺序不重要)<br /><code>无重复元素</code> <br /><strong>元素可无限复用</strong></td>
+<td><code>startIndex</code>记录起点。<br /><code>for</code>循环从 <code>startIndex</code>到 <code>n-1</code>。<br />递归 <code>backtrack(i)</code>(注意是 <code>i</code>不是 <code>i+1</code>)。</td>
+<td>可选剪枝：若 <code>sum + nums[i] &gt; target</code><br />则可提前终止 (因为数组已排序)。</td>
+</tr>
+<tr>
+<td><strong>40. Combination Sum II<br /> (组合总和II)</strong> <br /> <code>[10,1,2,7,6,1,5]</code></td>
+<td><strong>组合</strong>(顺序不重要) <br /><strong>元素不可复用</strong></td>
+<td><code>startIndex</code>记录起点。<br /><code>for</code>循环从 <code>startIndex</code>到 <code>n-1</code>。 <br />递归 <code>backtrack(i + 1)</code>。</td>
+<td><strong>先排序</strong> 。<strong>剪枝条件</strong> ：在同一层递归中，<br />如果当前数字与前一个数字相同，<br />则跳过当前数字。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心要点</strong> ：</p>
+<ul>
+<li>看到 <strong>排列</strong> ，立刻想到  <strong><code>used</code> 数组</strong> 。</li>
+<li>看到 <strong>组合/子集</strong> ，立刻想到  <strong><code>startIndex</code></strong> 。</li>
+<li>看到 <strong>输入有重复</strong> ，立刻想到  <strong>先排序，后剪枝</strong> 。</li>
+<li>看到 <strong>元素可复用</strong> ，立刻想到递归时 <code>startIndex</code> <strong>不加一</strong> (<code>backtrack(i)</code>)。</li>
+</ul>
+<p>把这个清单和决策流程记在心里，以后再遇到回溯问题，你就能迅速地选择正确的工具和模板来解决了。</p>
+<p>...</p>
+<p>...</p>
+<p>...</p>
+<p>...</p>
+<h2 id="dp">DP</h2>
+<p>对于求职者来说，DP 的熟练程度往往能决定面试的层级和结果，尤其是在 Google、Meta、ByteDance 这类重视算法能力的公司。</p>
+<hr />
+<h3 id="_12">为什么面试官喜欢考动态规划？</h3>
+<p>面试官用 DP 问题不是为了难住你，而是因为它能非常有效地考察候选人的多项核心能力：</p>
+<ol>
+<li><strong>抽象建模能力</strong> ：能否将一个看似复杂的问题，抽象成一个数学模型（状态和状态转移）。</li>
+<li><strong>逻辑分解能力</strong> ：能否将一个大问题，拆解成性质相同、规模更小的子问题。</li>
+<li><strong>最优子结构和重复子问题</strong> ：是否能识别出问题是否具备 DP 的两个核心特征。</li>
+<li><strong>思维严谨性</strong> ：能否清晰地定义 DP 状态、推导状态转移方程，并处理好边界条件和初始值。</li>
+<li><strong>代码实现能力</strong> ：能否将脑中的递推公式，无误地转化为清晰的代码。</li>
+</ol>
+<p>一个能流畅地分析并解决 DP 问题的人，通常意味着他具备了很强的逻辑思维和解决复杂问题的潜力。</p>
+<hr />
+<h3 id="dp_1">面试中常见的 DP 类型有哪些？</h3>
+<p>你不需要掌握所有 DP 的花样，但以下几个经典模式是面试的“高频区”，掌握它们的性价比极高：</p>
+<h4 id="1">1. 入门级/基础模型</h4>
+<p>这类题通常是用来破冰或检验你是否了解 DP 的基本概念。</p>
+<ul>
+<li><strong>斐波那契数列 (Fibonacci Number)</strong></li>
+<li><strong>爬楼梯 (Climbing Stairs)</strong></li>
+</ul>
+<h4 id="2-dp-linear-dp">2. 一维序列 DP (Linear DP)</h4>
+<p>这是最常见、最基础的模式，在一个序列（数组）上进行动态规划。</p>
+<ul>
+<li><strong>打家劫舍 (House Robber)</strong> : 学习如何在不相邻的元素中取最优解。</li>
+<li><strong>最长递增子序列 (Longest Increasing Subsequence)</strong> : <code>O(n^2)</code> 和 <code>O(n log n)</code> 两种解法都能体现你的水平。</li>
+<li><strong>最大子数组和 (Maximum Subarray)</strong> : 虽然有更优的 <code>O(n)</code> 解法，但它也是 DP 的一个好例子。</li>
+</ul>
+<h4 id="3-dp-grid-dp">3. 二维矩阵/网格 DP (Grid DP)</h4>
+<p>在一个二维网格上从起点走到终点，求解路径数量或最优路径。</p>
+<ul>
+<li><strong>不同路径 (Unique Paths)</strong> : 网格 DP 的入门题。</li>
+<li><strong>最小路径和 (Minimum Path Sum)</strong></li>
+</ul>
+<h4 id="4-dp-string-dp">4. 字符串 DP (String DP)</h4>
+<p>涉及两个或多个字符串的匹配、编辑等问题。</p>
+<ul>
+<li><strong>最长公共子序列 (Longest Common Subsequence)</strong> : 极其经典，是很多字符串 DP 问题的基础。</li>
+<li><strong>编辑距离 (Edit Distance)</strong> : Hard 难度，但思想非常有代表性，是双字符串 DP 的“天花板”之一。</li>
+</ul>
+<h4 id="5-knapsack-problem">5. 背包问题 (Knapsack Problem)</h4>
+<p>这是一个超级模式，有多种变体，是面试的热点。</p>
+<ul>
+<li><strong>0-1 背包</strong> : 每个物品只能选一次。（如  <strong>分割等和子集 (Partition Equal Subset Sum)</strong> ）</li>
+<li><strong>完全背包</strong> : 每个物品可以无限次选择。（如  <strong>零钱兑换 (Coin Change)</strong> ）</li>
+</ul>
+<p>对于大多数 NG 和社招面试，能熟练掌握以上 <strong>5</strong> 种模式，就已经能覆盖 <strong>80%以上</strong> 的 DP 面试题了。至于更高级的区间 DP、树形 DP、状态压缩 DP 等，除非你面的岗位非常核心或级别很高，否则遇到的概率较小。</p>
+<hr />
+<h3 id="dp_2">如何在面试中优雅地解答一道 DP 题？</h3>
+<p>如果你在面试中遇到一道疑似 DP 的题，可以遵循一个非常清晰的沟通和解题步骤，这会让面试官对你的评价大大加分：</p>
+<ol>
+<li><strong>先上暴力解（通常是递归）</strong>
+   不要一上来就想 DP。先用最直观的递归（自顶向下）把问题的逻辑讲清楚。比如：“我们可以定义一个函数 <code>solve(i)</code>，它表示从第 <code>i</code> 个位置开始能得到的最终答案……”</li>
+<li><strong>指出重复子问题（画出递归树）</strong>
+   在纸上或白板上画出递归树，明确地告诉面试官：“我们可以看到，<code>solve(i-k)</code> 这样的子问题被重复计算了很多次，这里存在优化空间。”</li>
+<li><strong>加入备忘录（记忆化搜索）</strong>
+   在暴力递归的基础上，引入一个 <code>memo</code> 数组或哈希表，存储已经计算过的子问题的结果，避免重复计算。这其实就是  <strong>自顶向下 (Top-Down) 的 DP</strong> ，对于很多面试来说，这已经是一个非常好的答案了。</li>
+<li><strong>（进阶）转为迭代（DP Table）</strong>
+   如果时间允许，或者你想展示更强的能力，可以进一步转为  <strong>自底向上 (Bottom-Up) 的 DP</strong> 。</li>
+<li><strong>定义 DP 数组含义</strong> : “现在我们换一种思路，用一个 <code>dp</code> 数组来解决。<code>dp[i]</code> 的含义是……” (这是最关键的一步！)</li>
+<li><strong>推导状态转移方程</strong> : “<code>dp[i]</code> 的值可以由 <code>dp[i-1]</code> 和 <code>dp[i-2]</code> 推导出来，关系是……”</li>
+<li><strong>确定遍历顺序和初始值</strong> : “我们需要从左到右遍历，并且 <code>dp[0]</code> 和 <code>dp[1]</code> 的初始值分别是……”</li>
+</ol>
+<p>这个“ <strong>暴力递归 -&gt; 记忆化搜索 -&gt; DP Table</strong> ”的思考路径，能清晰地展示你的思维过程，即使最后没能写出最优解，面试官也会对你的分析能力非常满意。</p>
+<p><strong>总之，DP 是硬核，但更是你展示算法实力的绝佳舞台。</strong> 把它当作一个必须攻克的山头，你的面试竞争力会提升一个档次。</p>
+<p>...</p>
+<h2 id="_13">算法天梯题目整理</h2>
+<p>本部分的内容主要是整理算法天梯内容，即我正在维护的一个“Algorithm Roadmap”项目：<a href="https://jeffliulab.github.io/algorithm-roadmap/">https://jeffliulab.github.io/algorithm-roadmap/</a></p>
+<h3 id="stack">Stack类</h3>
+<h4 id="stack_1">Stack &gt;&gt; 辅助栈/节点强化思想</h4>
+<p>Min Stack（两种方法，强化节点或者使用辅助栈）</p>
+<h4 id="stack_2">Stack &gt;&gt; 括号问题</h4>
+<p>Valid Parentheses：用stack来判断是否是valid括号组合
+Evaluate Reverse Polish Notation：逆波兰运算
+Generate Parentheses：生成括号</p>
+<h4 id="monotonic-stack">辅助栈/节点强化思想 &gt;&gt; 单调栈 Monotonic Stack</h4>
+<p>保持单调递增或者单调递减，用于高效解决“下一个更大/下一个更小”问题。在pop和push的时候，单调栈始终保持stack内元素值按照单调顺序排列。</p>
+<p>单调递增stack：top保持最大，用于查找下一个更小</p>
+<p>单调递减stack：top保持最小，用于查找下一个更大</p>
+<ol>
+<li>Daily Temperatures</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.50899def.min.js"></script>
+      
+        <script src="../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

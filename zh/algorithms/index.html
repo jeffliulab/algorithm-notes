@@ -1,0 +1,2112 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Jeff Liu">
+      
+      
+        <link rel="canonical" href="https://jeffliulab.github.io/algorithm-notes/zh/algorithms/">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>Algorithms - Jeff's Algorithm and Leetcode Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#algorithms" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../" title="Jeff&#39;s Algorithm and Leetcode Notes" class="md-header__button md-logo" aria-label="Jeff's Algorithm and Leetcode Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jeff's Algorithm and Leetcode Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Algorithms
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../algorithms/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="Jeff&#39;s Algorithm and Leetcode Notes" class="md-nav__button md-logo" aria-label="Jeff's Algorithm and Leetcode Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Jeff's Algorithm and Leetcode Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    INTRO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Common
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Common
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%AE%97%E6%B3%95%E5%AE%9D%E5%85%B8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    算法宝典
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_structures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Structures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Leetcode/leetcode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Leetcode Temporary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Machine Learning
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Machine Learning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ML/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    常见面试问题
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Hard Questions
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Hard Questions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Hard/hard_01.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hard_Questions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sorting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sorting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sorting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      经典排序算法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="经典排序算法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-bubble-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 冒泡排序 (Bubble Sort)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-selection-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 选择排序 (Selection Sort)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-insertion-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 插入排序 (Insertion Sort)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-merge-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 归并排序 (Merge Sort)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-quick-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Quick Sort 快速排序
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-heap-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 堆排序 (Heap Sort)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-counting-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Counting Sort
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-radix-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Radix Sort
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-bucket-sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Bucket Sort
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      稳定性
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="稳定性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      稳定性高意味着什么？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      稳定性差（不稳定）又会导致什么？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      常见算法的稳定性总结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort" class="md-nav__link">
+    <span class="md-ellipsis">
+      不同Sort的横向对比
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#searching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Searching
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recursion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recursion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recursion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 递归入门：核心思想与黄金法则
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 递归入门：核心思想与黄金法则">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 什么是递归？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 递归的两条黄金法则
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 一个最简单的Python递归示例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-the-church-turing-thesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 理论基石：递归的计算能力 (The Church-Turing Thesis)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 递归的实现与改写方法 (Python实现)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 递归的实现与改写方法 (Python实现)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-the-call-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 系统如何实现递归：调用栈 (The Call Stack)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 改写为循环：两种核心模式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 递归的适用对象与场景
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 递归的优缺点权衡
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 总结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recursive-leap-of-faith" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recursive Leap of Faith
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#math-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Math Algorithms
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Math Algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hash-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hash Function
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hash Function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#int-hash" class="md-nav__link">
+    <span class="md-ellipsis">
+      Int Hash
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string-hash" class="md-nav__link">
+    <span class="md-ellipsis">
+      String Hash
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kadanes-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kadane's Algorithm
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="algorithms">Algorithms</h1>
+<p>注意：不要修改标题名称，否则会导致很多地方的链接失效。</p>
+<p>本页面主要介绍的是leetcode和常规算法。中高阶算法见对应的词条。</p>
+<h2 id="sorting">Sorting</h2>
+<p>好的，没有问题。下面我将对每一个主要的排序算法进行独立的、详细的介绍，并在最后给出一个整体的梳理和总结，帮助你形成一个完整清晰的知识体系。</p>
+<hr />
+<h3 id="_1">经典排序算法</h3>
+<p>其中最重要的是：</p>
+<ol>
+<li>Insertion Sort，小数组排序最佳，经常用在局部优化中</li>
+<li>Quick Sort，应用范围最广，平均效能最好</li>
+<li>Merge Sort，稳定性最好，不会在极端情况下严重退化</li>
+<li>Bucket Sort，可以在O(N)时间内解决，但是条件需求比较苛刻</li>
+</ol>
+<h4 id="1-bubble-sort">1. 冒泡排序 (Bubble Sort)</h4>
+<ul>
+<li><strong>核心思想</strong> ：通过重复地遍历待排序的数列，一次比较两个相邻的元素，如果它们的顺序错误就把它们交换过来。这个过程就像气泡从水底慢慢浮到水面一样，每一轮遍历都会将当前未排序部分的最大（或最小）元素“冒泡”到数列的末尾。</li>
+<li>
+<p><strong>步骤分解</strong> ：</p>
+</li>
+<li>
+<p>从数列的第一个元素开始，比较它和下一个元素。</p>
+</li>
+<li>如果当前元素比下一个元素大，就交换它们。</li>
+<li>继续向后移动，对下一对相邻元素进行同样的操作。</li>
+<li>当这个过程遍历到数列末尾时，最大的元素就已经被放在了正确的位置上。</li>
+<li>重复以上步骤，但是下一次遍历的范围可以排除已经排好的末尾元素。</li>
+<li>
+<p>直到没有任何一对数字需要比较，或者说遍历了一整轮都没有发生交换，排序完成。</p>
+</li>
+<li>
+<p><strong>性能分析</strong> ：</p>
+</li>
+<li><strong>时间复杂度</strong> ：<ul>
+<li>平均：<strong>O</strong>(<strong>n^</strong>2<strong>)</strong></li>
+<li>最坏：<strong>O</strong>(<strong>n^</strong>2<strong>)</strong> (数组完全逆序)</li>
+<li>最好：<strong>O</strong>(<strong>n</strong>) (加入一个标志位，如果一轮没有发生交换，说明已有序，提前结束)</li>
+</ul>
+</li>
+<li><strong>空间复杂度</strong> ：<strong>O</strong>(<strong>1</strong>) (原地排序)</li>
+<li><strong>稳定性</strong> ： <strong>稳定</strong> 。因为只有当 <code>a &gt; b</code> 时才交换，相等的元素不会改变相对位置。</li>
+<li><strong>优缺点与适用场景</strong> ：</li>
+<li><strong>优点</strong> ：实现非常简单，容易理解。</li>
+<li><strong>缺点</strong> ：效率极低，是性能最差的排序算法之一。</li>
+<li><strong>适用场景</strong> ：主要用于教学目的，或者在数据量极小（比如 n &lt; 10）的情况下使用。</li>
+</ul>
+<h4 id="2-selection-sort">2. 选择排序 (Selection Sort)</h4>
+<ul>
+<li><strong>核心思想</strong> ：首先在未排序序列中找到最小（或最大）元素，存放到排序序列的起始位置，然后再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。</li>
+<li>
+<p><strong>步骤分解</strong> ：</p>
+</li>
+<li>
+<p>在整个数组中，找到最小的那个元素。</p>
+</li>
+<li>将这个最小元素与数组的第一个元素交换位置。此时，第一个元素就是有序的了。</li>
+<li>在剩下的 <code>n-1</code> 个元素中，找到最小的元素。</li>
+<li>将它与数组的第二个元素交换位置。</li>
+<li>
+<p>依此类推，直到所有元素均排序完毕。</p>
+</li>
+<li>
+<p><strong>性能分析</strong> ：</p>
+</li>
+<li><strong>时间复杂度</strong> ：<ul>
+<li>平均/最坏/最好：<strong>O</strong>(<strong>n^</strong>2<strong>)</strong>。无论数据长什么样，它都必须完整地进行 <code>n-1</code> 轮查找和交换。</li>
+</ul>
+</li>
+<li><strong>空间复杂度</strong> ：<strong>O</strong>(<strong>1</strong>) (原地排序)</li>
+<li><strong>稳定性</strong> ： <strong>不稳定</strong> 。例如 <code>[5a, 5b, 2]</code>，第一轮会找到 <code>2</code>，然后将它和 <code>5a</code> 交换，得到 <code>[2, 5b, 5a]</code>，<code>5a</code> 和 <code>5b</code> 的相对位置就变了。</li>
+<li><strong>优缺点与适用场景</strong> ：</li>
+<li><strong>优点</strong> ：实现简单，并且它保证了元素的“交换次数”是最少的（每轮最多一次）。</li>
+<li><strong>缺点</strong> ：效率低下，性能表现与输入数据无关，无法利用数据本身的有序性。</li>
+<li><strong>适用场景</strong> ：同样是教学和数据量极小的场景。</li>
+</ul>
+<h4 id="3-insertion-sort">3. 插入排序 (Insertion Sort)</h4>
+<p>虽然插入排序本身时间复杂度很高，但是对于小数组，插入排序的效率接近O(N)。因此在对QuickSort或者BucketSort进行优化的时候，经常对其中的小数组应用InsertionSort。</p>
+<p><strong>为什么用插入排序处理小数组？</strong></p>
+<p>简单来说，就像你要去家门口 100 米外的便利店，你肯定会选择走路或骑自行车，而不是开跑车。虽然跑车速度快（渐进复杂度更优），但启动、挂挡、停车的“固定开销”太高了，在短距离内完全没有优势。</p>
+<p>插入排序就是算法中的“自行车”，而快速排序/归并排序就像“跑车”。</p>
+<p><strong>插入排序在小数组上表现更好的原因可以总结为以下几点：</strong></p>
+<ol>
+<li><strong>极低的“固定开销” (Low Overhead)</strong></li>
+<li><strong>代码简单</strong> ：插入排序的核心就是两层循环和元素交换，没有复杂的逻辑。</li>
+<li><strong>无额外空间</strong> ：它是原地排序，不需要像归并排序那样分配额外的临时数组。</li>
+<li><strong>无函数递归调用</strong> ：它没有像快排或归并排序那样的递归调用开销。每一次函数调用（压栈、出栈、传递参数）在底层都需要消耗时间的。对于一个长度为16的数组，快排可能需要进行多轮递归调用，而插入排序只是简单地执行循环。</li>
+<li><strong>对“近乎有序”的数据有奇效</strong></li>
+<li>插入排序的最佳时间复杂度是  <strong>O(n)</strong> 。当数据基本有序时，内层循环几乎不执行，速度飞快。</li>
+<li>在快速排序的递归过程中，当数组被分割到很小时，这些小数组通常已经 <strong>具有了一定的顺序性</strong> （不是完全随机的了），这正好发挥了插入排序的长处。</li>
+<li><strong>优秀的内存局部性 (Locality of Reference)</strong></li>
+<li>这是一个更底层的计算机体系结构原因。插入排序总是顺序地访问相邻的内存单元。这种方式对 CPU 的缓存（Cache）非常友好，可以大大减少从主内存读取数据的时间。</li>
+<li>相比之下，快速排序的 <code>partition</code> 操作（尤其是随机 pivot）可能会在内存中跳跃访问，更容易导致缓存未命中（Cache Miss）。</li>
+</ol>
+<p><strong>如何“证明”它比其他排序更好？</strong></p>
+<p>这个“证明”不是严格的数学证明，而是一个基于实际性能模型的合理解释。</p>
+<p>我们可以把一个算法的实际运行时间 <code>T(n)</code> 近似地看作：</p>
+<p><strong>T</strong>(<strong>n</strong>)<strong>≈</strong>C<strong>×</strong>操作次数</p>
+<p>这里的 <code>C</code> 就是我们前面提到的<strong>“固定开销” </strong>，或者叫<strong> “常数因子”</strong>。它代表了执行一次基本操作（如比较、交换、函数调用）的真实时间。</p>
+<ul>
+<li><strong>插入排序 (Insertion Sort)</strong> :
+  <strong>T</strong>in<strong>s(</strong>n<strong>)</strong>≈<strong>C</strong>in<strong>s×</strong>n^<strong>2</strong>
+  这里的 <strong>C</strong>in<strong>s</strong> 非常非常小，因为它的操作极其简单。</li>
+<li><strong>快速排序 (Quick Sort) / 归并排序 (Merge Sort)</strong> :
+  <strong>T</strong>q<strong>s(</strong>n<strong>)</strong>≈<strong>C</strong>q<strong>s×</strong>n<strong>lo</strong>g<strong>n</strong>
+  这里的 <strong>C</strong>q<strong>s</strong> 相对要大得多，因为它包含了递归调用、分区逻辑等的开销。</li>
+</ul>
+<p><strong>现在我们来比较一下，在 <code>n=16</code> 的情况下：</strong></p>
+<ul>
+<li>插入排序的时间：<strong>T</strong>in<strong>s</strong><strong>(</strong>16<strong>)</strong>≈<strong>C</strong>in<strong>s×</strong>1<strong>6</strong>2<strong>=</strong>256<strong>⋅</strong>C<strong>ins</strong></li>
+<li>快速排序的时间：<strong>T</strong>q<strong>s</strong><strong>(</strong>16<strong>)</strong>≈<strong>C</strong>q<strong>s×</strong>16<strong>lo</strong>g<strong>216</strong>=<strong>C</strong>q<strong>s</strong><strong>×</strong>16<strong>×</strong>4<strong>=</strong>64<strong>⋅</strong>C<strong>qs</strong></li>
+</ul>
+<p><strong>关键点来了</strong> ：虽然 <code>256</code> 这个数字比 <code>64</code> 大，但是常数因子 <strong>C</strong>q<strong>s</strong> 可能比 <strong>C</strong>in<strong>s</strong> 大得多（比如大10倍）。</p>
+<p>假设 <strong>C</strong>q<strong>s</strong><strong>=</strong>10<strong>⋅</strong>C<strong>in</strong>s****（这是一个合理的估算），那么：</p>
+<ul>
+<li>插入排序的实际时间 ≈ <strong>256</strong>⋅<strong>C</strong>in<strong>s</strong></li>
+<li>快速排序的实际时间 ≈ <strong>64</strong>⋅<strong>(</strong>10<strong>⋅</strong>C<strong>in</strong>s)<strong>=</strong>640<strong>⋅</strong>C<strong>in</strong>s</li>
+</ul>
+<p>在这个估算下，<strong>256</strong>⋅<strong>C</strong>in<strong>s</strong><strong>&lt;</strong>640<strong>⋅</strong>C<strong>in</strong>s<strong><em>*。</em>*这证明了在 n=16 这种小规模下，插入排序的实际运行时间是更短的。</strong></p>
+<p>随着 <code>n</code> 的增大，<code>n²</code> 的增长速度会远超 <code>n log n</code>，最终快排会胜出。但在那之前，存在一个<strong>“临界点”</strong>（crossover point），低于这个点的 <code>n</code> 值，插入排序都更快。这个临界点通常就在 <code>n=8</code> 到 <code>n=20</code> 之间，这也是为什么很多库函数的实现会选择 <code>16</code> 左右的数字作为切换的阈值。</p>
+<hr />
+<p><strong>总结：</strong></p>
+<ul>
+<li><strong>性能分析</strong> ：</li>
+<li><strong>时间复杂度</strong> ：<ul>
+<li>平均：<strong>O</strong>(<strong>n^</strong>2<strong>)</strong></li>
+<li>最坏：<strong>O</strong>(<strong>n^</strong>2<strong>)</strong> (数组完全逆序)</li>
+<li>最好：<strong>O</strong>(<strong>n</strong>) (数组已经基本有序，每次插入都只需要比较几次)</li>
+</ul>
+</li>
+<li><strong>空间复杂度</strong> ：<strong>O</strong>(<strong>1</strong>) (原地排序)</li>
+<li><strong>稳定性</strong> ： <strong>稳定</strong> 。因为我们是从后向前找到第一个不大于它的元素就插入，相等元素的顺序不会改变。</li>
+<li><strong>优缺点与适用场景</strong> ：</li>
+<li><strong>优点</strong> ：实现简单，对于<strong>小规模</strong>或<strong>基本有序</strong>的数据集，它的效率非常高，甚至超过 <strong>O</strong>(<strong>n</strong>log<strong>n</strong>) 算法。</li>
+<li><strong>缺点</strong> ：数据量大或无序时，效率很低。</li>
+<li><strong>适用场景</strong> ：数据量小。很多高级排序（如 TimSort）在处理小分区时会切换到插入排序。</li>
+</ul>
+<h4 id="4-merge-sort">4. 归并排序 (Merge Sort)</h4>
+<ul>
+<li><strong>核心思想</strong> ：一个典型的<strong>分治 (Divide and Conquer)</strong> 算法。它将一个大问题递归地拆分成小问题来解决。它先把数组从中间分成两半，再对这两半分别排序，最后将两个已排序的半区合并成一个完整的有序数组。</li>
+<li>
+<p><strong>步骤分解</strong> ：</p>
+</li>
+<li>
+<p><strong>分解 (Divide)</strong> ：如果数组长度大于1，就把它从中间劈成两半。</p>
+</li>
+<li><strong>解决 (Conquer)</strong> ：对左右两个子数组递归地调用归并排序。</li>
+<li><strong>合并 (Combine)</strong> ：当左右两个子数组都有序后，就将它们合并。合并时，创建一个临时数组，比较两个子数组的头部元素，哪个小就取哪个放入临时数组，直到一个子数组为空，再将另一个子数组剩余部分全部放入。最后将临时数组的内容拷回原数组。</li>
+</ul>
+<p>下面我们来看一下具体实现。</p>
+<p>首先第一步是Divide，很显然，就是不断把一个list分解为两部分：</p>
+<pre><code class="language-python">def mergeSort(arr, s, e):
+    if e - s + 1 &lt;= 1:  # 这个是用来判断是否分到了尽头
+        return arr
+
+    m = (s+e) // 2
+    mergeSort(arr, s, m)
+    mergeSort(arr, m+1, e)
+
+    merge(arr, s, m, e)
+
+    return arr
+</code></pre>
+<p>我们假设有一个函数，可以把分开的两部分合并起来，那么上面这个部分就已经写完了Merge Sort。</p>
+<p>如果你对Recursion递归不太熟悉，我们都知道，Recursion本质上就是函数运行到自己函数的时候，暂时停下来，再去继续执行本函数（只是用不同的参数），执行完后再回来继续执行。当递归进入到最终一层的时候，达到basecase，递归结束。</p>
+<p>反过来讲，在MergeSort中，递归的目的就是把ls拆分成长度为1的单位。那么如果我们换个角度去想，任何一个list，他的每一个index处本身就是一个最小单位，因此我们直接把一个list拿出来，这个list就是一个已经被MergeSort拆分完毕的一个由若干个长度为1的区段组成的list，这就是自底向上的迭代实现：</p>
+<pre><code class="language-python">def mergeSort(arr):
+    n = len(arr)
+    curr_size = 1
+
+    # 外层循环控制合并子数组的长度，每次翻倍
+    while curr_size &lt; n:
+        left_start = 0
+    # 内层循环负责遍历数组，找到需要合并的每一对子数组
+    while left_start &lt; n - 1:
+        # 计算左子数组的结尾（mid）
+        mid = min(left_start + curr_size - 1, n - 1)
+
+        # 计算右子数组的结尾（right_end）
+        # 这一步是为了处理边界情况，比如数组末尾的子数组可能不够长或者不存在
+        right_end = min(left_start + 2*curr_size-1, n-1)
+
+        # 调用封装好的merge函数进行合并
+        merge(arr, left_start, mid, right_end)
+
+        # 移动到下一对子数组的起点
+        left_start += 2 * curr_size
+
+    # 完成一轮合并后，将子数组长度翻倍
+        curr_size *= 2
+
+return arr
+</code></pre>
+<p>同时，如果你还记得递归的特性，应该能理解到递归和Stack结构一样，因此可以用Stack来模拟递归：</p>
+<pre><code class="language-python">def mergeSort_with_stack(arr):
+    &quot;&quot;&quot;
+    使用栈模拟递归实现的归并排序
+    &quot;&quot;&quot;
+    n = len(arr)
+    if n &lt;= 1:
+        return arr
+
+    # tasks_to_merge 栈，用于存储需要执行合并操作的区间
+    tasks_to_merge = []
+    # tasks_to_divide 栈，用于模拟递归的分解过程
+    tasks_to_divide = [(0, n - 1)]
+
+    # 1. 分解阶段：将所有大任务分解为小任务
+    while tasks_to_divide:
+        s, e = tasks_to_divide.pop()
+
+        # 将当前任务的合并操作压入合并栈
+        tasks_to_merge.append((s, e))
+
+        # 如果当前区间还能再分
+        if s &lt; e:
+            m = s + (e - s) // 2
+            # 将子任务压入分解栈，以便进一步分解
+            tasks_to_divide.append((s, m))
+            tasks_to_divide.append((m + 1, e))
+
+    # 2. 合并阶段：执行所有合并操作
+    # 此时 tasks_to_merge 栈顶是最小的子问题
+    while tasks_to_merge:
+        s, e = tasks_to_merge.pop()
+
+        # 只有当区间内多于1个元素时才需要合并
+        if s &lt; e:
+            m = s + (e - s) // 2
+            merge(arr, s, m, e)
+
+    return arr
+</code></pre>
+<p>上面的三种写法只是提供一个思路和视野，实际写的时候还是优先推荐Recursion写法，即自顶向下的写法，非常简洁，也比较好记，体现了计算机之美。</p>
+<p>理解上述内容后，merge函数就好写多了，就是把两个list合并为一个排好序的list。思路很简单，就是用两个指针pointer分别遍历两个list，然后不断把更小的数字放到一个result list中。这里有一个小技巧，就是result list其实就是我们本来的list！</p>
+<p>回看我们的函数：</p>
+<pre><code>def mergeSort(arr, s, e):
+    if e - s + 1 &lt;= 1:  # 这个是用来判断是否分到了尽头
+        return arr
+
+    m = (s+e) // 2
+    mergeSort(arr, s, m)
+    mergeSort(arr, m+1, e)
+
+    merge(arr, s, m, e)
+
+    return arr
+</code></pre>
+<p>在Divide完毕后，我们受伤握有s, m, e三个pointer，这三个pointer是原list中的index。因此在merge的时候，我们把左半边和右半边的内容复制出来，然后把结果直接复原在原本的list上就可以了。</p>
+<p>参考代码如下：</p>
+<pre><code class="language-python"># Merge in-place
+def merge(arr, s, m, e):
+    # Copy the sorted left &amp; right halfs to temp arrays
+    L = arr[s: m + 1]
+    R = arr[m + 1: e + 1]
+
+    i = 0 # index for L
+    j = 0 # index for R
+    k = s # index for arr
+
+    # Merge the two sorted halfs into the original array
+    while i &lt; len(L) and j &lt; len(R):
+        if L[i] &lt;= R[j]:
+            arr[k] = L[i]
+            i += 1
+        else:
+            arr[k] = R[j]
+            j += 1
+        k += 1
+
+    # One of the halfs will have elements remaining
+    while i &lt; len(L):
+        arr[k] = L[i]
+        i += 1
+        k += 1
+    while j &lt; len(R):
+        arr[k] = R[j]
+        j += 1
+        k += 1
+</code></pre>
+<p>最后注意，list</p>
+<ul>
+<li><strong>性能分析</strong> ：</li>
+<li><strong>时间复杂度</strong> ：<ul>
+<li>平均/最坏/最好：<strong>O</strong>(<strong>n</strong>log<strong>n</strong>)。无论数据如何分布，分解和合并的步骤都是固定的。</li>
+</ul>
+</li>
+<li><strong>空间复杂度</strong> ：<strong>O</strong>(<strong>n</strong>)。需要一个与原数组等大的辅助数组用于合并操作。</li>
+<li><strong>稳定性</strong> ： <strong>稳定</strong> 。在合并时，如果两个元素相等，我们可以规定先取左边子数组的元素，从而保证了相对位置不变。</li>
+<li><strong>优缺点与适用场景</strong> ：</li>
+<li><strong>优点</strong> ：性能极其稳定，最坏情况也能保证 <strong>O</strong>(<strong>n</strong>log<strong>n</strong>)。</li>
+<li><strong>缺点</strong> ：需要额外的 <strong>O</strong>(<strong>n</strong>) 空间，空间开销较大。</li>
+<li><strong>适用场景</strong> ：对性能稳定性要求高，且内存空间充足的场景。<strong>链表排序</strong>的最佳选择。</li>
+</ul>
+<h4 id="5-quick-sort">5. Quick Sort 快速排序</h4>
+<ul>
+<li><strong>核心思想</strong> ：同样是<strong>分治</strong>思想的体现。通过一趟排序将待排数据分割成独立的两部分，其中一部分的所有数据都比另一部分的所有数据都要小，然后再按此方法对这两部分数据分别进行快速排序。</li>
+<li>
+<p><strong>步骤分解</strong> ：</p>
+</li>
+<li>
+<p><strong>分区 (Partition)</strong> ：从数列中挑出一个元素，称为 “基准” (pivot)。</p>
+</li>
+<li>重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任何一边）。在这个分区退出之后，该基准就处于数列的中间位置。</li>
+<li><strong>递归 (Recursion)</strong> ：递归地把小于基准值元素的子数列和大于基准值元素的子数列排序。</li>
+</ul>
+<p>下面我们来看一下Quick Sort的实现。</p>
+<p>首先，在QuickSort中，最为重要的概念就是Pivot（读作皮瓦特）。Pivot就是划分两组数据的标杆。我们可以总是把第一个作为Pivot，也可以总是把最后一个数字作为Pivot。但是也显然的，Pivot的选择会严重影响性能，无论是第一个还是最后一个，都可能会面临如下情况：</p>
+<ul>
+<li>如果原数组中包含大量的重复元素</li>
+<li>如果原数组已经排序</li>
+</ul>
+<p>这会导致什么结果呢？分区会极度不均衡。我们可以想象一个最快的QuickSort方案：每次正好两个分区一样大，那么显然快排会最快。但是如果分区极度不均衡，想象一个极端例子：</p>
+<ul>
+<li>[1. 2. 3. 4. 5. 6. 7. 8. 9. 10]</li>
+</ul>
+<p>然后无论是第一个还是最后一个作为pivot，分区都将是他自己和其他数字。这样的话时间复杂度会极速退化到O(N^2)。</p>
+<p>针对QuickSort的这个特点，最佳实践一般包括：</p>
+<ol>
+<li>Pivot选择：三数取中，避免在有序数组上退化到O(N^2)</li>
+<li>处理重复元素：三路快排，对大量重复元素的数组性能大幅提升</li>
+<li>递归策略：尾递归消除，保证递归深度为O(logN)，防止栈溢出</li>
+<li>小数组处理：切换到插入排序，减少小数组排序的额外开销</li>
+</ol>
+<p>针对面试，我认为掌握前两个最佳实践方法就够了。下面我们分别来看一下，假如在面试中需要写QuickSort，我们一般怎么去写。</p>
+<p>首先我们肯定还是要直接把最普通的QuickSort写出来。这个怎么写呢？首先，我们捋一下QuickSort的顺序：</p>
+<ol>
+<li>假设有一个数组 <code>arr = [4, 7, 2, 1, 6, 5]</code>, <code>low = 0</code>, <code>high = 5</code>.</li>
+<li>总是选择arr[high]为pivot，即high = 5</li>
+<li>在low处设置一个pointer i，i代表一堵墙，在墙左边的元素一定要小于pivot</li>
+<li>设置一个j指针，用来从low遍历到high-1也即pivot之前：</li>
+<li>j = 0, arr[j] = 4, 4比pivot（5）小</li>
+<li>这个时候就要把4放到墙i的左边——交换i和j上面的数字，然后i++，就实现了这一步</li>
+<li>然后继续移动j，如果遇到比pivot大的，就不用管。</li>
+<li>直到遍历结束，这个时候数组变成了 <code>[4, 2, 1, 7, 6, 5]，i=3，在墙i左边的都比pivot小</code></li>
+<li>最后把i和pivot所在的数字调换，就实现了pivot左边的数字都比pivot小，pivot右边的数字都比pivot大了！</li>
+</ol>
+<p>熟悉上述内容后，我们一般在写的时候，把上面的内容单独抽象为一个partition method。</p>
+<p>然后QuickSort可以写成Recursion的形式，非常简洁：</p>
+<ol>
+<li>先判断base case，是不是还有至少两个元素能排</li>
+<li>如果能排，就先调用partition method得到p</li>
+<li>这里注意，得到p的同时，其实也已经把左右区域设置好了</li>
+<li>然后排p左边的、p右边的，即对左边和右边进行QuickSort的递归调用</li>
+</ol>
+<p>写成代码如下所示：</p>
+<pre><code class="language-python">def quickSort(arr, low, high):
+    if low &lt; high:
+        p = partition(arr, low, high)
+        quickSort(arr, low, p - 1)
+        quickSort(arr, p + 1, high)
+
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low
+    for j in range(low, high):
+        if arr[j] &lt; pivot:
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+    arr[i], arr[high] = arr[high], arr[i]
+    return i
+</code></pre>
+<p>这个时候，写出来的基本的QuickSort可以证明自己掌握了核心逻辑：分区Partition和递归Recursion。</p>
+<p>然后，针对时间复杂度退化的问题，增加一个partition随机化的处理。这个处理其实很简单，就是在pivot = arr[high]前面加一个pivot随机获取：</p>
+<pre><code class="language-python">import random
+....
+    rand_idx = random.randint(low, high)
+    arr[rand_idx], arr[high] = arr[high], arr[rand_idx]
+</code></pre>
+<p>注意原本的代码完全不用动！这里相当于造了一个新的arr[high]，后面的代码保持一致就可以了。</p>
+<p>如果还要继续优化，推荐继续优化三路取中。</p>
+<p>最终结合了所有优化（三路分区、三路快排、随即指针、插入排序、尾递归消除）的最佳实践版本如下：（可以通过LeetCode 912. Sort an Array的刁钻测试用例）</p>
+<pre><code class="language-python">import random
+
+# 定义一个全局常量，用于小数组优化的阈值。
+# 当待排序的子数组长度小于此值时，将切换到插入排序。
+# 16 是一个经验值，通常在 8 到 20 之间效果都不错。
+INSERTION_SORT_CUTOFF = 16
+
+class Solution(object):
+    def sortArray(self, nums):
+        &quot;&quot;&quot;
+        排序数组的主入口方法。
+
+        :type nums: List[int]
+        :rtype: List[int]
+        &quot;&quot;&quot;
+        # --- 入口检查 ---
+        # 处理空列表或 None 的边界情况。
+        if not nums:
+            return []
+
+        # --- 主排序逻辑调用 ---
+        # 调用内部的 _sort 方法，对整个数组进行排序。
+        # 初始范围是从索引 0 到 len(nums) - 1。
+        self._sort(nums, 0, len(nums) - 1)
+
+        # --- 返回结果 ---
+        # 排序是“原地”进行的，直接返回修改后的 nums 列表。
+        return nums
+
+    def _sort(self, arr, low, high):
+        &quot;&quot;&quot;
+        核心排序方法。
+        这是一个经过优化的递归函数，它使用 while 循环来消除尾递归，防止栈溢出。
+        &quot;&quot;&quot;
+        # while 循环是尾递归消除的关键。它确保了对较大分区的处理是通过迭代而不是深层递归完成的。
+        while low &lt; high:
+            # ---【实践 3: 小数组优化】 ---
+            # 如果当前分区足够小，递归的开销会变得比简单排序更大。
+            # 因此，我们切换到对小数组更高效的插入排序。
+            if high - low + 1 &lt; INSERTION_SORT_CUTOFF:
+                self._insertion_sort(arr, low, high)
+                # 使用 break 退出当前区间的 while 循环，因为这个小区间已经排序完毕。
+                break
+
+            # --- 调用三路快排进行分区 ---
+            # lt 和 gt 是分区后，“等于 pivot”区间的左右边界。
+            lt, gt = self._partition_3_way(arr, low, high)
+
+            # ---【实践 4: 尾递归消除】 ---
+            # 这是防止栈溢出的核心。我们比较左右两个待排序区间的长度，
+            # 对“较短”的那个区间进行递归调用，然后通过修改 low 或 high 的值，
+            # 让 while 循环在下一次迭代中处理“较长”的那个区间。
+            # 这确保了递归深度最多为 O(log n)。
+
+            # 左区间长度: (lt - 1) - low + 1 = lt - low
+            # 右区间长度: high - gt + 1
+            if (lt - low) &lt; (high - gt):
+                # 如果左边更短，递归处理左边
+                self._sort(arr, low, lt - 1)
+                # 让下一次循环处理右边
+                low = gt
+            else:
+                # 如果右边更短（或一样长），递归处理右边
+                self._sort(arr, gt, high)
+                # 让下一次循环处理左边
+                high = lt - 1
+
+    def _partition_3_way(self, arr, low, high):
+        &quot;&quot;&quot;
+        三路分区实现 (基于 Dijkstra 的荷兰国旗问题解法)。
+        它将数组分为三部分：小于、等于、大于 pivot。
+
+        返回值:
+            lt, gt: 分别是“等于 pivot”区间的开始和结束索引的后一个位置。
+                    即 arr[lt...gt-1] == pivot
+        &quot;&quot;&quot;
+        # ---【实践 1: 随机化 Pivot】 ---
+        # 这是防止算法在特定数据（如已排序数组）上性能退化到 O(n²) 的终极武器。
+        # 随机选择一个索引，然后将其值与 low 位置的元素交换，后续逻辑统一使用 arr[low] 作为 pivot。
+        rand_idx = random.randint(low, high)
+        arr[low], arr[rand_idx] = arr[rand_idx], arr[low]
+        pivot = arr[low]
+
+        # --- 指针初始化 ---
+        # Invariants (循环不变量):
+        # arr[low...lt-1]      中的元素都 &lt; pivot
+        # arr[lt...i-1]        中的元素都 == pivot
+        # arr[i...gt-1]        是待处理的未知元素
+        # arr[gt...high]       中的元素都 &gt; pivot
+        lt = low      # &quot;less than&quot; 区间的右边界
+        gt = high + 1 # &quot;greater than&quot; 区间的左边界 (初始时 gt 指向 high+1)
+        i = low + 1   # 当前考察的元素指针
+
+        # --- 开始三路分区循环 ---
+        while i &lt; gt:
+            if arr[i] &lt; pivot:
+                # 当前元素小于 pivot
+                # 将 lt 右移一位，然后把 arr[i] 和新的 arr[lt] 交换
+                lt += 1
+                arr[lt], arr[i] = arr[i], arr[lt]
+                # i 指针也右移，继续考察下一个元素
+                i += 1
+            elif arr[i] &gt; pivot:
+                # 当前元素大于 pivot
+                # 将 gt 左移一位，然后把 arr[i] 和新的 arr[gt] 交换
+                gt -= 1
+                arr[i], arr[gt] = arr[gt], arr[i]
+                # 注意：i 指针不移动！因为从 gt 交换过来的元素是未知的，需要在下一次循环中重新检查。
+            else: # arr[i] == pivot
+                # 当前元素等于 pivot，不做任何交换，直接移动 i 指针
+                i += 1
+
+        # --- 将 Pivot 放到最终位置 ---
+        # 循环结束后，lt 指向“小于”区间的最后一个元素。
+        # 将位于 low 的 pivot 和 arr[lt] 交换，这样 pivot 就来到了“等于”区间的开头。
+        arr[low], arr[lt] = arr[lt], arr[low]
+
+        # --- 返回分区边界 ---
+        # 此时，我们知道：
+        # 小于 pivot 的区间是 [low, lt-1]
+        # 等于 pivot 的区间是 [lt, gt-1]
+        # 大于 pivot 的区间是 [gt, high]
+        # 我们返回 lt 和 gt，以便 _sort 函数知道接下来要处理哪两个区间。
+        return lt, gt
+
+    def _insertion_sort(self, arr, low, high):
+        &quot;&quot;&quot;
+        对 arr[low...high] 区间进行插入排序。
+        插入排序对于小规模和近乎有序的数组非常高效。
+        &quot;&quot;&quot;
+        for i in range(low + 1, high + 1):
+            key = arr[i]
+            j = i - 1
+            while j &gt;= low and arr[j] &gt; key:
+                arr[j + 1] = arr[j]
+                j -= 1
+            arr[j + 1] = key
+</code></pre>
+<ul>
+<li><strong>性能分析</strong> ：</li>
+<li><strong>时间复杂度</strong> ：</li>
+<li>平均：<strong>O</strong>(<strong>n</strong>log<strong>n</strong>)。在大多数情况下，是同等复杂度算法中效率最高的。</li>
+<li>最坏：<strong>O</strong>(<strong>n^</strong>2<strong>)</strong>。当每次选的基准都是当前分区的最大或最小元素时发生（如对已排序数组选第一个元素为基准）。</li>
+<li>最好：<strong>O</strong>(<strong>n</strong>log<strong>n</strong>)。每次都恰好能把数组平分。</li>
+<li><strong>空间复杂度</strong> ：平均 <strong>O</strong>(<strong>lo</strong>g<strong>n</strong>)，最坏 <strong>O</strong>(<strong>n</strong>)。空间开销主要来自递归调用的栈深度。</li>
+<li><strong>稳定性</strong> ： <strong>不稳定</strong> 。在分区操作中，与基准相等的元素的相对位置可能会改变。</li>
+<li><strong>优缺点与适用场景</strong> ：</li>
+<li><strong>优点</strong> ：平均性能非常好，是实践中应用最广泛的排序算法。原地排序的变种空间复杂度低。</li>
+<li><strong>缺点</strong> ：最坏情况性能差，且不稳定。需要通过“随机选基准”或“三数取中”等方法优化。</li>
+<li><strong>适用场景</strong> ：绝大多数需要对大规模数据进行排序的场景。</li>
+</ul>
+<h4 id="6-heap-sort">6. 堆排序 (Heap Sort)</h4>
+<ul>
+<li><strong>核心思想</strong> ：利用了<strong>堆 (Heap)</strong> 这种数据结构的特性。堆是一个近似完全二叉树的结构，并同时满足堆积的性质：即子节点的键值或索引总是小于（或者大于）它的父节点。</li>
+<li>
+<p><strong>步骤分解</strong> ：</p>
+</li>
+<li>
+<p><strong>建堆 (Build Heap)</strong> ：将无序的输入数组构建成一个最大堆（或最小堆）。建堆的过程从最后一个非叶子节点开始，向前逐个进行下沉 (heapify) 操作。</p>
+</li>
+<li><strong>排序 (Sort)</strong> ：</li>
+<li>将堆顶元素（即当前最大值）与数组的最后一个元素交换。</li>
+<li>此时，数组末尾的元素已经就位，将剩余的 <code>n-1</code> 个元素重新调整为最大堆。</li>
+<li>
+<p>重复以上过程，每次都将堆顶的最大值换到未排序部分的末尾，直到整个数组排序完成。</p>
+</li>
+<li>
+<p><strong>性能分析</strong> ：</p>
+</li>
+<li><strong>时间复杂度</strong> ：</li>
+<li>平均/最坏/最好：<strong>O</strong>(<strong>n</strong>log<strong>n</strong>)。建堆的时间是 <strong>O</strong>(<strong>n</strong>)，之后有 <code>n-1</code> 次调整，每次调整是 <strong>O</strong>(<strong>lo</strong>g<strong>n</strong>)。</li>
+<li><strong>空间复杂度</strong> ：<strong>O</strong>(<strong>1</strong>)。原地排序，无需额外空间。</li>
+<li><strong>稳定性</strong> ： <strong>不稳定</strong> 。在将堆顶元素与末尾元素交换时，可能会打乱相等元素的相对顺序。</li>
+<li><strong>优缺点与适用场景</strong> ：</li>
+<li><strong>优点</strong> ：性能稳定，能保证 <strong>O</strong>(<strong>n</strong>log<strong>n</strong>)，且空间复杂度极低。</li>
+<li><strong>缺点</strong> ：在实际应用中的平均性能通常不如优化后的快速排序（因为访存不连续等原因），且不稳定。</li>
+<li><strong>适用场景</strong> ：需要 <strong>O</strong>(<strong>n</strong>log<strong>n</strong>) 的稳定性能，同时对空间复杂度有严格要求（<strong>O</strong>(<strong>1</strong>)）的场景。非常适合 LeetCode 912 这类题目。</li>
+</ul>
+<h4 id="7-counting-sort">7. Counting Sort</h4>
+<p>Counting Sort is not Bucket Sort.</p>
+<h4 id="8-radix-sort">8. Radix Sort</h4>
+<h4 id="9-bucket-sort">9. Bucket Sort</h4>
+<p>Bucket Sort可以把最坏情况的时间复杂度降低到O(N)级别，但是使用场景非常有限：</p>
+<ul>
+<li>数据范围已知（整数）</li>
+<li>或者数据均匀分布在某一个固定区间内（实数）</li>
+</ul>
+<p>Bucket Sort的空间复杂度是O(N+K)，其中K是Bucket的数量。</p>
+<ul>
+<li><strong>核心思想</strong> ：一种 <strong>非比较排序</strong> ，属于 <strong>分布式排序</strong> 。它将待排序的数据根据一定的映射规则，均匀地分配到有限数量的桶中，然后对每个桶内的数据分别进行排序，最后将所有桶的元素按顺序连接起来。</li>
+<li>
+<p><strong>步骤分解</strong> ：</p>
+</li>
+<li>
+<p>设置固定数量的空桶。</p>
+</li>
+<li>遍历输入数据，根据一个映射函数（例如 <code>(value - min) / range * k</code>）决定每个元素应该放入哪个桶。</li>
+<li>对每个非空的桶，使用其他排序算法（如插入排序）进行排序。</li>
+<li>
+<p>按顺序遍历所有桶，将桶内排好序的元素依次放回原数组。</p>
+</li>
+<li>
+<p><strong>性能分析</strong> ：</p>
+</li>
+<li><strong>时间复杂度</strong> ：</li>
+<li>平均：<strong>O</strong>(<strong>n</strong>+<strong>k</strong>) (k是桶的数量)。当数据<strong>均匀分布</strong>时，可达到线性时间。</li>
+<li>最坏：<strong>O</strong>(<strong>n^</strong>2<strong>)</strong>。当所有数据都落入同一个桶中，其性能退化为桶内排序算法的性能。</li>
+<li><strong>空间复杂度</strong> ：<strong>O</strong>(<strong>n</strong>+<strong>k</strong>)。需要额外的空间来存储元素和桶。</li>
+<li><strong>稳定性</strong> ： <strong>可稳定</strong> 。稳定性取决于桶内排序所用的算法是否稳定。</li>
+<li><strong>优缺点与适用场景</strong> ：</li>
+<li><strong>优点</strong> ：在数据均匀分布时，效率极高，可以突破基于比较的排序算法 <strong>O</strong>(<strong>n</strong>log<strong>n</strong>) 的下限。</li>
+<li><strong>缺点</strong> ：严重依赖数据的分布，对非均匀数据效率很差。实现相对复杂，需要设计好的映射函数。</li>
+<li><strong>适用场景</strong> ：数据满足均匀分布的特定场景，例如对浮点数排序。</li>
+</ul>
+<hr />
+<h3 id="_2">稳定性</h3>
+<p>一个排序算法是稳定的，指的是 <strong>当数组中有两个相等的元素时，排序后这两个元素仍然保持它们在原始数组中的相对顺序</strong> 。</p>
+<ul>
+<li><strong>举例</strong> ：假设你有一个数组 <code>[..., 7a, ..., 7b, ...]</code>，其中 <code>7a</code> 和 <code>7b</code> 的值都是7，但 <code>7a</code> 在 <code>7b</code> 的前面。一个稳定的排序算法在完成排序后，<code>7a</code> 保证仍然在 <code>7b</code> 的前面。</li>
+</ul>
+<p>常见的稳定的排序算法包括：冒泡排序、插入排序（包括直接插入排序和折半插入排序）、归并排序和基数排序。</p>
+<p>而不稳定的排序算法包括：堆排序、快速排序、希尔排序和选择排序。</p>
+<h4 id="_3">稳定性高意味着什么？</h4>
+<p>首先，我们需要明确一点：一个排序算法 <strong>要么是稳定的，要么是不稳定的</strong> ，没有“高低”之分。</p>
+<p><strong>稳定性的定义</strong> ：
+如果一个待排序的序列中有两个或多个值相等的元素，经过一个<strong>稳定</strong>的排序算法排序后，这些相等元素的 <strong>原始相对顺序保持不变</strong> 。</p>
+<p><strong>一个生动的例子：</strong>
+假设我们有一个学生名单，已经按“报名时间”的先后顺序排好了。现在，我们需要按“考试分数”对他们进行排序。</p>
+<p><strong>原始名单 (已按报名时间排序):</strong></p>
+<ol>
+<li><code>(张三, 95分)</code></li>
+<li><code>(李四, 88分)</code></li>
+<li><code>(王五, 95分)</code></li>
+</ol>
+<p>这里，张三和王五的分数相同（都是95分），但张三比王五报名早。</p>
+<p><strong>使用「稳定」的排序算法按分数排序后：</strong></p>
+<ol>
+<li><code>(李四, 88分)</code></li>
+<li><code>(张三, 95分)</code>  &lt;-- 张三依然在王五前面</li>
+<li><code>(王五, 95分)</code></li>
+</ol>
+<p><strong>结果分析</strong> ：分数高的排在前面。对于分数相同的张三和王五，算法 <strong>保留了他们原始的“先来后到”的顺序</strong> 。这就是稳定性的体现。它意味着排序过程尊重了数据原有的、与当前排序键无关的顺序。</p>
+<h4 id="_4">稳定性差（不稳定）又会导致什么？</h4>
+<p>如果使用一个<strong>不稳定</strong>的算法来完成上面例子中的排序，结果可能会变成：</p>
+<p><strong>使用「不稳定」的排序算法按分数排序后 (可能的结果):</strong></p>
+<ol>
+<li><code>(李四, 88分)</code></li>
+<li><code>(王五, 95分)</code>  &lt;-- <strong>出问题了！</strong> 王五跑到了张三前面</li>
+<li><code>(张三, 95分)</code></li>
+</ol>
+<p><strong>导致的问题和后果：</strong></p>
+<ol>
+<li><strong>破坏了二次排序的逻辑</strong> ：这是最常见的后果。比如，你想在一个商品列表中“先按价格排序，价格相同时再按销量排序”。你通常会先对整个列表按“销量”排一次，然后再用一个<strong>稳定</strong>的排序算法按“价格”排一次。如果第二次排序（按价格）不稳定，那么第一次排好的“销量顺序”在价格相同的商品之间就会被打乱，你的排序需求就失败了。</li>
+<li><strong>丢失了数据的隐式信息</strong> ：在上面的学生例子中，“报名时间的先后”是一种隐式信息。不稳定的排序会无情地破坏掉这种信息，导致结果不符合预期。在用户界面(UI)上，这可能会导致列表项在用户多次点击排序后无端地跳动，影响用户体验。</li>
+<li><strong>产生难以调试的业务逻辑错误</strong> ：有时候，程序的正确性依赖于这种原始顺序。例如，在一个金融交易系统中，如果两笔交易的金额和时间戳都完全一样，你可能希望系统按它们被接收的顺序来处理。一个不稳定的排序可能会颠倒这个顺序，引发难以追踪的逻辑错误。</li>
+</ol>
+<h4 id="_5">常见算法的稳定性总结</h4>
+<p><strong>结论</strong> ：当你在处理复杂数据，并且元素的原始顺序或次要排序键很重要时， <strong>必须选择一个稳定的排序算法</strong> 。如果只是排序一堆独立的数字，那么稳定性就无关紧要了。</p>
+<h3 id="sort">不同Sort的横向对比</h3>
+<p>为了方便你横向对比，这里再次提供最终的总结表：</p>
+<table>
+<thead>
+<tr>
+<th>排序算法</th>
+<th>平均时间复杂度</th>
+<th>最坏时间复杂度</th>
+<th>平均空间复杂度</th>
+<th>稳定性</th>
+<th>核心思想/备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>冒泡排序</strong></td>
+<td><strong>O</strong>(<strong>n^2</strong>)</td>
+<td><strong>O</strong>(<strong>n^</strong>2<strong>)</strong></td>
+<td><strong>O</strong>(<strong>1</strong>)</td>
+<td>稳定</td>
+<td>教学用，效率极低。</td>
+</tr>
+<tr>
+<td><strong>选择排序</strong></td>
+<td><strong>O</strong>(<strong>n^</strong>2<strong>)</strong></td>
+<td><strong>O</strong>(<strong>n^</strong>2<strong>)</strong></td>
+<td><strong>O</strong>(<strong>1</strong>)</td>
+<td>不稳定</td>
+<td>教学用，交换次数最少。</td>
+</tr>
+<tr>
+<td><strong>插入排序</strong></td>
+<td><strong>O</strong>(<strong>n^</strong>2<strong>)</strong></td>
+<td><strong>O</strong>(<strong>n^</strong>2<strong>)</strong></td>
+<td><strong>O</strong>(<strong>1</strong>)</td>
+<td>稳定</td>
+<td>数据量小或基本有序时高效。</td>
+</tr>
+<tr>
+<td><strong>Merge Sort</strong></td>
+<td><strong>O</strong>(<strong>n</strong>log<strong>n</strong>)</td>
+<td><strong>O</strong>(<strong>n</strong>log<strong>n</strong>)</td>
+<td><strong>O</strong>(<strong>n</strong>)</td>
+<td>稳定</td>
+<td>分治思想，性能稳定，空间换时间。</td>
+</tr>
+<tr>
+<td><strong>Quick Sort</strong></td>
+<td><strong>O</strong>(<strong>n</strong>log<strong>n</strong>)</td>
+<td><strong>O</strong>(<strong>n^</strong>2<strong>)</strong></td>
+<td><strong>O</strong>(<strong>lo</strong>g<strong>n</strong>)</td>
+<td>不稳定</td>
+<td>分治思想，实践中平均最快，但有退化风险。</td>
+</tr>
+<tr>
+<td><strong>Heap Sort</strong></td>
+<td><strong>O</strong>(<strong>n</strong>log<strong>n</strong>)</td>
+<td><strong>O</strong>(<strong>n</strong>log<strong>n</strong>)</td>
+<td><strong>O</strong>(<strong>1</strong>)</td>
+<td>不稳定</td>
+<td>利用堆结构，原地排序，性能稳定。</td>
+</tr>
+<tr>
+<td>Counting Sort</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Radix Sort</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Bucket Sort</strong></td>
+<td><strong>O</strong>(<strong>n</strong>+<strong>k</strong>)</td>
+<td><strong>O</strong>(<strong>n^</strong>2<strong>)</strong></td>
+<td><strong>O</strong>(<strong>n</strong>+<strong>k</strong>)</td>
+<td>可稳定</td>
+<td>分布式排序，依赖数据均匀分布。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>如何选择？</strong></p>
+<ul>
+<li><strong>追求最快的平均速度，且不在乎最坏情况和稳定性</strong> -&gt;  <strong>快速排序</strong> 。</li>
+<li><strong>需要稳定的性能，且内存不是问题，或要对链表排序</strong> -&gt;  <strong>归并排序</strong> 。</li>
+<li><strong>需要稳定的性能，且空间复杂度要求极为苛刻</strong> -&gt;  <strong>堆排序</strong> 。</li>
+<li><strong>数据范围已知且不大，数据分布均匀</strong> -&gt; <strong>桶排序</strong> 或  <strong>计数排序</strong> 。</li>
+<li><strong>数据量很小（例如 n &lt; 50）或数据已基本有序</strong> -&gt;  <strong>插入排序</strong> 。</li>
+<li><strong>只想写个最简单的用于教学或临时测试</strong> -&gt; <strong>冒泡排序</strong> 或  <strong>选择排序</strong> 。</li>
+</ul>
+<p>面试中推荐选择快速排序（随机Pivot），理由如下：</p>
+<ol>
+<li>不同的排序方法各有优劣，但是能实现平均O(NlogN)的排序只有Merge, Quick, Heap。</li>
+<li>QuickSort的空间复杂度是O(logN)，比Merge的O(N)好</li>
+<li>BucketSort严重依赖于数据的均匀分配，不适合于大多数或者相对普遍性的情况</li>
+<li>最坏时间情况是O(N^2)，这种情况发生在已经有序的情况下。但是可以用random pivot来吧时间复杂度稳定在O(NlogN)</li>
+<li>HeapSort最差和平均时间都是O(NlogN), 而空间复杂度是O(1)，那么为什么不用heap呢？因为QuickSort的拓展性更好，在很多问题中都能应用，比如QuickSelect等。</li>
+</ol>
+<p>但是，面试中还是可能会要求用HeapSort，因为HeapSort是最安全的方法，所以在练习时，（按照优先级顺序）需要掌握以下排序方法：</p>
+<ol>
+<li>Quick Sort，核心中的核心，适用范围和解题范围最广</li>
+<li>Merge Sort，考察Divide and Conquer思想，性能极度稳定，无最坏情况。需要掌握自顶向下（递归）和自底向上（迭代）两种实现。</li>
+<li>Heap Sort，空间复杂度为O(1)，理论上最完美的选择。</li>
+<li>Insertion Sort，最基础的，不能拉胯了。</li>
+<li>Counting Sort, Bucket Sort, 非比较排序，考察利用数据本身的特性（如数值范围）来换取更高的效率。</li>
+</ol>
+<p>...</p>
+<h2 id="searching">Searching</h2>
+<p>...</p>
+<h2 id="recursion">Recursion</h2>
+<h3 id="1"><strong>1. 递归入门：核心思想与黄金法则</strong></h3>
+<h4 id="11"><strong>1.1 什么是递归？</strong></h4>
+<p>从本质上讲，递归是一种解决问题的方法，它将一个大问题分解成一个或多个<strong>规模更小、但结构完全相同</strong>的子问题，并通过解决这些子问题来最终解决原来的大问题。在编程中，这通常表现为一个函数 <strong>直接或间接地调用自身</strong> 。</p>
+<p><strong>一个经典的类比：俄罗斯套娃 (Matryoshka Dolls)</strong>
+你有一个俄罗斯套娃，打开它，会发现里面有一个小一点的、一模一样的套娃。你再打开这个小套娃，里面还有一个更小的……这个过程不断重复，直到你打开最后一个实心的、无法再打开的娃娃。这个“无法再打开的娃娃”就是递归的终点。</p>
+<h4 id="12"><strong>1.2 递归的两条黄金法则</strong></h4>
+<p>要正确地设计一个递归函数，必须遵守以下两条黄金法则，缺一不可：</p>
+<ol>
+<li><strong>必须有一个基本情况 (Base Case):</strong>
+   这是递归的“出口”或“终止条件”。当问题规模小到某个可以直接解决的程度时，函数将不再调用自身，而是直接返回一个确切的值。没有基本情况的递归会导致无限循环，最终耗尽内存而使程序崩溃（在Python中通常是 <code>RecursionError: maximum recursion depth exceeded</code>）。</li>
+<li><strong>必须向基本情况靠近 (Approach the Base Case):</strong>
+   每一次递归调用，都必须使问题的规模向基本情况靠近。这意味着传递给下一次递归调用的参数，在某种意义上必须比当前调用的参数“更小”或“更简单”。如果递归调用没有缩小问题规模，同样会陷入无限循环。</li>
+</ol>
+<h4 id="13-python"><strong>1.3 一个最简单的Python递归示例</strong></h4>
+<p>让我们看一个打印倒计时的简单函数：</p>
+<p><strong>Python</strong></p>
+<pre><code>def countdown(n):
+    # 基本情况 (Base Case): 当数字小于等于0时，停止递归
+    if n &lt;= 0:
+        print(&quot;Blastoff!&quot;)
+        return
+
+    # 递归步骤 (Recursive Step)
+    print(n)
+    countdown(n - 1) # 调用自身，但问题规模减小了 (n -&gt; n-1)
+
+# --- 调用函数 ---
+countdown(3)
+</code></pre>
+<p><strong>执行过程追踪：</strong></p>
+<ol>
+<li><code>countdown(3)</code> 被调用，不满足基本情况，打印 <code>3</code>，然后调用 <code>countdown(2)</code>。</li>
+<li><code>countdown(2)</code> 被调用，不满足基本情况，打印 <code>2</code>，然后调用 <code>countdown(1)</code>。</li>
+<li><code>countdown(1)</code> 被调用，不满足基本情况，打印 <code>1</code>，然后调用 <code>countdown(0)</code>。</li>
+<li><code>countdown(0)</code> 被调用，满足基本情况 (<code>n &lt;= 0</code>)，打印 <code>Blastoff!</code>，然后函数返回。</li>
+<li>程序逐层返回，最终结束。</li>
+</ol>
+<p><strong>输出结果：</strong></p>
+<pre><code>3
+2
+1
+Blastoff!
+</code></pre>
+<hr />
+<h3 id="2-the-church-turing-thesis"><strong>2. 理论基石：递归的计算能力 (The Church-Turing Thesis)</strong></h3>
+<p><strong>邱奇-图灵论题 (Church-Turing Thesis)</strong> 是计算理论中的核心假设，它指出任何可被直观、有效计算的问题，都能被一台图灵机解决。</p>
+<ul>
+<li><strong>核心关联：</strong> 后续研究证明，基于递归的计算模型（Lambda演算）和基于循环与状态机的计算模型（图灵机）在计算能力上是 <strong>等价的</strong> 。</li>
+<li><strong>结论：</strong> 这为我们提供了一个坚实的理论基础——任何能用递归算法解决的问题，也必然能用循环算法（通常需要配合栈等数据结构）解决，反之亦然。它们在“能解决什么问题”这个层面上没有高下之分。</li>
+</ul>
+<hr />
+<h3 id="3-python"><strong>3. 递归的实现与改写方法 (Python实现)</strong></h3>
+<h4 id="31-the-call-stack"><strong>3.1 系统如何实现递归：调用栈 (The Call Stack)</strong></h4>
+<p>当Python解释器执行递归函数时，它使用<strong>调用栈</strong>来管理每一次函数调用。每当一个函数被调用，一个新的<strong>栈帧 (Stack Frame)</strong> 被推入调用栈顶部，用于存储该次调用的局部变量、参数和返回地址。当函数返回时，其对应的栈帧被弹出。这个自动化的过程是递归能够正确工作的幕后英雄。</p>
+<h4 id="32"><strong>3.2 改写为循环：两种核心模式</strong></h4>
+<p><strong>模式一：尾递归 (Tail Recursion) → 简单循环</strong></p>
+<p>如果递归调用是函数执行的最后一步，它就是尾递归。虽然Python解释器默认<strong>不进行</strong>尾递归优化，但理解这个模式有助于我们手动将其改写为高效的循环。</p>
+<ul>
+<li><strong>示例 (计算阶乘):</strong>
+  <strong>Python</strong></li>
+</ul>
+<p>```
+  # 尾递归版本 (在Python中仍会受递归深度限制)
+  def factorial_tail(n, accumulator=1):
+      if n &lt;= 1:
+          return accumulator
+      return factorial_tail(n - 1, n * accumulator)</p>
+<p># 改写为循环版本 (推荐)
+  def factorial_loop(n):
+      accumulator = 1
+      for i in range(1, n + 1):
+          accumulator *= i
+      return accumulator
+  ```</p>
+<p><strong>模式二：普通递归 → 循环 + 显式栈 (Iteration + Explicit Stack)</strong></p>
+<p>对于更普遍的非尾递归，我们需要手动创建一个 <strong>栈</strong> （在Python中通常用列表 <code>list</code> 模拟）来追踪“待办事项”。</p>
+<ul>
+<li><strong>示例 (树的先序遍历):</strong>
+  <strong>Python</strong></li>
+</ul>
+<p>```
+  # 假设的树节点类
+  class TreeNode:
+      def <strong>init</strong>(self, val=0, left=None, right=None):
+          self.val = val
+          self.left = left
+          self.right = right</p>
+<p># 优雅的递归版本
+  def preorder_recursive(root: TreeNode):
+      result = []
+      def helper(node):
+          if not node:
+              return
+          result.append(node.val)
+          helper(node.left)
+          helper(node.right)
+      helper(root)
+      return result</p>
+<p># 循环 + 栈版本
+  def preorder_iterative(root: TreeNode):
+      if not root:
+          return []</p>
+<pre><code>  stack = [root]  # 手动创建栈，用列表模拟
+  result = []
+
+  while stack:  # 当栈不为空时
+      node = stack.pop()
+      result.append(node.val)
+
+      # 注意：因为栈是后进先出(LIFO)，所以要先推入右孩子，再推入左孩子
+      if node.right:
+          stack.append(node.right)
+      if node.left:
+          stack.append(node.left)
+
+  return result
+</code></pre>
+<p>```</p>
+<hr />
+<h3 id="4"><strong>4. 递归的适用对象与场景</strong></h3>
+<ol>
+<li><strong>处理递归数据结构:</strong></li>
+<li><strong>树 (Trees):</strong> 几乎所有树操作（遍历、搜索、计算深度等）的最佳表达方式都是递归。</li>
+<li><strong>图 (Graphs):</strong> 深度优先搜索 (DFS)。</li>
+<li><strong>分形几何 (Fractals):</strong> 谢尔宾斯基三角形、科赫雪花等。</li>
+<li><strong>解决具有递归性质的算法问题:</strong></li>
+<li><strong>分治算法 (Divide and Conquer):</strong> 归并排序 (Merge Sort)、快速排序 (Quick Sort)。</li>
+<li><strong>回溯算法 (Backtracking):</strong> 全排列、组合、N皇后问题、解数独。</li>
+<li><strong>动态规划 (Dynamic Programming):</strong> 自顶向下（Top-down with Memoization）的解法本质上就是带缓存的递归。</li>
+</ol>
+<hr />
+<h3 id="5"><strong>5. 递归的优缺点权衡</strong></h3>
+<table>
+<thead>
+<tr>
+<th>方面</th>
+<th>优点 (Advantages)</th>
+<th>缺点 (Disadvantages)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>代码与逻辑</strong></td>
+<td><strong>清晰简洁</strong> ：代码能直接反映问题的数学或逻辑定义，可读性极高。</td>
+<td><strong>难以调试</strong> ：追踪函数调用链比追踪循环变量更抽象。</td>
+</tr>
+<tr>
+<td><strong>开发效率</strong></td>
+<td><strong>高</strong> ：对于适合的场景，能快速实现核心逻辑，无需手动管理复杂的状态。</td>
+<td><strong>思维要求高</strong> ：需要精确定义基本情况和递归步骤，否则极易出错。</td>
+</tr>
+<tr>
+<td><strong>性能与内存</strong></td>
+<td><strong>优雅但可能低效</strong> ：函数调用有固定的开销。</td>
+<td><strong>栈溢出风险 (Stack Overflow)</strong> ：Python有递归深度限制（通常为1000左右），深度过大会导致 <code>RecursionError</code>。这是最大的实际限制。</td>
+</tr>
+<tr>
+<td><strong>空间复杂度</strong></td>
+<td><strong>较高</strong> ：调用栈会占用O(N)的空间（N为递归深度）。</td>
+<td><strong>可控</strong> ：循环版本使用堆内存上的数据结构，空间只受限于总内存大小。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6"><strong>6. 总结</strong></h3>
+<ul>
+<li><strong>核心认知</strong> ：递归是将大问题分解为同类小问题的强大思想。</li>
+<li><strong>理论等价</strong> ：递归与循环在计算能力上等价，可以相互转换。</li>
+<li><strong>实践选择</strong> ：这是一个在<strong>代码可读性</strong>与<strong>程序性能/安全性</strong>之间的权衡。</li>
+<li><strong>优先选择递归</strong> ：当问题结构天然递归且深度可控时。</li>
+<li><strong>优先选择循环</strong> ：当性能至关重要或数据规模可能导致栈溢出时。</li>
+</ul>
+<p>精通递归的思想，并懂得在何时将其转化为更高效的循环，是每一位优秀Python程序员的必备技能。</p>
+<h3 id="recursive-leap-of-faith">Recursive Leap of Faith</h3>
+<p>DFS 的清晰，不在于执行步骤，而在于 <strong>它和问题本身的逻辑定义高度一致</strong> 。</p>
+<p>要理解 DFS 的清晰，需要掌握一个核心思想，叫做<strong>“递归的信任之跃”（Recursive Leap of Faith）</strong>。你不需要在脑子里追踪程序到底递归到了哪一层，你只需要做两件事：</p>
+<ol>
+<li><strong>定义好函数的“契约”</strong> ：
+   对于 <code>isSameTree(p, q)</code> 这个函数，它的契约就是：“你给我两个节点 p 和 q，我会返回 <code>True</code> 或 <code>False</code>，告诉你以它们为根的两棵树是否完全相同。”</li>
+<li>
+<p><strong>只考虑当前这一层，并信任“契约”</strong> ：
+   现在，你要写函数内部的逻辑。你完全不需要去想“下一层会怎么样”、“递归了五层之后是什么情况”，你只需要问自己：</p>
+</li>
+<li>
+<p><strong>最简单的情况是什么（Base Case）？</strong></p>
+</li>
+<li>如果 p 和 q 都是 <code>None</code>，那它们肯定相同，返回 <code>True</code>。</li>
+<li>如果只有一个是 <code>None</code>，或者它们的值不一样，那肯定不同，返回 <code>False</code>。</li>
+<li><strong>一般情况是什么（Recursive Step）？</strong></li>
+<li>如果上面最简单的情况都不是，那么要判断当前这两棵树是否相同，就需要满足三个条件：<ol>
+<li>它们的值 <code>p.val</code> 和 <code>q.val</code> 相等（我们已经检查过了）。</li>
+<li>它们的左子树必须相同。</li>
+<li>它们的右子树也必须相同。</li>
+</ol>
+</li>
+<li>那怎么判断它们的左子树是否相同呢？ <strong>直接信任并使用我们定好的“契约”</strong> ！调用 <code>isSameTree(p.left, q.left)</code> 就行了。右子树同理。</li>
+</ol>
+<h2 id="math-algorithms">Math Algorithms</h2>
+<h3 id="hash-function">Hash Function</h3>
+<p>常见的hash function：</p>
+<h4 id="int-hash">Int Hash</h4>
+<p>整数的hash function一般就是自定义一个长度的hashtable，比如1000，然后所有的整数int就整除1000，结果就是在这个list里头的index。</p>
+<p>在python中，负数也可以直接取模运算。</p>
+<p>hash function与完整实现的python代码示例：</p>
+<pre><code class="language-python">class SimpleHashTable:
+    def __init__(self, capacity=10):
+        &quot;&quot;&quot;
+        初始化哈希表。
+        capacity: 底层数组（桶）的大小。建议使用素数以获得更好的分布，但这里简化为10。
+        &quot;&quot;&quot;
+        self.capacity = capacity
+        # 初始化一个列表作为我们的“桶”。
+        # 每个桶可以是一个空列表，用于存储链表（处理冲突）。
+        self.buckets = [[] for _ in range(self.capacity)]
+        self.size = 0 # 跟踪哈希表中实际存储的键值对数量
+
+    def _hash_function(self, key):
+        &quot;&quot;&quot;
+        内部哈希函数，将键转换为整数哈希值。
+        这里使用Python内置的hash()函数，因为它已经很高效和通用。
+        &quot;&quot;&quot;
+        return hash(key)
+
+    def _get_index(self, hash_value):
+        &quot;&quot;&quot;
+        将哈希值映射到底层数组的索引。
+        使用取模运算确保索引在 [0, capacity-1] 范围内。
+        &quot;&quot;&quot;
+        return hash_value % self.capacity
+
+    def put(self, key, value):
+        &quot;&quot;&quot;
+        向哈希表插入一个键值对。
+        如果键已存在，则更新其值。
+        &quot;&quot;&quot;
+        hash_value = self._hash_function(key)
+        index = self._get_index(hash_value)
+
+        bucket = self.buckets[index] # 获取对应的桶（链表）
+
+        # 遍历桶中的键值对，检查键是否已存在
+        for i, (existing_key, existing_value) in enumerate(bucket):
+            if existing_key == key:
+                # 键已存在，更新其值
+                bucket[i] = (key, value)
+                print(f&quot;键 '{key}' 已存在，值已更新为: {value}&quot;)
+                return
+
+        # 键不存在，添加到桶的链表末尾
+        bucket.append((key, value))
+        self.size += 1
+        print(f&quot;插入: ('{key}', {value}) 到索引 {index}&quot;)
+
+    def get(self, key):
+        &quot;&quot;&quot;
+        从哈希表获取一个键对应的值。
+        如果键不存在，返回 None。
+        &quot;&quot;&quot;
+        hash_value = self._hash_function(key)
+        index = self._get_index(hash_value)
+
+        bucket = self.buckets[index]
+
+        # 遍历桶中的键值对，查找匹配的键
+        for existing_key, existing_value in bucket:
+            if existing_key == key:
+                print(f&quot;找到: '{key}' 对应的值是: {existing_value} (在索引 {index})&quot;)
+                return existing_value
+
+        print(f&quot;未找到键: '{key}'&quot;)
+        return None # 键不存在
+
+    def delete(self, key):
+        &quot;&quot;&quot;
+        从哈希表删除一个键值对。
+        &quot;&quot;&quot;
+        hash_value = self._hash_function(key)
+        index = self._get_index(hash_value)
+
+        bucket = self.buckets[index]
+
+        # 遍历桶中的键值对，查找并删除
+        for i, (existing_key, existing_value) in enumerate(bucket):
+            if existing_key == key:
+                del bucket[i]
+                self.size -= 1
+                print(f&quot;删除: ('{key}', {existing_value}) 从索引 {index}&quot;)
+                return True # 删除成功
+
+        print(f&quot;删除失败: 未找到键 '{key}'&quot;)
+        return False # 删除失败
+
+    def __len__(self):
+        &quot;&quot;&quot;返回哈希表中键值对的数量&quot;&quot;&quot;
+        return self.size
+
+    def __str__(self):
+        &quot;&quot;&quot;打印哈希表的当前状态&quot;&quot;&quot;
+        items = []
+        for i, bucket in enumerate(self.buckets):
+            if bucket:
+                items.append(f&quot;Bucket {i}: {bucket}&quot;)
+        return &quot;\n&quot;.join(items) if items else &quot;哈希表为空。&quot;
+</code></pre>
+<p>...</p>
+<p>使用示例：</p>
+<pre><code class="language-python"># 创建一个容量为5的哈希表进行测试
+my_hash_table = SimpleHashTable(capacity=5) 
+
+# 插入一些键值对
+my_hash_table.put(&quot;apple&quot;, 10)
+my_hash_table.put(&quot;banana&quot;, 20)
+my_hash_table.put(&quot;cherry&quot;, 30)
+my_hash_table.put(&quot;date&quot;, 40)
+my_hash_table.put(&quot;elderberry&quot;, 50) # 可能会与之前的键发生哈希冲突，但会被链表处理
+my_hash_table.put(&quot;fig&quot;, 60) # 再次插入，看如何处理冲突
+
+print(&quot;\n--- 哈希表当前状态 ---&quot;)
+print(my_hash_table)
+print(f&quot;哈希表大小: {len(my_hash_table)}&quot;)
+
+print(&quot;\n--- 获取值 ---&quot;)
+my_hash_table.get(&quot;banana&quot;)
+my_hash_table.get(&quot;apple&quot;)
+my_hash_table.get(&quot;grape&quot;) # 不存在的键
+my_hash_table.get(&quot;elderberry&quot;)
+
+print(&quot;\n--- 更新值 ---&quot;)
+my_hash_table.put(&quot;apple&quot;, 100) # 更新'apple'的值
+my_hash_table.get(&quot;apple&quot;)
+
+print(&quot;\n--- 删除值 ---&quot;)
+my_hash_table.delete(&quot;banana&quot;)
+my_hash_table.delete(&quot;grape&quot;) # 不存在的键
+my_hash_table.get(&quot;banana&quot;) # 确认是否已删除
+
+print(&quot;\n--- 最终哈希表状态 ---&quot;)
+print(my_hash_table)
+print(f&quot;最终哈希表大小: {len(my_hash_table)}&quot;)
+</code></pre>
+<p>...</p>
+<p>...</p>
+<h4 id="string-hash">String Hash</h4>
+<p>字符串一般用乘法哈希法：</p>
+<ol>
+<li><strong>初始值：</strong> 从一个起始哈希值（通常为 <code>0</code>）开始。</li>
+<li><strong>迭代：</strong> 遍历字符串中的每一个字符。</li>
+<li><strong>累积：</strong> 对于每个字符，将其 ASCII 值与一个选定的素数（最常用的是  <strong>31</strong> ）相乘，然后将结果加到当前的哈希值上。这个素数有助于将哈希值更均匀地分布，减少冲突。</li>
+<li><strong>最终值：</strong> 所有字符处理完毕后，得到的累积值就是最终的哈希值。</li>
+</ol>
+<p>...</p>
+<p>其hash function如下：</p>
+<pre><code class="language-python">def custom_string_hash(s):
+    &quot;&quot;&quot;
+    一个简单的自定义字符串哈希函数，基于乘法哈希法。
+
+    参数:
+        s (str): 需要计算哈希值的字符串。
+
+    返回:
+        int: 计算出的整数哈希值。
+    &quot;&quot;&quot;
+
+    hash_value = 0
+    prime = 31 # 一个常用的素数，有助于减少冲突并均匀分布哈希值
+
+    for char in s:
+        # 将当前哈希值乘以素数，然后加上字符的ASCII值。
+        # 这种累积方式确保了字符的顺序和内容都会影响最终的哈希值。
+        hash_value = (hash_value * prime) + ord(char)
+
+        # 注意：在实际更复杂的哈希函数中，为了防止整数溢出（在某些语言中）
+        # 或者为了将哈希值控制在特定范围内，可能会引入位操作或取模。
+        # Python 的整数可以任意大，所以这里不需要特殊处理溢出，
+        # 但如果要在哈希表中使用，最终仍然会进行取模运算以映射到数组索引。
+
+    return hash_value
+</code></pre>
+<p>...</p>
+<p>...</p>
+<p>为什么选择 31？</p>
+<ul>
+<li><strong>素数特性：</strong> 素数有助于减少哈希冲突。当与各种字符的 ASCII 值相乘时，它能更好地“搅动”哈希值，使其更均匀地分布。</li>
+<li><strong>性能优化：</strong> 在一些底层语言中，乘以 31 可以被编译器优化为 <code>(x &lt;&lt; 5) - x</code>，这比一般的乘法运算更快。虽然 Python 解释器不一定会进行这种微优化，但这个数字已经成为一种行业惯例。</li>
+</ul>
+<p>这个 <code>custom_string_hash</code> 函数虽然简单，但它很好地演示了字符串哈希函数的核心思想：通过迭代和累积每个字符的信息，生成一个能够代表整个字符串的、唯一性较好的整数值。在实际的哈希表使用中，这个结果还会再经过<strong>取模运算</strong>来映射到底层数组的索引。</p>
+<p>...</p>
+<p>...</p>
+<p>...</p>
+<h2 id="kadanes-algorithm">Kadane's Algorithm</h2>
+<p>...</p>
+<p>...</p>
+<p>...</p>
+<p>...</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
